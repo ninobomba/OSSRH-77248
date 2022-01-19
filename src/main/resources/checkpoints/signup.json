@@ -1,0 +1,30 @@
+ [
+  {
+    "id": "SGS1",
+    "module": "signup",
+    "name": "start",
+    "description": "Start of request",
+    "order": 1
+  },
+  {
+    "id": "SGV2",
+    "module": "signup",
+    "name": "validate",
+    "description": "Validate data",
+    "order": 2
+  },
+  {
+    "id": "SGP3",
+    "module": "signup",
+    "name": "persist",
+    "description": "Persist data",
+    "order": 3
+  },
+  {
+    "id": "SGC4",
+    "module": "signup",
+    "name": "completed",
+    "description": "Request is completed",
+    "order": 4
+  }
+ ]

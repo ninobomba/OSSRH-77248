@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+    <Properties>
+        <Property name="basePath">logs</Property>
+        <Property name="backupPath">${basePath}/backup</Property>
+        <Property name="logPattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%t] %c{1}:%L - %m%n</Property>
+    </Properties>
+
+    <Appenders>
+
+        <RollingFile name="fileLogger"
+                     fileName="${basePath}/app.log"
+                     filePattern="${backupPath}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="${logPattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="1024 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="12"/>
+        </RollingFile>
+
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${logPattern}" />
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+
+        <AsyncLogger name="tech.tools4monkeys.commons" level="trace" additivity="true">
+            <appender-ref ref="fileLogger" />
+        </AsyncLogger>
+
+        <Root level="trace" additivity="false">
+            <appender-ref ref="console" />
+        </Root>
+
+    </Loggers>
+
+</Configuration>
