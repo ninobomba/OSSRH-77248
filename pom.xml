@@ -13,13 +13,13 @@
 
     <name>monkeys-commons</name>
     <description>Tools 4 Monkeys - Java Commons</description>
-    <url>https://github.com/ninobomba/commons</url>
+    <url>https://github.com/ninobomba/OSSRH-77248</url>
 
     <developers>
         <developer>
             <name>Fernando Farfan</name>
             <email>fernando.farfan@live.com</email>
-            <url>https://github.com/ninobomba/OSSRH-77248</url>
+            <url>https://github.com/ninobomba</url>
         </developer>
     </developers>
 
