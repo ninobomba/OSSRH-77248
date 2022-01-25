@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class H2ConnectivityInspector implements IResourceInspector
 {
 
-    private final String DRIVER = "org.h2.Driver";
+    private static final String DRIVER = "org.h2.Driver";
 
     private String uri;
     private String user;

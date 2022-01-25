@@ -28,11 +28,6 @@ public class CheckPoint implements Cloneable
         completed = true;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
     @SneakyThrows
     public String toJsonString()
     {

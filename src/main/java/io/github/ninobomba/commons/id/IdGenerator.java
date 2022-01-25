@@ -12,10 +12,10 @@ import java.util.stream.IntStream;
 public final class IdGenerator
 {
 
-    private final static int MAX_QUEUE_SIZE = 10_000;
-    private final static int MIN_QUEUE_SIZE_BEFORE_LOAD = 10;
+    private static final int MAX_QUEUE_SIZE = 10_000;
+    private static final int MIN_QUEUE_SIZE_BEFORE_LOAD = 10;
 
-    private final static ConcurrentLinkedQueue<Long> queue = new ConcurrentLinkedQueue<>();
+    private static final ConcurrentLinkedQueue<Long> queue = new ConcurrentLinkedQueue<>();
 
     private static Snowflake snowflake;
     private static IdGenerator instance;
