@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import io.github.ninobomba.commons.persistence.PersistenceDiskUtils;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Map;
 import java.util.Objects;
@@ -42,7 +43,8 @@ public final class CheckPointPersistence
     public void save( Map<String, CheckPoint> checkPointMap )
     {
         log.trace( "CheckPointPersistence::save() >: start" );
-        if( Objects.isNull( checkPointMap ) ) {
+
+        if( CollectionUtils.isEmpty( checkPointMap ) ) {
             log.warn( "CheckPointPersistence::save() !: checkpoint map is null, returning" );
             return;
         }

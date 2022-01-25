@@ -42,7 +42,7 @@ public final class IdGenerator
     public long getNextId()
     {
         if( queue.isEmpty() || queue.size() <= MIN_QUEUE_SIZE_BEFORE_LOAD ) {
-            log.info( "IdGenerator::getNextId() !: loading new id numbers in memory" );
+            log.info( "IdGenerator::getNextId() !: loading new id numbers into memory" );
             new Thread( IdGenerator::load );
         }
 
@@ -50,7 +50,7 @@ public final class IdGenerator
     }
 
     @Deprecated
-    /**
+    /*
      * @deprecated in favor of the snowflake logic. Try the getNextId() method instead.
      */
     static long generateId()

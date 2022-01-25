@@ -40,7 +40,7 @@ public final class ApiGeoLocation
                 .concat( "?access_key=" )
                 .concat( accessKey );
 
-        log.debug( "ApiGeoLocation: getGeoLocationInfo() _: requesting geolocation {}", url );
+        log.debug( "ApiGeoLocation::getGeoLocationInfo() _: requesting geolocation {}", url );
 
         var connection = (HttpURLConnection) new URL( url ).openConnection();
         connection.setRequestMethod( "GET" );
@@ -54,9 +54,9 @@ public final class ApiGeoLocation
 
         var response = builder.toString();
 
-        log.debug( "ApiGeoLocation: getGeoLocationInfoByIpAddress() _: geolocation response {}", response );
+        log.debug( "ApiGeoLocation::getGeoLocationInfoByIpAddress() _: geolocation response {}", response );
 
-        log.trace( "ApiGeoLocation: getGeoLocationInfoByIpAddress() <: complete" );
+        log.trace( "ApiGeoLocation::getGeoLocationInfoByIpAddress() <: complete" );
 
         return response;
     }

@@ -2,6 +2,7 @@ package io.github.ninobomba.commons.inspectors;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +20,7 @@ public class FilePermissionsInspector implements IResourceInspector
     @Override
     public boolean isAvailable()
     {
-        if( Objects.isNull( files ) || files.isEmpty() ) {
+        if( CollectionUtils.isEmpty( files ) ) {
             log.warn( "FilePermissionsInspector::isAvailable() !: file list is empty" );
             return false;
         }
@@ -55,7 +56,7 @@ public class FilePermissionsInspector implements IResourceInspector
     @Override
     public String toString()
     {
-        if( Objects.isNull( files ) || files.isEmpty() )
+        if( CollectionUtils.isEmpty( files ) )
             return "Files is empty or null : " + files;
 
         var fileList = new StringBuilder();

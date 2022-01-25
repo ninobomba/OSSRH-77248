@@ -2,6 +2,7 @@ package io.github.ninobomba.commons.platform;
 
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import org.springframework.util.CollectionUtils;
 
 import java.net.InetAddress;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public final class SystemMetaDataProvider
 
     public static Map<String, String> getProperties()
     {
-        if( Objects.isNull( properties ) || properties.isEmpty() ) {
+        if( CollectionUtils.isEmpty( properties ) ) {
             properties = new HashMap<>();
             properties.putAll( getSystemEnvironmentProperties() );
             properties.putAll( getNetworkProperties() );

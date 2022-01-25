@@ -16,7 +16,6 @@ public class RabbitMQConnectivityInspector implements IResourceInspector
     private final String user;
     private final String password;
     private final String host;
-
     private final Integer port;
 
     @SneakyThrows

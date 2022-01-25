@@ -47,10 +47,10 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
     @Override
     public void publish(NotificationMessage notificationMessage)
     {
-        log.trace("TwilioSmsNotificationChannel: publish() >: start");
+        log.trace("TwilioSmsNotificationChannel::publish() >: start");
 
         if( ! isServiceAvailable ) {
-            log.warn("TwilioSmsNotificationChannel: publish() !: twilio channel is not available, returning");
+            log.warn("TwilioSmsNotificationChannel::publish() !: twilio channel is not available, returning");
             return;
         }
 
@@ -62,19 +62,19 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
             return;
         }
 
-        log.trace("TwilioSmsNotificationChannel: publish() _: twilio sms notification info: {}", notificationMessage.toJsonString() );
+        log.trace("TwilioSmsNotificationChannel::publish() _: twilio sms notification info: {}", notificationMessage.toJsonString() );
 
         CompletableFuture
                 .runAsync(() -> sendMessage( notificationMessage ))
                 .join();
 
-        log.trace("TwilioSmsNotificationChannel: publish() <: complete");
+        log.trace("TwilioSmsNotificationChannel::publish() <: complete");
     }
 
     @SneakyThrows
     public void sendMessage(NotificationMessage notificationMessage)
     {
-        log.trace("TwilioSmsNotificationChannel: sendMessage() >: start");
+        log.trace("TwilioSmsNotificationChannel::sendMessage() >: start");
 
         String message = "\n"
                 .concat( AppData.getInstance().getName()    + " / " )
