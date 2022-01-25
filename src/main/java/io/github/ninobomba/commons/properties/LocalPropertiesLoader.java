@@ -63,8 +63,9 @@ public final class LocalPropertiesLoader {
 
         for (String path : propertiesFiles) {
             File file = ResourceUtils.getFile(path);
-            var in = new FileInputStream(file);
-            properties.load(in);
+            try( var in =  new FileInputStream(file)) {
+                properties.load(in);
+            }
         }
 
         print();

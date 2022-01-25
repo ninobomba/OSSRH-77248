@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Getter
 @Builder
-public class ApiErrorResponse implements Serializable
+public class ApiErrorResponse
 {
     private static final long serialVersionUID = -4107701302700942933L;
 

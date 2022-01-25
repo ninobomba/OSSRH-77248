@@ -7,7 +7,6 @@ import org.springframework.util.CollectionUtils;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @UtilityClass
 public final class SystemMetaDataProvider
