@@ -19,15 +19,16 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 public final class SlackNotificationChannel implements INotificationChannel
 {
-    private static final SlackNotificationChannel instance = new SlackNotificationChannel();
+    private static SlackNotificationChannel instance;
 
-    private boolean isServiceAvailable;
-    private List<String> notificationLevel;
+    private static boolean isServiceAvailable;
+    private List<String> notificationLevelList;
 
     private String issueUrl;
     private String token;
@@ -39,11 +40,25 @@ public final class SlackNotificationChannel implements INotificationChannel
 
     private SlackNotificationChannel()
     {
-        boolean isServiceEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.slack.service.enabled", "false" ));
-        if( isServiceEnabled ) load();
+        boolean isEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.slack.service.enabled", "false" ));
+        if( ! isEnabled ) {
+            log.warn("SlackNotificationChannel() _: Slack channel is not enabled, check local properties - notifications.slack.service.enabled");
+            return;
+        }
+
+        load();
+
+        setServiceAvailable( true );
     }
 
-    public static SlackNotificationChannel getInstance() { return instance; }
+    public static void setServiceAvailable(boolean isAvailable) {
+        isServiceAvailable = isAvailable;
+    }
+
+    public static SlackNotificationChannel getInstance() {
+        if( Objects.isNull( instance ) ) instance = new SlackNotificationChannel();
+        return instance;
+    }
 
     @Override
     public void publish(NotificationMessage notificationMessage)
@@ -55,11 +70,12 @@ public final class SlackNotificationChannel implements INotificationChannel
             return;
         }
 
-        if( ! notificationLevel.contains( notificationMessage.getLevel().toString() ) )
+        if( ! notificationLevelList.contains( notificationMessage.getLevel().toString() ) )
         {
-            log.warn("SlackNotificationChannel::publish() _: slack notification level is not accepted: {} - configured levels: {}",
-                    notificationMessage.toJsonString(),
-                    notificationLevel
+            log.warn("SlackNotificationChannel::publish() !: Slack notification level is not accepted: Actual: {}, Configured: {}, Message: {}",
+                    notificationMessage.getLevel(),
+                    notificationLevelList,
+                    notificationMessage.toJsonString()
             );
             return;
         }
@@ -74,7 +90,7 @@ public final class SlackNotificationChannel implements INotificationChannel
     }
 
     @SneakyThrows
-    public void sendMessage(NotificationMessage notificationMessage)
+    private void sendMessage(NotificationMessage notificationMessage)
     {
         log.trace("SlackNotificationChannel::sendMessage() >: start");
 
@@ -122,7 +138,7 @@ public final class SlackNotificationChannel implements INotificationChannel
         var blocks = new ArrayList<LayoutBlock>();
 
         blocks.add( DividerBlock.builder().build() );
-        blocks.add (SectionBlock.builder().text( MarkdownTextObject.builder().text( " << *Application* >>" ).build()).build());
+        blocks.add( SectionBlock.builder().text( MarkdownTextObject.builder().text( " << *Application* >>" ).build()).build());
         blocks.add( DividerBlock.builder().build() );
 
         blocks.add (
@@ -195,7 +211,9 @@ public final class SlackNotificationChannel implements INotificationChannel
     @Override
     public void load()
     {
-        notificationLevel = List.of( LocalPropertiesLoader.getInstance().getProperty( "notifications.slack.trace", "CRITICAL,ERROR" )
+        log.trace("SlackNotificationChannel::load() >: start");
+
+        notificationLevelList = List.of( LocalPropertiesLoader.getInstance().getProperty( "notifications.slack.trace", "CRITICAL,ERROR" )
                 .replaceAll( "\\s+", "" )
                 .split(",") );
 
@@ -215,7 +233,7 @@ public final class SlackNotificationChannel implements INotificationChannel
         config.setPrettyResponseLoggingEnabled( true );
         slack = Slack.getInstance( config );
 
-        isServiceAvailable = true;
+        log.trace("SlackNotificationChannel::load() <: complete");
     }
 
 }

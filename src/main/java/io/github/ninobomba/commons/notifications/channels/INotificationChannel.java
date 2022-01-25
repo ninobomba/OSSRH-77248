@@ -7,4 +7,5 @@ public interface INotificationChannel
     void publish(NotificationMessage notificationMessage);
 
     void load();
+
 }
