@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
@@ -25,7 +26,7 @@ public class HttpRemoteIpUtils
 
         Map<String,String> headers = HttpRequestDataUtils.getRequestHeadersMap( request );
 
-        if( Objects.isNull( headers) || headers.isEmpty() ) return null;
+        if( CollectionUtils.isEmpty( headers) ) return null;
 
         String ip =
                 Optional.of(

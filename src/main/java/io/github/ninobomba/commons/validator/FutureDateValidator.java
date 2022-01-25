@@ -20,7 +20,7 @@ public class FutureDateValidator implements ConstraintValidator<FutureDate, Stri
 	@Override
 	public boolean isValid(String input, ConstraintValidatorContext context)
 	{
-		if(StringUtils.isBlank( input ) ) return false;
+		if( StringUtils.isBlank( input ) ) return false;
 
 		boolean delimiterSlash  = input.contains("/");
 		boolean delimiterHyphen = input.contains("-");

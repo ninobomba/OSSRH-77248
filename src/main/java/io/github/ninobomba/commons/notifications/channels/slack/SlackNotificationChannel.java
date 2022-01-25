@@ -48,44 +48,44 @@ public final class SlackNotificationChannel implements INotificationChannel
     @Override
     public void publish(NotificationMessage notificationMessage)
     {
-        log.trace("SlackNotificationChannel: publish() >: start");
+        log.trace("SlackNotificationChannel::publish() >: start");
 
         if( ! isServiceAvailable ) {
-            log.warn("SlackNotificationChannel:  publish() !: slack channel is not available, returning");
+            log.warn("SlackNotificationChannel::publish() !: slack channel is not available, returning");
             return;
         }
 
         if( ! notificationLevel.contains( notificationMessage.getLevel().toString() ) )
         {
-            log.warn("SlackNotificationChannel: publish() _: slack notification level is not accepted: {} - configured levels: {}",
+            log.warn("SlackNotificationChannel::publish() _: slack notification level is not accepted: {} - configured levels: {}",
                     notificationMessage.toJsonString(),
                     notificationLevel
             );
             return;
         }
 
-        log.trace("SlackNotificationChannel: publish() _: slack notification info: {}", notificationMessage.toJsonString() );
+        log.trace("SlackNotificationChannel::publish() _: slack notification info: {}", notificationMessage.toJsonString() );
 
         CompletableFuture
                 .runAsync(() -> sendMessage( notificationMessage ))
                 .join();
 
-        log.trace("SlackNotificationChannel: publish() <: complete");
+        log.trace("SlackNotificationChannel::publish() <: complete");
     }
 
     @SneakyThrows
     public void sendMessage(NotificationMessage notificationMessage)
     {
-        log.trace("SlackNotificationChannel: sendMessage() >: start");
+        log.trace("SlackNotificationChannel::sendMessage() >: start");
 
         String emoji;
 
         switch ( notificationMessage.getLevel() )
         {
-            case CRITICAL : emoji = ":interrobang:";
-            case ERROR    : emoji = ":error:";
-            case WARNING  : emoji = ":warning:";
-            case DEBUG    : emoji = ":speech_balloon:";
+            case CRITICAL : emoji = ":interrobang:"; break;
+            case ERROR    : emoji = ":error:"; break;
+            case WARNING  : emoji = ":warning:"; break;
+            case DEBUG    : emoji = ":speech_balloon:"; break;
             default       : emoji = ":info_3:";
         }
 
@@ -101,7 +101,7 @@ public final class SlackNotificationChannel implements INotificationChannel
                         .concat( "An *" + notificationMessage.getLevel()  + "* message " )
                         .concat( "on *" + AppData.getInstance().getEnv()  + "* environment has occurred" )
                 )
-                .attachments(createAttachments( notificationMessage ) )
+                .attachments( createAttachments( notificationMessage ) )
                 .build();
 
         if( skipDelivery ) return;
@@ -109,12 +109,12 @@ public final class SlackNotificationChannel implements INotificationChannel
         var response = slack.methods(token).chatPostMessage( request );
 
         if( ! response.isOk() )
-            log.error("SlackNotificationChannel: sendMessage() !: error while sending message to slack: \nerror: {}, \nmeta: {}",
+            log.error("SlackNotificationChannel::sendMessage() !: error while sending message to slack: \nerror: {}, \nmeta: {}",
                     response.getError(),
                     response.getResponseMetadata()
             );
 
-        log.trace("SlackNotificationChannel: sendMessage() <: complete");
+        log.trace("SlackNotificationChannel::sendMessage() <: complete");
     }
 
     private List<Attachment> createAttachments(NotificationMessage notificationMessage)

@@ -40,41 +40,41 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
     }
 
     public static TwilioWhatsAppNotificationChannel getInstance(){
-        if(Objects.isNull( instance )) instance = new TwilioWhatsAppNotificationChannel();
+        if( Objects.isNull( instance ) ) instance = new TwilioWhatsAppNotificationChannel();
         return instance;
     }
 
     @Override
     public void publish(NotificationMessage notificationMessage)
     {
-        log.trace("TwilioWhatsUpNotificationChannel: publish() >: start");
+        log.trace("TwilioWhatsUpNotificationChannel::publish() >: start");
 
         if( ! isServiceAvailable ) {
-            log.warn("TwilioWhatsUpNotificationChannel: publish() !: twilio whats-app channel is not available, returning");
+            log.warn("TwilioWhatsUpNotificationChannel::publish() !: twilio whats-app channel is not available, returning");
             return;
         }
 
         if( ! notificationLevel.contains( notificationMessage.getLevel().toString() ) ) {
-            log.warn("TwilioWhatsUpNotificationChannel: publish() _: twilio whats-app notification level is not accepted: {} - configured levels: {}",
+            log.warn("TwilioWhatsUpNotificationChannel::publish() _: twilio whats-app notification level is not accepted: {} - configured levels: {}",
                     notificationMessage.toJsonString(),
                     notificationLevel
             );
             return;
         }
 
-        log.trace("TwilioWhatsUpNotificationChannel: publish() _: whats-app notification info: {}", notificationMessage.toJsonString() );
+        log.trace("TwilioWhatsUpNotificationChannel::publish() _: whats-app notification info: {}", notificationMessage.toJsonString() );
 
         CompletableFuture
                 .runAsync(() -> sendMessage( notificationMessage ))
                 .join();
 
-        log.trace("TwilioWhatsUpNotificationChannel: publish() <: complete");
+        log.trace("TwilioWhatsUpNotificationChannel::publish() <: complete");
     }
 
     @SneakyThrows
     public void sendMessage(NotificationMessage notificationMessage)
     {
-        log.trace( "TwilioWhatsUpNotificationChannel: sendMessage() >: start" );
+        log.trace( "TwilioWhatsUpNotificationChannel::sendMessage() >: start" );
 
         String message = "\n"
                 .concat( AppData.getInstance().getName()    + " / " )
@@ -89,10 +89,9 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
                 .concat( "\n\n" )
                 .concat( "Url: " + issueUrl.concat( "&nid="+ notificationMessage.getId() ) );
 
-
         phoneList.forEach( to -> {
 
-            log.debug("TwilioWhatsUpNotificationChannel: sendMessage() _: sending whats-app message to: {} from: {}", to, twilioPhoneNumber);
+            log.debug("TwilioWhatsUpNotificationChannel::sendMessage() _: sending whats-app message to: {} from: {}", to, twilioPhoneNumber);
 
             if( skipDelivery ) return;
 
@@ -100,14 +99,14 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
                     .creator( to, twilioPhoneNumber, message )
                     .create();
 
-            log.debug( "TwilioWhatsUpNotificationChannel: sendMessage() _: response \nAccountSID: {}\nStatus: {} \nError: {}",
+            log.debug( "TwilioWhatsUpNotificationChannel::sendMessage() _: response \nAccountSID: {}\nStatus: {} \nError: {}",
                     twilioMessage.getAccountSid(),
                     twilioMessage.getStatus(),
                     "[".concat( String.valueOf( twilioMessage.getErrorCode() ) ).concat( "] - " ).concat(  String.valueOf( twilioMessage.getErrorMessage() ) )
                     );
         });
 
-        log.trace("TwilioWhatsUpNotificationChannel: sendMessage() <: complete");
+        log.trace("TwilioWhatsUpNotificationChannel::sendMessage() <: complete");
     }
 
     @Override
@@ -138,7 +137,7 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
                 .split(",");
 
         if( list.length == 0 )
-            throw EmptyOrNullParameterException.create( "TwilioWhatsUpNotificationChannel: load() !: invalid phone list", String.valueOf( phones ) );
+            throw EmptyOrNullParameterException.create( "TwilioWhatsUpNotificationChannel: load() !: invalid phone list", phones);
 
         Arrays
                 .stream( list )

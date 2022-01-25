@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -60,7 +61,7 @@ public final class CheckPointFactory
     {
         log.trace( "CheckPointFactory::build() >: start" );
 
-        if( Objects.isNull( paths ) || paths.isEmpty() ) {
+        if( CollectionUtils.isEmpty( paths ) ) {
             log.debug( "CheckPointFactory::build() !: list of path directories is empty: {}", paths );
             return;
         }
@@ -179,7 +180,8 @@ public final class CheckPointFactory
     public String templateSummary( String key )
     {
         var list = checkPointTemplates.get( key );
-        if( Objects.isNull( list ) || list.isEmpty() ) return "Checkpoint template list for key: [" + key + "] is Empty or Null";
+        if( CollectionUtils.isEmpty( list ) )
+            return "Checkpoint template list for key: [" + key + "] is Empty or Null";
 
         StringJoiner joiner = new StringJoiner("\n" );
         list.forEach( e -> joiner.add( e.toJsonString() ) );

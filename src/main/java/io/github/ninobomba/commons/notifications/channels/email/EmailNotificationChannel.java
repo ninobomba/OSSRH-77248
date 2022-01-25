@@ -44,22 +44,22 @@ public final class EmailNotificationChannel implements INotificationChannel
     @Override
     public void publish(NotificationMessage notificationMessage)
     {
-        log.trace("EmailNotificationChannel: publish() >: start");
+        log.trace("EmailNotificationChannel::publish() >: start");
 
         if( ! isServiceAvailable ) {
-            log.warn("EmailNotificationChannel:  publish() !: email channel is not available, returning");
+            log.warn("EmailNotificationChannel::publish() !: email channel is not available, returning");
             return;
         }
 
         if( ! notificationLevel.contains( String.valueOf( notificationMessage.getLevel() ) ) ) {
-            log.warn("EmailNotificationChannel: publish() _: email notification level is not accepted: {} - configured levels: {}",
+            log.warn("EmailNotificationChannel::publish() _: email notification level is not accepted: {} - configured levels: {}",
                     notificationMessage.toJsonString(),
                     notificationLevel
             );
             return;
         }
 
-        log.info("EmailNotificationChannel: publish() _: email notification info: {}",
+        log.info("EmailNotificationChannel::publish() _: email notification info: {}",
                 notificationMessage.toJsonString()
         );
 
@@ -67,7 +67,7 @@ public final class EmailNotificationChannel implements INotificationChannel
                 .runAsync(() -> sendMessage( notificationMessage ))
                 .join();
 
-        log.trace("EmailNotificationChannel: publish() <: complete");
+        log.trace("EmailNotificationChannel::publish() <: complete");
     }
 
     @SneakyThrows
@@ -127,7 +127,7 @@ public final class EmailNotificationChannel implements INotificationChannel
     @Override
     public void load()
     {
-        log.trace("EmailNotificationChannel: load() >: start");
+        log.trace("EmailNotificationChannel::load() >: start");
 
         notificationLevel = List.of( LocalPropertiesLoader.getInstance()
                 .getProperty( "notifications.email.trace", "CRITICAL,ERROR" )
@@ -175,7 +175,7 @@ public final class EmailNotificationChannel implements INotificationChannel
 
         session.setDebug( Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty("notifications.email.debug", "false") ));
 
-        log.debug( "EmailNotificationChannel: load() _: \nhost: {} \nport: {} \nuser: {} \nto: {}",
+        log.debug( "EmailNotificationChannel::load() _: \nhost: {} \nport: {} \nuser: {} \nto: {}",
                 host,
                 port,
                 username,
@@ -184,7 +184,7 @@ public final class EmailNotificationChannel implements INotificationChannel
 
         isServiceAvailable = true;
 
-        log.trace( "EmailNotificationChannel: load() <: complete" );
+        log.trace( "EmailNotificationChannel::load() <: complete" );
     }
 
 }

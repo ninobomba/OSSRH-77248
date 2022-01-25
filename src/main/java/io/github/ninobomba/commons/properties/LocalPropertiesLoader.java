@@ -46,12 +46,12 @@ public final class LocalPropertiesLoader {
 
     public String getProperty(String name, String defaultValue) {
         var value = getProperty(name);
-        return Objects.isNull(value) ? defaultValue : value;
+        return Objects.isNull( value ) ? defaultValue : value;
     }
 
     public String getProperty(String name) {
         var property = properties.get(name);
-        return Objects.nonNull(property) ? property.toString() : null;
+        return Objects.nonNull( property ) ? property.toString() : null;
     }
 
     @SneakyThrows
