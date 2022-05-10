@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 public class EmailNotificationChannelTest
 {
      final NotificationMessage notification = new NotificationMessage();
+
      {
         Exception exception = new RuntimeException( "An email test exception" );
         notification.setMessage( exception.getMessage() );

@@ -1,20 +1,22 @@
 package io.github.ninobomba.commons.notifications;
 
+import io.github.ninobomba.commons.notifications.commons.ENotificationLevel;
 import io.github.ninobomba.commons.notifications.commons.NotificationMessage;
 import org.junit.jupiter.api.Test;
 
-public class NotificationManagerTest
+class NotificationManagerTest
 {
 
     @Test
     void pushAndFlushTest()
     {
-        for( int index =0; index < 10; index++ )
+        for( int index =0; index < 2; index++ )
             NotificationManager.push(
                     NotificationMessage
                             .builder()
                             .message(String.valueOf( index ))
                             .payload( "{}" )
+                            .level( ENotificationLevel.ERROR )
                             .build()
             );
 

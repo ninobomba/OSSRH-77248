@@ -15,34 +15,48 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 public final class TwilioSmsNotificationChannel implements INotificationChannel
 {
 
-    private static final TwilioSmsNotificationChannel instance = new TwilioSmsNotificationChannel();
+    private static TwilioSmsNotificationChannel instance;
 
-    private boolean isServiceAvailable;
-    private List<String> notificationLevel;
+    private static boolean isServiceAvailable;
+    private List<String> notificationLevelList;
 
     private String issueUrl;
     private PhoneNumber twilioPhoneNumber;
 
     private List<PhoneNumber> phoneList;
 
-    private static final boolean skipDelivery = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
+    private static final boolean SKIP_DELIVERY = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
 
     private TwilioSmsNotificationChannel()
     {
-        boolean isServiceEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.sms.service.enabled", "false" ));
-        if( ! isServiceEnabled )
+        boolean isEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.sms.service.enabled", "false" ));
+        if( ! isEnabled  ) {
+            log.warn("TwilioSmsNotificationChannel() _: twilio SMS channel is not enabled, check local properties - notifications.twilio.sms.service.enabled");
             return;
+        }
+
         phoneList = new ArrayList<>();
+
         load();
+
+        setServiceAvailable( true );
     }
 
-    public static TwilioSmsNotificationChannel getInstance(){ return instance; }
+    public static void setServiceAvailable(boolean isAvailable) {
+        isServiceAvailable = isAvailable;
+    }
+
+    public static TwilioSmsNotificationChannel getInstance() {
+        if( Objects.isNull( instance ) ) instance = new TwilioSmsNotificationChannel();
+        return instance;
+    }
 
     @Override
     public void publish(NotificationMessage notificationMessage)
@@ -54,10 +68,11 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
             return;
         }
 
-        if( ! notificationLevel.contains( notificationMessage.getLevel().toString() ) ) {
-            log.warn("TwilioSmsNotificationChannel: publish() _: twilio notification level is not accepted: {} - configured levels: {}",
-                    notificationMessage.toJsonString(),
-                    notificationLevel
+        if( ! notificationLevelList.contains( notificationMessage.getLevel().toString() ) ) {
+            log.warn("TwilioSmsNotificationChannel::publish() !: twilio notification level is not accepted: Actual: {}, Configured: {}, Message: {}",
+                    notificationMessage.getLevel(),
+                    notificationLevelList,
+                    notificationMessage.toJsonString()
             );
             return;
         }
@@ -72,7 +87,7 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
     }
 
     @SneakyThrows
-    public void sendMessage(NotificationMessage notificationMessage)
+    private void sendMessage(NotificationMessage notificationMessage)
     {
         log.trace("TwilioSmsNotificationChannel::sendMessage() >: start");
 
@@ -91,9 +106,9 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
 
         phoneList.forEach(to -> {
 
-            log.debug("TwilioSmsNotificationChannel: sendMessage() _: sending sms message to: {} from: {}", to, twilioPhoneNumber);
+            log.debug("TwilioSmsNotificationChannel::sendMessage() _: sending sms message to: {} from: {}", to, twilioPhoneNumber);
 
-            if( skipDelivery ) return;
+            if(SKIP_DELIVERY) return;
 
             var twilioMessage = Message
                     .creator( to, twilioPhoneNumber, message )
@@ -106,13 +121,15 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
                     );
         });
 
-        log.trace("TwilioSmsNotificationChannel: sendMessage() <: complete");
+        log.trace("TwilioSmsNotificationChannel::sendMessage() <: complete");
     }
 
     @Override
     public void load()
     {
-        notificationLevel = List.of( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.sms.trace", "CRITICAL,ERROR" )
+        log.trace("TwilioSmsNotificationChannel::load() >: start");
+
+        notificationLevelList = List.of( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.sms.trace", "CRITICAL,ERROR" )
                 .replaceAll( "\\s+", "" )
                 .split(",") );
 
@@ -153,7 +170,7 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
 
         Twilio.init(sid, token);
 
-        isServiceAvailable = true;
+        log.trace("TwilioSmsNotificationChannel::load() <: complete");
     }
 
 }

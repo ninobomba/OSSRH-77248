@@ -24,24 +24,35 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
 
     private static TwilioWhatsAppNotificationChannel instance;
 
-    private boolean isServiceAvailable;
-    private List<String> notificationLevel;
+    private static boolean isServiceAvailable;
+    private List<String> notificationLevelList;
 
     private String issueUrl;
     private PhoneNumber twilioPhoneNumber;
     private static final List<PhoneNumber> phoneList = new ArrayList<>();
 
-    private final boolean skipDelivery = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
+    private final boolean SKIP_DELIVERY = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
 
     private TwilioWhatsAppNotificationChannel()
     {
-        boolean isServiceEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.whatsapp.service.enabled", "false" ));
-        if( isServiceEnabled ) load();
+        boolean isEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.whatsapp.service.enabled", "false" ));
+        if( ! isEnabled ) {
+            log.warn("TwilioWhatsAppNotificationChannel() _: twilio Whats-up channel is not enabled, check local properties - notifications.twilio.whatsapp.service.enabled");
+            return;
+        }
+
+        load();
+
+        setServiceAvailable( true );
     }
 
     public static TwilioWhatsAppNotificationChannel getInstance(){
         if( Objects.isNull( instance ) ) instance = new TwilioWhatsAppNotificationChannel();
         return instance;
+    }
+
+    public static void setServiceAvailable(boolean isAvailable) {
+        isServiceAvailable = isAvailable;
     }
 
     @Override
@@ -54,10 +65,11 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
             return;
         }
 
-        if( ! notificationLevel.contains( notificationMessage.getLevel().toString() ) ) {
-            log.warn("TwilioWhatsUpNotificationChannel::publish() _: twilio whats-app notification level is not accepted: {} - configured levels: {}",
-                    notificationMessage.toJsonString(),
-                    notificationLevel
+        if( ! notificationLevelList.contains( notificationMessage.getLevel().toString() ) ) {
+            log.warn("TwilioWhatsUpNotificationChannel::publish() !: twilio notification level is not accepted: Actual: {}, Configured: {}, Message: {}",
+                    notificationMessage.getLevel(),
+                    notificationLevelList,
+                    notificationMessage.toJsonString()
             );
             return;
         }
@@ -72,7 +84,7 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
     }
 
     @SneakyThrows
-    public void sendMessage(NotificationMessage notificationMessage)
+    private void sendMessage(NotificationMessage notificationMessage)
     {
         log.trace( "TwilioWhatsUpNotificationChannel::sendMessage() >: start" );
 
@@ -93,7 +105,7 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
 
             log.debug("TwilioWhatsUpNotificationChannel::sendMessage() _: sending whats-app message to: {} from: {}", to, twilioPhoneNumber);
 
-            if( skipDelivery ) return;
+            if(SKIP_DELIVERY) return;
 
             var twilioMessage = Message
                     .creator( to, twilioPhoneNumber, message )
@@ -103,7 +115,7 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
                     twilioMessage.getAccountSid(),
                     twilioMessage.getStatus(),
                     "[".concat( String.valueOf( twilioMessage.getErrorCode() ) ).concat( "] - " ).concat(  String.valueOf( twilioMessage.getErrorMessage() ) )
-                    );
+            );
         });
 
         log.trace("TwilioWhatsUpNotificationChannel::sendMessage() <: complete");
@@ -112,7 +124,9 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
     @Override
     public void load()
     {
-        notificationLevel = List.of( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.whatsapp.trace", "CRITICAL,ERROR" )
+        log.trace("TwilioWhatsUpNotificationChannel::load() >: start");
+
+        notificationLevelList = List.of( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.whatsapp.trace", "CRITICAL,ERROR" )
                 .replaceAll( "\\s+", "" )
                 .split(",") );
 
@@ -153,7 +167,7 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
 
         Twilio.init(sid, token);
 
-        isServiceAvailable = true;
+        log.trace("TwilioWhatsUpNotificationChannel::load() <: complete");
     }
 
 }
