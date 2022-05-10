@@ -102,7 +102,7 @@ public final class RequestManager implements Runnable
             return;
         }
 
-        while( isEnabled ) {
+        while( ! requestQueue.isEmpty() ) {
             log.debug( "RequestManager::run() _: Request manager check queue tts: {} ms", sleepTime );
             checkOnQueue();
             Thread.sleep( sleepTime );
