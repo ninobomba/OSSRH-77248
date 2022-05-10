@@ -38,12 +38,12 @@ public final class NotificationManager
     }
 
     @SneakyThrows
-    public static void push(NotificationMessage notification) {
+    public void push(NotificationMessage notification) {
         if( Objects.nonNull( notification ) ) notificationQueue.put( notification );
     }
 
     @SneakyThrows
-    public static void flush()
+    public void flush()
     {
         log.trace( "NotificationManager::flush() >: start" );
 

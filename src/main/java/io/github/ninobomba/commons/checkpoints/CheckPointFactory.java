@@ -162,7 +162,7 @@ public final class CheckPointFactory
         String content;
         try (
                 var resource  = new ClassPathResource( filename ).getInputStream();
-                var reader = new BufferedReader( new InputStreamReader( resource ) )
+                var reader = new BufferedReader( new InputStreamReader( resource, StandardCharsets.UTF_8.name() ) )
         ) {
             content = reader.lines().collect( Collectors.joining("\n" ) );
         }

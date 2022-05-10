@@ -36,8 +36,6 @@ public final class SlackNotificationChannel implements INotificationChannel
 
     private Slack slack;
 
-    private final boolean skipDelivery = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
-
     private SlackNotificationChannel()
     {
         boolean isEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.slack.service.enabled", "false" ));
@@ -119,8 +117,6 @@ public final class SlackNotificationChannel implements INotificationChannel
                 )
                 .attachments( createAttachments( notificationMessage ) )
                 .build();
-
-        if( skipDelivery ) return;
 
         var response = slack.methods(token).chatPostMessage( request );
 
@@ -215,7 +211,7 @@ public final class SlackNotificationChannel implements INotificationChannel
 
         notificationLevelList = List.of( LocalPropertiesLoader.getInstance().getProperty( "notifications.slack.trace", "CRITICAL,ERROR" )
                 .replaceAll( "\\s+", "" )
-                .split(",") );
+                .split(","));
 
         issueUrl = LocalPropertiesLoader.getInstance().getProperty( "notifications.slack.issue.url" );
         if( StringUtils.isBlank( issueUrl ) )

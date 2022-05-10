@@ -1,5 +1,6 @@
 package io.github.ninobomba.commons.request;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import io.github.ninobomba.commons.checkpoints.CheckPoint;
 import io.github.ninobomba.commons.checkpoints.CheckPointFactory;
@@ -13,7 +14,6 @@ import java.time.Duration;
 import java.util.*;
 
 @Slf4j
-@Data
 @Builder
 public class Request
 {
@@ -21,8 +21,8 @@ public class Request
     @Builder.Default
     private final long id = IdGenerator.getInstance().getNextId();
 
-    private String name;
-    private String payload;
+    @Getter private String name;
+    @Getter private String payload;
 
     @Builder.Default
     private final Queue<Event> eventQueue = new LinkedList<>();

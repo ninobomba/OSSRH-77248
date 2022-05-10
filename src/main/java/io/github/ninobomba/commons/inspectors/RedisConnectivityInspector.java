@@ -5,6 +5,8 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 @Slf4j
 @Builder
 public class RedisConnectivityInspector implements IResourceInspector
@@ -30,7 +32,7 @@ public class RedisConnectivityInspector implements IResourceInspector
         var client = RedisClient.create( uri );
 
         try ( StatefulRedisConnection<String, String> connection = client.connect() ) {
-            isConnectionAvailable = connection.sync().isOpen();
+            isConnectionAvailable = Objects.nonNull( connection ) && connection.sync().isOpen();
             client.shutdownAsync();
         } catch ( Exception e ) {
             log.error( "RedisConnectivityInspector::isAvailable() !: error while opening redis connection" );

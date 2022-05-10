@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
 @Slf4j
 @Builder
@@ -28,7 +29,7 @@ public class H2ConnectivityInspector implements IResourceInspector
         Class.forName ( DRIVER );
 
         try ( Connection connection = DriverManager.getConnection ( uri, user, password ) ) {
-            isValid = connection.isValid( 1000 );
+            isValid = Objects.nonNull( connection ) && connection.isValid( 1000 );
         } catch ( SQLException e ) {
             log.error( "H2ConnectivityInspector::isAvailable() !: Unable to connect to db", e );
         }

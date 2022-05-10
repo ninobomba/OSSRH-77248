@@ -2,7 +2,6 @@ package io.github.ninobomba.commons.api.response;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 @Getter

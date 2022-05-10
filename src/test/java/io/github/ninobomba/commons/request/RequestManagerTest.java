@@ -27,7 +27,7 @@ public class RequestManagerTest
 
     @SneakyThrows
     @Test
-    public void addRequestTest()
+    void addRequestTest()
     {
         // events
         System.out.println( "Working events" );

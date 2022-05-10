@@ -15,9 +15,15 @@ import java.util.concurrent.CompletableFuture;
 public final class CheckPointPersistence
 {
 
-    private static String outputDirectory;
+    private static final String outputDirectory;
 
-    private static CheckPointPersistence checkPointPersistence;
+    private static CheckPointPersistence instance;
+
+    static {
+        log.debug( "CheckPointPersistence::static-init() -> output directory is empty loading from properties file. checkpoints.files.path or defaulting to logs/checkpoints" );
+        outputDirectory = LocalPropertiesLoader.getInstance().getProperty( "checkpoints.files.path", "logs/checkpoints" );
+        log.debug( "CheckPointPersistence::static-init() -> output directory: {}", outputDirectory );
+    }
 
     private CheckPointPersistence() {
     }
@@ -26,18 +32,14 @@ public final class CheckPointPersistence
     {
         log.trace( "CheckPointPersistence::getInstance() >: start" );
 
-        if( Objects.isNull( checkPointPersistence ) ) {
+        if( Objects.isNull(instance) ) {
             log.debug( "CheckPointPersistence::getInstance() _: creating unique instance" );
-            checkPointPersistence = new CheckPointPersistence();
+            instance = new CheckPointPersistence();
         }
 
         log.trace( "CheckPointPersistence::getInstance() <: complete" );
 
-        return checkPointPersistence;
-    }
-
-    public void setOutputDirectory( String directory ) {
-        outputDirectory = directory;
+        return instance;
     }
 
     public void save( Map<String, CheckPoint> checkPointMap )
@@ -49,11 +51,9 @@ public final class CheckPointPersistence
             return;
         }
 
-        if( StringUtils.isBlank( outputDirectory ) )
-        {
-            log.debug( "CheckPointPersistence::save() -> output directory is empty loading from properties file. checkpoints.files.path or defaulting to logs/checkpoints" );
-            outputDirectory = LocalPropertiesLoader.getInstance().getProperty( "checkpoints.files.path", "logs/checkpoints" );
-            log.debug( "CheckPointPersistence::save() -> output directory: {}", outputDirectory );
+        if( StringUtils.isBlank( outputDirectory ) ) {
+            log.debug( "CheckPointPersistence::save() !: output directory is empty, check properties file. checkpoints.files.path" );
+            return;
         }
 
         var checkpoints = mapToString( checkPointMap );

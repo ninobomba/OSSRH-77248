@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.exceptions.process;
 
-public class AbstractFactoryBusinessException
+public class BusinessExceptionAbstractFactory
 {
 
     public static BusinessException create( ActionType type, String message, String description, Throwable throwable )

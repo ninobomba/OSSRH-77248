@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 @UtilityClass
 public class ApiRemoteIP
@@ -23,7 +24,7 @@ public class ApiRemoteIP
             throw EmptyOrNullParameterException.create( "HttpRemoteIpTools: getRemoteIpByAws() !: aws url is blank", awsUrl );
 
         String response;
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL( awsUrl ).openStream()))) {
+        try (BufferedReader br = new BufferedReader( new InputStreamReader(new URL( awsUrl ).openStream(), StandardCharsets.UTF_8.name()))) {
             response = br.readLine();
         }
 

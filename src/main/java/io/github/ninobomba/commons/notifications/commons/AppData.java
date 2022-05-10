@@ -3,21 +3,20 @@ package io.github.ninobomba.commons.notifications.commons;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.ninobomba.commons.id.IdGenerator;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
-import lombok.Data;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.net.InetAddress;
 
-@Data
 public final class AppData
 {
 
-    private String id;
-    private String name;
-    private String module;
-    private String version;
-    private String host;
-    private String env;
+    @Getter private String id;
+    @Getter private String name;
+    @Getter private String module;
+    @Getter private String version;
+    @Getter private String host;
+    @Getter private String env;
 
     private static final AppData instance = new AppData();
 

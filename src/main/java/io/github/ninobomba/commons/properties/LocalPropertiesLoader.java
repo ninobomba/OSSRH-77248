@@ -28,8 +28,8 @@ public final class LocalPropertiesLoader {
     }
 
     private LocalPropertiesLoader(String path) {
-        finalPath = StringUtils.isEmpty(path) ? DEFAULT_PROPERTIES_PATH : path;
-        log.debug("LocalPropertiesLoader() c: checking resources from path: {}", finalPath);
+        finalPath = StringUtils.isEmpty( path ) ? DEFAULT_PROPERTIES_PATH : path;
+        log.debug("LocalPropertiesLoader():: checking resources from path: {}", finalPath);
         load();
     }
 
@@ -63,7 +63,7 @@ public final class LocalPropertiesLoader {
 
         for (String path : propertiesFiles) {
             File file = ResourceUtils.getFile(path);
-            try( var in =  new FileInputStream(file)) {
+            try( var in = new FileInputStream(file)) {
                 properties.load(in);
             }
         }
