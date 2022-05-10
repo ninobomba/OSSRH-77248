@@ -28,19 +28,20 @@ public final class RequestManager implements Runnable
 
     private static String outputDirectory;
 
+    static {
+        outputDirectory = LocalPropertiesLoader.getInstance().getProperty( "request.manager.logs", "logs/requests" );
+    }
+
     private RequestManager()
     {
         isEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "request.manager.enabled", "false" ) );
         sleepTime = Long.parseLong( LocalPropertiesLoader.getInstance().getProperty( "request.manager.sleep", "10000" ) );
-        outputDirectory = LocalPropertiesLoader.getInstance().getProperty( "request.manager.logs", "logs/requests" );
-
         printConfiguration();
     }
 
     public static RequestManager getInstance()
     {
-        if( Objects.isNull( instance ) )
-        {
+        if( Objects.isNull( instance ) ) {
             log.debug( "RequestManager::getInstance() _: creating singleton unique instance" );
             instance = new RequestManager();
         }

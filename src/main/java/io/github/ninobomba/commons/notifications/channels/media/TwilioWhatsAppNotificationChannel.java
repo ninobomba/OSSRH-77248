@@ -31,8 +31,6 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
     private PhoneNumber twilioPhoneNumber;
     private static final List<PhoneNumber> phoneList = new ArrayList<>();
 
-    private final boolean SKIP_DELIVERY = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
-
     private TwilioWhatsAppNotificationChannel()
     {
         boolean isEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.whatsapp.service.enabled", "false" ));
@@ -104,8 +102,6 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
         phoneList.forEach( to -> {
 
             log.debug("TwilioWhatsUpNotificationChannel::sendMessage() _: sending whats-app message to: {} from: {}", to, twilioPhoneNumber);
-
-            if(SKIP_DELIVERY) return;
 
             var twilioMessage = Message
                     .creator( to, twilioPhoneNumber, message )

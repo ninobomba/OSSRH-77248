@@ -12,24 +12,20 @@ import java.util.stream.IntStream;
 public final class IdGenerator
 {
 
-    private static final int MAX_QUEUE_SIZE = 10_000;
+    private static final int MAX_QUEUE_SIZE = 20;
     private static final int MIN_QUEUE_SIZE_BEFORE_LOAD = 10;
 
     private static final ConcurrentLinkedQueue<Long> queue = new ConcurrentLinkedQueue<>();
 
-    private static Snowflake snowflake;
+    private static final Snowflake snowflake;
     private static IdGenerator instance;
 
-    private IdGenerator() {
+    static {
         snowflake = new Snowflake(25, 2 );
         load();
     }
 
-    private static void load() {
-        IntStream
-                .rangeClosed( 1, MAX_QUEUE_SIZE )
-                .parallel()
-                .forEach( e -> queue.offer( snowflake.nextId() ) );
+    private IdGenerator() {
     }
 
     public static IdGenerator getInstance() {
@@ -43,10 +39,19 @@ public final class IdGenerator
     {
         if( queue.isEmpty() || queue.size() <= MIN_QUEUE_SIZE_BEFORE_LOAD ) {
             log.info( "IdGenerator::getNextId() !: loading new id numbers into memory" );
-            new Thread( IdGenerator::load );
+            load();
         }
 
         return queue.isEmpty() ? snowflake.nextId() : queue.poll();
+    }
+
+    private static void load() {
+        IntStream
+                .rangeClosed( 1, MAX_QUEUE_SIZE )
+                //.parallel()
+                .forEach( e -> queue.offer( snowflake.nextId() ) );
+
+        log.info( "IdGenerator::load() : loaded {} id numbers into memory", queue.size() );
     }
 
     @Deprecated

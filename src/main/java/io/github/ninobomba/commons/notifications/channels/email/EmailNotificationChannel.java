@@ -23,8 +23,6 @@ public final class EmailNotificationChannel implements INotificationChannel
 
     private static EmailNotificationChannel instance;
 
-    private static final boolean SKIP_DELIVERY = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
-
     private static boolean isServiceAvailable;
 
     private List<String> notificationLevelList;
@@ -98,8 +96,6 @@ public final class EmailNotificationChannel implements INotificationChannel
         message.addRecipient( Message.RecipientType.TO, new InternetAddress(to) );
         message.setSubject( subject );
         message.setContent( body, "text/html" );
-
-        if(SKIP_DELIVERY) return;
 
         Transport.send( message );
     }

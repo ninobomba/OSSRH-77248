@@ -11,7 +11,7 @@ class NotificationManagerTest
     void pushAndFlushTest()
     {
         for( int index =0; index < 2; index++ )
-            NotificationManager.push(
+            NotificationManager.getInstance().push(
                     NotificationMessage
                             .builder()
                             .message(String.valueOf( index ))
@@ -20,7 +20,7 @@ class NotificationManagerTest
                             .build()
             );
 
-        NotificationManager.flush();
+        NotificationManager.getInstance().flush();
     }
 
 }

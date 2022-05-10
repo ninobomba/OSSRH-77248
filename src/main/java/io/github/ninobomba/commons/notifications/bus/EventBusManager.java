@@ -20,20 +20,24 @@ import java.util.concurrent.Executors;
 public class EventBusManager {
 
     private static EventBusManager instance;
-    private static EventBus eventBus;
+    private static EventBus eventBus = new AsyncEventBus( Executors.newCachedThreadPool() );
     private static final List<?> listeners = List.of(
             new EmailEventListener(),
             new SlackEventListener(),
             new TwilioEventListener()
     );
 
-    private EventBusManager() {
-        eventBus = new AsyncEventBus( Executors.newCachedThreadPool() );
+    static {
         listeners.forEach( listener -> eventBus.register( listener ) );
     }
 
+    private EventBusManager() {
+    }
+
     public static EventBusManager getInstance() {
-        if( Objects.isNull( eventBus ) ) instance = new EventBusManager();
+        if( Objects.isNull( instance ) ) {
+            instance = new EventBusManager();
+        }
         return instance;
     }
 

@@ -53,7 +53,7 @@ public class PersistenceDiskUtils
 
         try {
             lock.lock();
-            Files.write( Paths.get( fileLocation ), data.getBytes(), StandardOpenOption.APPEND );
+            Files.write( Paths.get( fileLocation ), data.getBytes( StandardCharsets.UTF_8 ), StandardOpenOption.APPEND );
         } finally {
             lock.unlock();
         }

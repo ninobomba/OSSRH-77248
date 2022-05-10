@@ -5,12 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.CharSet;
+import org.apache.commons.lang3.CharSetUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 @Slf4j
@@ -47,7 +50,7 @@ public final class ApiGeoLocation
         connection.setRequestProperty( "User-Agent", "Mozilla/5.0" );
 
         StringBuilder builder = new StringBuilder();
-        try( var reader = new BufferedReader( new InputStreamReader( connection.getInputStream() ) ) ) {
+        try( var reader = new BufferedReader( new InputStreamReader( connection.getInputStream(), StandardCharsets.UTF_8.name() ) ) ) {
             String inputLine;
             while ( Objects.nonNull( inputLine = reader.readLine()) ) builder.append( inputLine );
         }

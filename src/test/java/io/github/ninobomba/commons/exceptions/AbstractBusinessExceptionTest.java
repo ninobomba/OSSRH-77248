@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.exceptions;
 
-import io.github.ninobomba.commons.exceptions.process.AbstractFactoryBusinessException;
+import io.github.ninobomba.commons.exceptions.process.BusinessExceptionAbstractFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -11,8 +11,8 @@ public class AbstractBusinessExceptionTest
     @Test
     public void createTest()
     {
-        var exception = AbstractFactoryBusinessException.create(
-                AbstractFactoryBusinessException.ActionType.BUILD,
+        var exception = BusinessExceptionAbstractFactory.create(
+                BusinessExceptionAbstractFactory.ActionType.BUILD,
                 "Invalid data",
                 "Not enough money"
         );

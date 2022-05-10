@@ -7,6 +7,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Slf4j
 @Builder
@@ -30,7 +31,7 @@ public class RabbitMQConnectivityInspector implements IResourceInspector
 
         boolean isValid = false;
         try ( Connection connection = factory.newConnection() ) {
-            isValid = connection.isOpen();
+            isValid = Objects.nonNull(connection) && connection.isOpen();
         } catch ( IOException e ) {
             log.error( "RabbitMQConnectivityInspector::isAvailable() !: Unable to connect", e );
         }

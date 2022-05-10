@@ -8,7 +8,7 @@ import io.github.ninobomba.commons.notifications.commons.NotificationMessage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class TwilioWhatsAppNotificationChannelTest
+class TwilioWhatsAppNotificationChannelTest
 {
     final NotificationMessage notification = new NotificationMessage();
     {
@@ -25,7 +25,7 @@ public class TwilioWhatsAppNotificationChannelTest
     }
 
     @Test
-    void smsNotificationCommandTest() {
+    void whatsUpNotificationCommandTest() {
         TwilioWhatsAppNotificationChannel.getInstance().publish( notification );
     }
 

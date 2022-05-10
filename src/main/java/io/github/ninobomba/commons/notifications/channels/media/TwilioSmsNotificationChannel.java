@@ -32,8 +32,6 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
 
     private List<PhoneNumber> phoneList;
 
-    private static final boolean SKIP_DELIVERY = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
-
     private TwilioSmsNotificationChannel()
     {
         boolean isEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.sms.service.enabled", "false" ));
@@ -107,8 +105,6 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
         phoneList.forEach(to -> {
 
             log.debug("TwilioSmsNotificationChannel::sendMessage() _: sending sms message to: {} from: {}", to, twilioPhoneNumber);
-
-            if(SKIP_DELIVERY) return;
 
             var twilioMessage = Message
                     .creator( to, twilioPhoneNumber, message )
