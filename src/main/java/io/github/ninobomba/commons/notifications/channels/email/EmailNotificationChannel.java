@@ -13,6 +13,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,12 +21,13 @@ import java.util.concurrent.CompletableFuture;
 public final class EmailNotificationChannel implements INotificationChannel
 {
 
-    private static final EmailNotificationChannel instance = new EmailNotificationChannel();
+    private static EmailNotificationChannel instance;
 
-    private static final boolean skipDelivery = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
+    private static final boolean SKIP_DELIVERY = ! StringUtils.isBlank( System.getProperty( "skipDelivery" ) );
 
-    private boolean isServiceAvailable;
-    private List<String> notificationLevel;
+    private static boolean isServiceAvailable;
+
+    private List<String> notificationLevelList;
 
     private Session session;
 
@@ -35,11 +37,25 @@ public final class EmailNotificationChannel implements INotificationChannel
 
     private EmailNotificationChannel()
     {
-        boolean isServiceEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.email.service.enabled", "false" ));
-        if( isServiceEnabled ) load();
+        boolean isEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "notifications.email.service.enabled", "false" ));
+        if( ! isEnabled  ) {
+            log.warn("EmailNotificationChannel() _: email channel is not enabled, check local properties - notifications.email.service.enabled");
+            return;
+        }
+
+        load();
+
+        setServiceAvailable( true );
     }
 
-    public static EmailNotificationChannel getInstance(){ return instance; }
+    public static void setServiceAvailable(boolean isAvailable) {
+        isServiceAvailable = isAvailable;
+    }
+
+    public static EmailNotificationChannel getInstance() {
+        if( Objects.isNull( instance ) ) instance = new EmailNotificationChannel();
+        return instance;
+    }
 
     @Override
     public void publish(NotificationMessage notificationMessage)
@@ -51,10 +67,11 @@ public final class EmailNotificationChannel implements INotificationChannel
             return;
         }
 
-        if( ! notificationLevel.contains( String.valueOf( notificationMessage.getLevel() ) ) ) {
-            log.warn("EmailNotificationChannel::publish() _: email notification level is not accepted: {} - configured levels: {}",
-                    notificationMessage.toJsonString(),
-                    notificationLevel
+        if( ! notificationLevelList.contains( String.valueOf( notificationMessage.getLevel() ) ) ) {
+            log.warn("EmailNotificationChannel::publish() !: email notification level is not accepted. Actual: {} - Configured: {}, Message: {}",
+                    notificationMessage.getLevel(),
+                    notificationLevelList,
+                    notificationMessage.toJsonString()
             );
             return;
         }
@@ -71,7 +88,7 @@ public final class EmailNotificationChannel implements INotificationChannel
     }
 
     @SneakyThrows
-    public void sendMessage(NotificationMessage notificationMessage)
+    private void sendMessage(NotificationMessage notificationMessage)
     {
         String subject = buildEmailSubject( notificationMessage );
         String body    = buildEmailBody( notificationMessage );
@@ -82,7 +99,7 @@ public final class EmailNotificationChannel implements INotificationChannel
         message.setSubject( subject );
         message.setContent( body, "text/html" );
 
-        if( skipDelivery ) return;
+        if(SKIP_DELIVERY) return;
 
         Transport.send( message );
     }
@@ -99,27 +116,28 @@ public final class EmailNotificationChannel implements INotificationChannel
 
     private String buildEmailBody(NotificationMessage notificationMessage)
     {
+        String END_OF_ROW = "</td></tr>";
         return ""
                 .concat( "</br>" )
                 .concat( "<h4>Application</h4>" )
                 .concat( "<table width=\"100%\">" )
-                .concat( "<tr><td>Id:</td><td>".concat( AppData.getInstance().getId() ) ).concat( "</td></tr>" )
-                .concat( "<tr><td>Name:</td><td>".concat( AppData.getInstance().getName() ) ).concat( "</td></tr>" )
-                .concat( "<tr><td>Module:</td><td>".concat( AppData.getInstance().getModule() ) ).concat( "</td></tr>" )
-                .concat( "<tr><td>Version:</td><td>".concat( AppData.getInstance().getVersion() ) ).concat( "</td></tr>" )
-                .concat( "<tr><td>Host:</td><td>".concat( AppData.getInstance().getHost() ) ).concat( "</td></tr>" )
-                .concat( "<tr><td>Timestamp:</td><td>".concat( notificationMessage.getTimestamp() ) ).concat( "</td></tr>" )
+                .concat( "<tr><td>Id:</td><td>".concat( AppData.getInstance().getId() ) ).concat( END_OF_ROW )
+                .concat( "<tr><td>Name:</td><td>".concat( AppData.getInstance().getName() ) ).concat( END_OF_ROW )
+                .concat( "<tr><td>Module:</td><td>".concat( AppData.getInstance().getModule() ) ).concat( END_OF_ROW )
+                .concat( "<tr><td>Version:</td><td>".concat( AppData.getInstance().getVersion() ) ).concat( END_OF_ROW )
+                .concat( "<tr><td>Host:</td><td>".concat( AppData.getInstance().getHost() ) ).concat( END_OF_ROW )
+                .concat( "<tr><td>Timestamp:</td><td>".concat( notificationMessage.getTimestamp() ) ).concat( END_OF_ROW )
                 .concat( "</table>" )
 
                 .concat( "</br>" )
 
                 .concat( "<h4>Notification</h4>" )
                 .concat( "<table width=\"100%\">" )
-                .concat( "<tr VALIGN=\"TOP\"><td>Id:</td><td>".concat( String.valueOf( notificationMessage.getId() )) ).concat( "</td></tr>" )
-                .concat( "<tr VALIGN=\"TOP\"><td>Request:</td><td>".concat( String.valueOf( notificationMessage.getRequestId() )) ).concat( "</td></tr>" )
-                .concat( "<tr VALIGN=\"TOP\"><td>Message:</td><td>".concat( notificationMessage.getMessage() ) ).concat( "</td></tr>" )
-                .concat( "<tr VALIGN=\"TOP\"><td>Url:</td><td>".concat(issueUrl.concat( "&nid="+ notificationMessage.getId())) ).concat( "</td></tr>" )
-                .concat( "<tr VALIGN=\"TOP\"><td>Payload:</td><td>".concat( notificationMessage.getPayload() ) ).concat( "</td></tr>" )
+                .concat( "<tr VALIGN=\"TOP\"><td>Id:</td><td>".concat( String.valueOf( notificationMessage.getId() )) ).concat( END_OF_ROW )
+                .concat( "<tr VALIGN=\"TOP\"><td>Request:</td><td>".concat( String.valueOf( notificationMessage.getRequestId() )) ).concat( END_OF_ROW )
+                .concat( "<tr VALIGN=\"TOP\"><td>Message:</td><td>".concat( notificationMessage.getMessage() ) ).concat( END_OF_ROW )
+                .concat( "<tr VALIGN=\"TOP\"><td>Url:</td><td>".concat(issueUrl.concat( "&nid="+ notificationMessage.getId())) ).concat( END_OF_ROW )
+                .concat( "<tr VALIGN=\"TOP\"><td>Payload:</td><td>".concat( notificationMessage.getPayload() ) ).concat( END_OF_ROW )
                 .concat( "</table>" );
     }
 
@@ -129,7 +147,7 @@ public final class EmailNotificationChannel implements INotificationChannel
     {
         log.trace("EmailNotificationChannel::load() >: start");
 
-        notificationLevel = List.of( LocalPropertiesLoader.getInstance()
+        notificationLevelList = List.of( LocalPropertiesLoader.getInstance()
                 .getProperty( "notifications.email.trace", "CRITICAL,ERROR" )
                 .replaceAll( "\\s+", "" )
                 .split(",") );
@@ -181,8 +199,6 @@ public final class EmailNotificationChannel implements INotificationChannel
                 username,
                 to
         );
-
-        isServiceAvailable = true;
 
         log.trace( "EmailNotificationChannel::load() <: complete" );
     }
