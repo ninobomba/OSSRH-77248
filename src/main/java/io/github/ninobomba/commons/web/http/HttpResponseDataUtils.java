@@ -23,7 +23,7 @@ public class HttpResponseDataUtils
     }
 
     public static Map<String,String> getResponseHeadersMap( HttpServletResponse httpResponse ) {
-        Map<String,String> map = new HashMap<>();
+        var map = new HashMap<String,String>();
         httpResponse
                 .getHeaderNames()
                 .forEach( key -> map.put( key, httpResponse.getHeader( key ) ) );

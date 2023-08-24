@@ -24,7 +24,7 @@ public class ApiRemoteIP
             throw EmptyOrNullParameterException.create( "HttpRemoteIpTools: getRemoteIpByAws() !: aws url is blank", awsUrl );
 
         String response;
-        try (BufferedReader br = new BufferedReader( new InputStreamReader(new URL( awsUrl ).openStream(), StandardCharsets.UTF_8.name()))) {
+        try (BufferedReader br = new BufferedReader( new InputStreamReader(new URL( awsUrl ).openStream(), StandardCharsets.UTF_8))) {
             response = br.readLine();
         }
 

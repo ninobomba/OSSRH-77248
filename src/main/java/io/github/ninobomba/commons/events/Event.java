@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.*;
-import io.github.ninobomba.commons.id.IdGenerator;
+import io.github.ninobomba.commons.id.IdGeneratorSnowFlakeSupport;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +30,7 @@ public class Event
     }
 
     private void assignDefaults() {
-        id = IdGenerator.getInstance().getNextId();
+        id = IdGeneratorSnowFlakeSupport.getInstance().getNextId();
         timestamp = LocalDateTime.now();
         formattedTimestamp = timestamp.format( DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm:ss.SSS" ) );
     }

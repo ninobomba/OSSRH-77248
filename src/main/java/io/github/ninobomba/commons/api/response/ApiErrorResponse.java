@@ -2,12 +2,13 @@ package io.github.ninobomba.commons.api.response;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 @Getter
 @Builder
-public class ApiErrorResponse
-{
+public class ApiErrorResponse implements Serializable {
+
     private static final long serialVersionUID = -4107701302700942933L;
 
     private final String field;

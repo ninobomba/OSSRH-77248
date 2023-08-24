@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayInputStream;
-import java.io.SequenceInputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,7 +12,7 @@ import java.util.stream.StreamSupport;
 
 @Slf4j
 @UtilityClass
-public class HttpRequestDataUtils
+public final class HttpRequestDataUtils
 {
 
     public static void printRequestHeaders(HttpServletRequest httpRequest)
@@ -48,7 +46,7 @@ public class HttpRequestDataUtils
 
     public static Map<String,String> getRequestParametersMap(HttpServletRequest httpRequest)
     {
-        Map<String,String> map = new HashMap<>();
+        var map = new HashMap<String,String>();
         Stream
                 .of( Collections.list ( httpRequest.getParameterNames() ) , Collections.list( httpRequest.getAttributeNames() ) )
                 .flatMap( Collection::stream )

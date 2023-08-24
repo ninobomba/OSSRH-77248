@@ -1,7 +1,7 @@
 package io.github.ninobomba.commons.notifications.commons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.ninobomba.commons.id.IdGenerator;
+import io.github.ninobomba.commons.id.IdGeneratorSnowFlakeSupport;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,7 +15,7 @@ public class NotificationMessage
 {
 
     @Builder.Default
-    private long id = IdGenerator.getInstance().getNextId();
+    private long id = IdGeneratorSnowFlakeSupport.getInstance().getNextId();
 
     @Builder.Default
     private ENotificationLevel level = ENotificationLevel.INFO;
@@ -35,4 +35,3 @@ public class NotificationMessage
     }
 
 }
-

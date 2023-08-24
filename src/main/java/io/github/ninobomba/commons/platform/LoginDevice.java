@@ -2,9 +2,10 @@ package io.github.ninobomba.commons.platform;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @Builder
-public class LoginDevice
-{
+public class LoginDevice implements Serializable {
 
     /**
      *

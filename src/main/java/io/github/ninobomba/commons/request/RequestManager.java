@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The RequestManager will keep a blocking queue and persists event:Event and checkpoint:CheckPoint instances.
@@ -26,7 +27,7 @@ public final class RequestManager implements Runnable
 
     private final long sleepTime;
 
-    private static String outputDirectory;
+    private static final String outputDirectory;
 
     static {
         outputDirectory = LocalPropertiesLoader.getInstance().getProperty( "request.manager.logs", "logs/requests" );
@@ -106,7 +107,7 @@ public final class RequestManager implements Runnable
         while( ! requestQueue.isEmpty() ) {
             log.debug( "RequestManager::run() _: Request manager check queue tts: {} ms", sleepTime );
             checkOnQueue();
-            Thread.sleep( sleepTime );
+            TimeUnit.SECONDS.sleep( sleepTime );
         }
     }
 
@@ -118,6 +119,3 @@ public final class RequestManager implements Runnable
     }
 
 }
-
-
-

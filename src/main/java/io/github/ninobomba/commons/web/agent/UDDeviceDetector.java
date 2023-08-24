@@ -1,7 +1,7 @@
 package io.github.ninobomba.commons.web.agent;
 
 import io.github.ninobomba.commons.web.http.HttpRemoteIpUtils;
-import io.github.ninobomba.commons.id.IdGenerator;
+import io.github.ninobomba.commons.id.IdGeneratorSnowFlakeSupport;
 import net.sf.uadetector.ReadableUserAgent;
 import net.sf.uadetector.service.UADetectorServiceFactory;
 
@@ -14,7 +14,7 @@ public class UDDeviceDetector
     public LoginDevice getLoginDeviceDetails(HttpServletRequest request)
     {
         String deviceId   = UUID.randomUUID().toString();
-        String token      = String.valueOf( IdGenerator.getInstance().getNextId() );
+        String token      = String.valueOf( IdGeneratorSnowFlakeSupport.getInstance().getNextId() );
         String email      = request.getParameter( "username" );
         String timezone   = request.getParameter( "ua_timezone" );
         String remoteHost = HttpRemoteIpUtils.getRemoteIpByHttpRequestHeaders( request );

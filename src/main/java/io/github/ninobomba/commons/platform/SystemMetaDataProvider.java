@@ -30,7 +30,7 @@ public final class SystemMetaDataProvider
     @SneakyThrows
     public static Map<String, String> getNetworkProperties()
     {
-        Map<String, String> properties = new HashMap<>();
+        var properties = new HashMap<String, String>();
         properties.put( "inet-address", String.valueOf( InetAddress.getLocalHost() ) );
         properties.put( "host-address", String.valueOf( InetAddress.getLocalHost().getHostAddress() ) );
         return properties;

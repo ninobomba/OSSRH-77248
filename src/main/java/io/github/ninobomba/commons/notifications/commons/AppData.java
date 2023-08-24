@@ -1,7 +1,7 @@
 package io.github.ninobomba.commons.notifications.commons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.ninobomba.commons.id.IdGenerator;
+import io.github.ninobomba.commons.id.IdGeneratorSnowFlakeSupport;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -29,7 +29,7 @@ public final class AppData
     @SneakyThrows
     private void load()
     {
-        id = LocalPropertiesLoader.getInstance().getProperty( "notifications.application.id", String.valueOf( IdGenerator.getInstance().getNextId() ) );
+        id = LocalPropertiesLoader.getInstance().getProperty( "notifications.application.id", String.valueOf( IdGeneratorSnowFlakeSupport.getInstance().getNextId() ) );
         name = LocalPropertiesLoader.getInstance().getProperty( "notifications.application.name" );
         module = LocalPropertiesLoader.getInstance().getProperty( "notifications.application.module" );
         version = LocalPropertiesLoader.getInstance().getProperty( "notifications.application.version" );

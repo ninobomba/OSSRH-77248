@@ -29,7 +29,7 @@ public class HttpUrlUtils
     @SneakyThrows
     public static Map<String,String> parseUrlWithParameters(String uri)
     {
-        Map<String,String> response = new HashMap<>();
+        var response = new HashMap<String,String>();
 
         if( StringUtils.isBlank( uri ) ) return response;
 

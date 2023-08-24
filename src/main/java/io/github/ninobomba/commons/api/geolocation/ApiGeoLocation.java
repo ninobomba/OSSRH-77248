@@ -50,7 +50,7 @@ public final class ApiGeoLocation
         connection.setRequestProperty( "User-Agent", "Mozilla/5.0" );
 
         StringBuilder builder = new StringBuilder();
-        try( var reader = new BufferedReader( new InputStreamReader( connection.getInputStream(), StandardCharsets.UTF_8.name() ) ) ) {
+        try( var reader = new BufferedReader( new InputStreamReader( connection.getInputStream(), StandardCharsets.UTF_8 ) ) ) {
             String inputLine;
             while ( Objects.nonNull( inputLine = reader.readLine()) ) builder.append( inputLine );
         }

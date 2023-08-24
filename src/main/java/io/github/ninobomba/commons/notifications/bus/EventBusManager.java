@@ -17,10 +17,10 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 
 @Slf4j
-public class EventBusManager {
+public final class EventBusManager {
 
     private static EventBusManager instance;
-    private static EventBus eventBus = new AsyncEventBus( Executors.newCachedThreadPool() );
+    private static final EventBus eventBus = new AsyncEventBus( Executors.newCachedThreadPool() );
     private static final List<?> listeners = List.of(
             new EmailEventListener(),
             new SlackEventListener(),
@@ -28,7 +28,7 @@ public class EventBusManager {
     );
 
     static {
-        listeners.forEach( listener -> eventBus.register( listener ) );
+        listeners.forEach( eventBus::register );
     }
 
     private EventBusManager() {

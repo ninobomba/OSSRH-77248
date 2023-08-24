@@ -5,10 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import io.github.ninobomba.commons.checkpoints.CheckPoint;
 import io.github.ninobomba.commons.checkpoints.CheckPointFactory;
 import io.github.ninobomba.commons.events.Event;
-import io.github.ninobomba.commons.id.IdGenerator;
+import io.github.ninobomba.commons.id.IdGeneratorSnowFlakeSupport;
 import io.github.ninobomba.commons.json.JsonUtils;
 import lombok.Builder;
-import lombok.Data;
 
 import java.time.Duration;
 import java.util.*;
@@ -19,7 +18,7 @@ public class Request
 {
 
     @Builder.Default
-    private final long id = IdGenerator.getInstance().getNextId();
+    private final long id = IdGeneratorSnowFlakeSupport.getInstance().getNextId();
 
     @Getter private String name;
     @Getter private String payload;
