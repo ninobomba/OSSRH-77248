@@ -26,6 +26,7 @@ public class Request
     @Builder.Default
     private final Queue<Event> eventQueue = new LinkedList<>();
 
+    @Getter
     private Map<String, CheckPoint> checkPointMap;
 
     /**
@@ -34,10 +35,6 @@ public class Request
      */
     public void createCheckPointMapWithKey( String key ) {
         checkPointMap = CheckPointFactory.getInstance().getCheckPointMap( key );
-    }
-
-    public Map<String, CheckPoint> getCheckPointMap() {
-        return checkPointMap;
     }
 
     public void pushEvent( String name )

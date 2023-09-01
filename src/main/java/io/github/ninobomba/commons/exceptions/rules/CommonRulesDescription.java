@@ -9,8 +9,7 @@ public enum CommonRulesDescription
     HIGHER_THAN_ZERO( "The value is higher than zero" ),
 
     INVALID_AMOUNT( "Invalid amount" ),
-    INSUFFICIENT_FUNDS( "Insufficient funds" ),
-
+    INSUFFICIENT_FUNDS( "Insufficient funds" )
     ;
 
     public final String description;

@@ -1,7 +1,6 @@
 package io.github.ninobomba.commons.web.http;
 
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
@@ -9,13 +8,13 @@ import org.springframework.util.CollectionUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
-@UtilityClass
-public class HttpRemoteIpUtils
+public final class HttpRemoteIpUtils
 {
+
+    private HttpRemoteIpUtils() {}
 
     @SneakyThrows
     public static String getRemoteIpByHttpRequestHeaders(HttpServletRequest request)
@@ -24,7 +23,7 @@ public class HttpRemoteIpUtils
 
         final String HEADER_IP_REGEX = "X-FORWARDED-FOR|PROXY-CLIENT-IP|WL-PROXY-CLIENT-IP|HTTP-CLIENT-IP|ORIGIN|REFERER";
 
-        Map<String,String> headers = HttpRequestDataUtils.getRequestHeadersMap( request );
+        var headers = HttpRequestDataUtils.getRequestHeadersMap( request );
 
         if( CollectionUtils.isEmpty( headers) ) return null;
 
@@ -44,6 +43,5 @@ public class HttpRemoteIpUtils
 
         return ip;
     }
-
 
 }

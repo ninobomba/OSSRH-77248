@@ -33,7 +33,7 @@ public class HttpUrlUtils
 
         if( StringUtils.isBlank( uri ) ) return response;
 
-        URL url = new URL( uri );
+        var url = new URL( uri );
 
         response.put("authority",  url.getAuthority());
         response.put("protocol",   url.getProtocol());

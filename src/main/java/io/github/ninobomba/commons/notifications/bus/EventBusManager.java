@@ -35,9 +35,7 @@ public final class EventBusManager {
     }
 
     public static EventBusManager getInstance() {
-        if( Objects.isNull( instance ) ) {
-            instance = new EventBusManager();
-        }
+        if( Objects.isNull( instance ) ) instance = new EventBusManager();
         return instance;
     }
 

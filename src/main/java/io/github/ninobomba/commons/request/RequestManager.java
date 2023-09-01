@@ -33,8 +33,7 @@ public final class RequestManager implements Runnable
         outputDirectory = LocalPropertiesLoader.getInstance().getProperty( "request.manager.logs", "logs/requests" );
     }
 
-    private RequestManager()
-    {
+    private RequestManager() {
         isEnabled = Boolean.parseBoolean( LocalPropertiesLoader.getInstance().getProperty( "request.manager.enabled", "false" ) );
         sleepTime = Long.parseLong( LocalPropertiesLoader.getInstance().getProperty( "request.manager.sleep", "10000" ) );
         printConfiguration();
