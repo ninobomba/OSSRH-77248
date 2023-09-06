@@ -1,7 +1,6 @@
 package io.github.ninobomba.commons.web.http;
 
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -12,28 +11,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@UtilityClass
-public class HttpUrlUtils
+
+public interface HttpUrlUtils
 {
 
     @SneakyThrows
-    public static URL buildURL(String path ) {
-        return new URL( path );
+    static URL buildURL(String path ) {
+        return new URI( path ).toURL();
     }
 
     @SneakyThrows
-    public static URI buildURI(String path ) {
+    static URI buildURI(String path ) {
         return new URI( path );
     }
 
     @SneakyThrows
-    public static Map<String,String> parseUrlWithParameters(String uri)
+    static Map<String,String> parseUrlWithParameters(String uri)
     {
         var response = new HashMap<String,String>();
 
         if( StringUtils.isBlank( uri ) ) return response;
 
-        var url = new URL( uri );
+        var url = new URI( uri ).toURL();
 
         response.put("authority",  url.getAuthority());
         response.put("protocol",   url.getProtocol());
@@ -47,23 +46,23 @@ public class HttpUrlUtils
         return response;
     }
 
-    public static boolean hostAvailabilityCheck(String url) {
+    static boolean hostAvailabilityCheck(String url) {
         return hostAvailabilityCheck(url, 0, 10_000);
     }
 
-    public static boolean hostAvailabilityCheck(String url, int port) {
+    static boolean hostAvailabilityCheck(String url, int port) {
         return hostAvailabilityCheck(url, port, 10_000);
     }
 
     @SneakyThrows
-    public static boolean hostAvailabilityCheck(String url, int port, int timeout)
+    static boolean hostAvailabilityCheck(String url, int port, int timeout)
     {
         url = url.replaceFirst("^https", "http"); // Otherwise, an exception may be thrown on invalid SSL certificates.
         HttpURLConnection connection = null;
         try {
             String uri = url;
             if( port > 0 ) uri += ":" + port;
-            connection = (HttpURLConnection) new URL( uri ).openConnection();
+            connection = (HttpURLConnection) new URI( uri ).toURL().openConnection();
             connection.setConnectTimeout(timeout);
             connection.setReadTimeout(timeout);
             connection.setRequestMethod("HEAD");

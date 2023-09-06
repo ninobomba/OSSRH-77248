@@ -29,13 +29,12 @@ public class RedisConnectivityInspector implements IResourceInspector
         log.debug( "RedisConnectivityInspector::isAvailable() _: Attempting to connect to redis server: {}", uri );
 
         boolean isConnectionAvailable = false;
-        var client = RedisClient.create( uri );
-
-        try ( StatefulRedisConnection<String, String> connection = client.connect() ) {
-            isConnectionAvailable = Objects.nonNull( connection ) && connection.sync().isOpen();
-            client.shutdownAsync();
-        } catch ( Exception e ) {
-            log.error( "RedisConnectivityInspector::isAvailable() !: error while opening redis connection" );
+        try (var client = RedisClient.create(uri)) {
+            try (StatefulRedisConnection<String, String> connection = client.connect()) {
+                isConnectionAvailable = Objects.nonNull(connection) && connection.isOpen();
+            } catch (Exception e) {
+                log.error("RedisConnectivityInspector::isAvailable() !: error while opening redis connection");
+            }
         }
 
         log.info( "RedisConnectivityInspector::isAvailable() _: is db available: {}", isConnectionAvailable );

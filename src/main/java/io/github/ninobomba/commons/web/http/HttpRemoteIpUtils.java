@@ -27,14 +27,12 @@ public final class HttpRemoteIpUtils
 
         if( CollectionUtils.isEmpty( headers) ) return null;
 
-        String ip =
-                Optional.of(
-                        headers.entrySet()
-                        .stream()
+        var ip =
+                Optional.ofNullable( headers.entrySet().stream()
                         .filter(m -> StringUtils.containsAny(m.getKey().toUpperCase(), HEADER_IP_REGEX))
-                        .map(Map.Entry::getValue)
+                        .map( Map.Entry::getValue )
                         .findFirst()
-                        .orElseGet(request::getRemoteHost)
+                        .orElseGet( request::getRemoteHost )
                 ).orElse(
                         InetAddress.getLocalHost().getHostAddress()
                 );

@@ -24,9 +24,9 @@ public class PostgresqlConnectivityInspector implements IResourceInspector
     public boolean isAvailable()
     {
         Properties properties = new Properties();
-        properties.setProperty("user", user );
-        properties.setProperty("password", password );
-        properties.setProperty("ssl", ssl );
+        properties.setProperty( "user", user );
+        properties.setProperty( "password", password );
+        properties.setProperty( "ssl", ssl );
 
         boolean isValid = false;
         try ( Connection connection = DriverManager.getConnection ( uri, properties ) ) {

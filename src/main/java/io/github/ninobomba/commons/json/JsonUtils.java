@@ -4,15 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
 
-@UtilityClass
-public final class JsonUtils
+public interface JsonUtils
 {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper().enable( SerializationFeature.INDENT_OUTPUT );
+    ObjectMapper objectMapper = new ObjectMapper().enable( SerializationFeature.INDENT_OUTPUT );
 
-    public static boolean isValidJson(String json)
+    static boolean isValidJson(String json)
     {
         try {
             objectMapper.readTree( json );
@@ -23,7 +21,7 @@ public final class JsonUtils
     }
 
     @SneakyThrows
-    public static String pretty( String json )
+    static String pretty( String json )
     {
         return objectMapper
                 .writerWithDefaultPrettyPrinter()
@@ -31,6 +29,3 @@ public final class JsonUtils
     }
 
 }
-
-
-

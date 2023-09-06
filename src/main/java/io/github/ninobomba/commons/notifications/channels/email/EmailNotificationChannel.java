@@ -2,11 +2,11 @@ package io.github.ninobomba.commons.notifications.channels.email;
 
 import io.github.ninobomba.commons.exceptions.commons.EmptyOrNullParameterException;
 import io.github.ninobomba.commons.notifications.channels.INotificationChannel;
-import lombok.extern.slf4j.Slf4j;
 import io.github.ninobomba.commons.notifications.commons.AppData;
 import io.github.ninobomba.commons.notifications.commons.NotificationMessage;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.mail.*;
@@ -112,7 +112,7 @@ public final class EmailNotificationChannel implements INotificationChannel
 
     private String buildEmailBody(NotificationMessage notificationMessage)
     {
-        String END_OF_ROW = "</td></tr>";
+        final String END_OF_ROW = "</td></tr>";
         return ""
                 .concat( "</br>" )
                 .concat( "<h4>Application</h4>" )

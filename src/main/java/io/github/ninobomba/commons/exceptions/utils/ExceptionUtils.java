@@ -1,25 +1,25 @@
 package io.github.ninobomba.commons.exceptions.utils;
 
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-@UtilityClass
-public class ExceptionUtils
+public interface ExceptionUtils
 {
 
     @SneakyThrows
-    public static String convertToString(Throwable throwable )
+    static String convertToString(Throwable throwable )
     {
-        if ( Objects.isNull( throwable) ) return null;
+        if ( Objects.isNull( throwable ) ) return null;
 
         var traces = throwable.getStackTrace();
 
         var response = new StringJoiner("\n");
 
-        if ( Objects.nonNull( traces ) && traces.length > 0 )
+        if ( ! CollectionUtils.isEmpty( Arrays.asList( traces ) ) )
         {
             response.add(throwable.getClass() + ": " + throwable.getMessage());
             for (StackTraceElement trace : traces)

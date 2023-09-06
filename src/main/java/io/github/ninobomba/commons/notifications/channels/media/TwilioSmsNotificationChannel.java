@@ -4,12 +4,12 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import io.github.ninobomba.commons.exceptions.commons.EmptyOrNullParameterException;
-import lombok.extern.slf4j.Slf4j;
 import io.github.ninobomba.commons.notifications.channels.INotificationChannel;
 import io.github.ninobomba.commons.notifications.commons.AppData;
 import io.github.ninobomba.commons.notifications.commons.NotificationMessage;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
     {
         log.trace("TwilioSmsNotificationChannel::sendMessage() >: start");
 
-        String message = "\n"
+        final String message = "\n"
                 .concat( AppData.getInstance().getName()    + " / " )
                 .concat( AppData.getInstance().getModule()  + " / " )
                 .concat( AppData.getInstance().getVersion() + " /n/n " )

@@ -1,17 +1,21 @@
 package io.github.ninobomba.commons.platform;
 
+import lombok.Getter;
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
 import org.springframework.util.CollectionUtils;
 
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
-@UtilityClass
 public final class SystemMetaDataProvider
 {
     private static Map<String, String> properties;
+
+    @Getter
+    private static final SystemMetaDataProvider instance = new SystemMetaDataProvider();
+
+    private SystemMetaDataProvider() {}
 
     public static Map<String, String> getProperties()
     {
