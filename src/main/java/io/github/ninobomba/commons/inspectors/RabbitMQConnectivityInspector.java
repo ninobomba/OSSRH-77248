@@ -31,7 +31,7 @@ public class RabbitMQConnectivityInspector implements IResourceInspector
 
         boolean isValid = false;
         try ( Connection connection = factory.newConnection() ) {
-            isValid = Objects.nonNull(connection) && connection.isOpen();
+            isValid = Objects.nonNull( connection ) && connection.isOpen();
         } catch ( IOException e ) {
             log.error( "RabbitMQConnectivityInspector::isAvailable() !: Unable to connect", e );
         }

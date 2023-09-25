@@ -130,11 +130,11 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
         if( StringUtils.isBlank( issueUrl ) )
             throw EmptyOrNullParameterException.create( "TwilioWhatsUpNotificationChannel::load() !: twilio whats-up issue url is empty", issueUrl );
 
-        String token = LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.whatsapp.token" );
+        var token = LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.whatsapp.token" );
         if( StringUtils.isBlank( token ) )
             throw EmptyOrNullParameterException.create( "TwilioWhatsUpNotificationChannel::load() !: twilio whatsapp token is empty", token );
 
-        String sid = LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.whatsapp.sid" );
+        var sid = LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.whatsapp.sid" );
         if( StringUtils.isBlank( sid ) )
             throw EmptyOrNullParameterException.create( "TwilioWhatsUpNotificationChannel: load() !: twilio whatsapp sid is empty", sid );
 

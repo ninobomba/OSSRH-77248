@@ -1,9 +1,9 @@
 package io.github.ninobomba.commons.request;
 
-import lombok.extern.slf4j.Slf4j;
 import io.github.ninobomba.commons.persistence.PersistenceDiskUtils;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -27,7 +27,7 @@ public final class RequestManager implements Runnable
 
     private final long sleepTime;
 
-    private static final String outputDirectory;
+    private static String outputDirectory;
 
     static {
         outputDirectory = LocalPropertiesLoader.getInstance().getProperty( "request.manager.logs", "logs/requests" );

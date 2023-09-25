@@ -3,8 +3,9 @@ package io.github.ninobomba.commons.web.http;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toMap;
 
 public interface HttpRequestDataUtils
 {
@@ -13,18 +14,6 @@ public interface HttpRequestDataUtils
     static Map<String,String> getRequestHeadersMap(ServletRequest servletRequest) {
         return getRequestHeadersMap( ( HttpServletRequest ) servletRequest );
     }
-
-//    static Map<String, String> printRequestHeaders(HttpServletRequest httpRequest)
-//    {
-//        var response = StreamSupport
-//                .stream( Spliterators.spliteratorUnknownSize( httpRequest.getHeaderNames().asIterator(), Spliterator.ORDERED ), false)
-//                .collect(
-//                        HashMap::new, ( map, key ) -> map.put( key, httpRequest.getHeader( key ) ),
-//                        HashMap::putAll
-//                );
-//        //.forEach( key -> log.info("HttpHeadersTools: printRequestHeaders() _: {} : {}", key, httpRequest.getHeader( key ) ) );
-//        return response;
-//    }
 
     static Map<String,String> getRequestHeadersMap(HttpServletRequest httpRequest)
     {
@@ -45,13 +34,9 @@ public interface HttpRequestDataUtils
 
     static Map<String,String> getRequestParametersMap(HttpServletRequest httpRequest)
     {
-        var map = new HashMap<String,String>();
-        Stream
-                .of( Collections.list ( httpRequest.getParameterNames() ) , Collections.list( httpRequest.getAttributeNames() ) )
+        return
+        Stream.of( Collections.list ( httpRequest.getParameterNames() ) , Collections.list( httpRequest.getAttributeNames() ) )
                 .flatMap( Collection::stream )
-                .collect( Collectors.toList() )
-                .forEach( key -> map.put( key, httpRequest.getParameter( key ) ) );
-        return map;
+                .collect( toMap( key -> key, httpRequest::getParameter ));
     }
-
 }

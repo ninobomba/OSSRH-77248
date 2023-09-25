@@ -29,7 +29,7 @@ public class RedisConnectivityInspector implements IResourceInspector
         log.debug( "RedisConnectivityInspector::isAvailable() _: Attempting to connect to redis server: {}", uri );
 
         boolean isConnectionAvailable = false;
-        try (var client = RedisClient.create(uri)) {
+        try ( var client = RedisClient.create( uri ) ) {
             try (StatefulRedisConnection<String, String> connection = client.connect()) {
                 isConnectionAvailable = Objects.nonNull(connection) && connection.isOpen();
             } catch (Exception e) {

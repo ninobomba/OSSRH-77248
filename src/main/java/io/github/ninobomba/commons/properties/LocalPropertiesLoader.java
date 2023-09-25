@@ -49,6 +49,7 @@ public final class LocalPropertiesLoader {
     private void load( String path ) {
         listPropertiesFile( path ).forEach( e -> {
             try( var in = new FileInputStream( ResourceUtils.getFile( e ) ) ) { properties.load( in ); }
+            catch ( Exception ignored ){ }
         });
     }
 

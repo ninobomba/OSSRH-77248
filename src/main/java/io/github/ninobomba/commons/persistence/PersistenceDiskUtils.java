@@ -1,9 +1,8 @@
 package io.github.ninobomba.commons.persistence;
 
 import io.github.ninobomba.commons.time.DateTimeUtils;
-import lombok.extern.slf4j.Slf4j;
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -12,10 +11,11 @@ import java.nio.file.StandardOpenOption;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
-@UtilityClass
-public class PersistenceDiskUtils
+public final class PersistenceDiskUtils
 {
-    private final ReentrantLock lock = new ReentrantLock();
+    private static final ReentrantLock lock = new ReentrantLock();
+
+    private PersistenceDiskUtils(){}
 
     public static void persist( String outputDirectory, String data )
     {

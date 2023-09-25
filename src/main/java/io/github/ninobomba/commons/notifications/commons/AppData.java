@@ -18,13 +18,12 @@ public final class AppData
     @Getter private String host;
     @Getter private String env;
 
+    @Getter
     private static final AppData instance = new AppData();
 
     private AppData(){
         load();
     }
-
-    public static AppData getInstance(){ return instance; }
 
     @SneakyThrows
     private void load()

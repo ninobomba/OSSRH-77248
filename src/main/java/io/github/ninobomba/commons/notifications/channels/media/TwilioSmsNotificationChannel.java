@@ -152,10 +152,7 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel
         if( list.length == 0 )
             throw EmptyOrNullParameterException.create( "TwilioSmsNotificationChannel::load() !: invalid phone list", phones );
 
-        Arrays
-                .stream( list )
-                .sequential()
-                .forEach( e -> phoneList.add( new PhoneNumber( e ) ));
+        Arrays.stream( list ).forEach( e -> phoneList.add( new PhoneNumber( e ) ));
 
         var twilioPhoneFrom = LocalPropertiesLoader.getInstance().getProperty( "notifications.twilio.sms.from" );
 

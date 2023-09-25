@@ -9,12 +9,12 @@ import com.slack.api.model.block.LayoutBlock;
 import com.slack.api.model.block.SectionBlock;
 import com.slack.api.model.block.composition.MarkdownTextObject;
 import io.github.ninobomba.commons.exceptions.commons.EmptyOrNullParameterException;
-import lombok.extern.slf4j.Slf4j;
 import io.github.ninobomba.commons.notifications.channels.INotificationChannel;
 import io.github.ninobomba.commons.notifications.commons.AppData;
 import io.github.ninobomba.commons.notifications.commons.NotificationMessage;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public final class SlackNotificationChannel implements INotificationChannel
         setServiceAvailable( true );
     }
 
-    public static void setServiceAvailable(boolean isAvailable) {
+    public static void setServiceAvailable( boolean isAvailable ) {
         isServiceAvailable = isAvailable;
     }
 
@@ -61,7 +61,7 @@ public final class SlackNotificationChannel implements INotificationChannel
     @Override
     public void publish(NotificationMessage notificationMessage)
     {
-        log.trace("SlackNotificationChannel::publish() >: start");
+        log.trace( "SlackNotificationChannel::publish() >: start" );
 
         if( ! isServiceAvailable ) {
             log.warn("SlackNotificationChannel::publish() !: slack channel is not available, returning");
