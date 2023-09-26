@@ -44,7 +44,7 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
         setServiceAvailable( true );
     }
 
-    public static TwilioWhatsAppNotificationChannel getInstance(){
+    public static TwilioWhatsAppNotificationChannel getInstance() {
         if( Objects.isNull( instance ) ) instance = new TwilioWhatsAppNotificationChannel();
         return instance;
     }
@@ -54,7 +54,7 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
     }
 
     @Override
-    public void publish(NotificationMessage notificationMessage)
+    public void publish( NotificationMessage notificationMessage )
     {
         log.trace("TwilioWhatsUpNotificationChannel::publish() >: start");
 
@@ -82,7 +82,7 @@ public final class TwilioWhatsAppNotificationChannel implements INotificationCha
     }
 
     @SneakyThrows
-    private void sendMessage(NotificationMessage notificationMessage)
+    private void sendMessage( NotificationMessage notificationMessage )
     {
         log.trace( "TwilioWhatsUpNotificationChannel::sendMessage() >: start" );
 

@@ -1,8 +1,8 @@
 package io.github.ninobomba.commons.checkpoints;
 
-import lombok.extern.slf4j.Slf4j;
 import io.github.ninobomba.commons.persistence.PersistenceDiskUtils;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -32,7 +32,7 @@ public final class CheckPointPersistence
     {
         log.trace( "CheckPointPersistence::getInstance() >: start" );
 
-        if( Objects.isNull(instance) ) {
+        if( Objects.isNull( instance ) ) {
             log.debug( "CheckPointPersistence::getInstance() _: creating unique instance" );
             instance = new CheckPointPersistence();
         }

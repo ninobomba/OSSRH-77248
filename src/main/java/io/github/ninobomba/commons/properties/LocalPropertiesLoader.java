@@ -42,7 +42,7 @@ public final class LocalPropertiesLoader {
     }
 
     public String getProperty( String name ) {
-        return Optional.ofNullable( properties.get( name ).toString() ).orElse( null );
+        return properties.get( name ).toString();
     }
 
     @SneakyThrows
@@ -77,16 +77,10 @@ public final class LocalPropertiesLoader {
             var item = path.concat( e.getFileName().toString() );
             log.debug("LocalPropertiesLoader::listPropertiesFile() _: evaluating: {}", item);
             if (!Files.isDirectory( e ) && "properties".equals( FilenameUtils.getExtension( String.valueOf( e ) ) ) ) {
-                log.debug("LocalPropertiesLoader::listPropertiesFile() _: adding: {}", item);
                 response.add(item);
             }
         });
         streamPath.close();
-
-        if ( ! response.isEmpty() )
-            log.debug("LocalPropertiesLoader::listPropertiesFile() _: files: {}", response);
-
-        log.debug("LocalPropertiesLoader::listPropertiesFile() _: response: {}", response);
 
         log.trace("LocalPropertiesLoader::listPropertiesFile() <: complete");
 

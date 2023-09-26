@@ -17,7 +17,7 @@ public final class HttpRemoteIpUtils
     private HttpRemoteIpUtils() {}
 
     @SneakyThrows
-    public static String getRemoteIpByHttpRequestHeaders(HttpServletRequest request)
+    public static String getRemoteIpByHttpRequestHeaders( HttpServletRequest request )
     {
         log.trace( "HttpRemoteIpUtils::getRemoteIpByHttpRequestHeaders() >: start" );
 

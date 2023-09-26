@@ -92,16 +92,13 @@ public final class SlackNotificationChannel implements INotificationChannel
     {
         log.trace("SlackNotificationChannel::sendMessage() >: start");
 
-        String emoji;
-
-        switch ( notificationMessage.getLevel() )
-        {
-            case CRITICAL : emoji = ":interrobang:"; break;
-            case ERROR    : emoji = ":error:"; break;
-            case WARNING  : emoji = ":warning:"; break;
-            case DEBUG    : emoji = ":speech_balloon:"; break;
-            default       : emoji = ":info_3:";
-        }
+        String emoji = switch ( notificationMessage.getLevel() ) {
+            case CRITICAL -> ":interrobang:";
+            case ERROR -> ":error:";
+            case WARNING -> ":warning:";
+            case DEBUG -> ":speech_balloon:";
+            default -> ":info_3:";
+        };
 
         var request = ChatPostMessageRequest.builder()
                 .channel(slackChannelId)
@@ -118,7 +115,7 @@ public final class SlackNotificationChannel implements INotificationChannel
                 .attachments( createAttachments( notificationMessage ) )
                 .build();
 
-        var response = slack.methods(token).chatPostMessage( request );
+        var response = slack.methods( token ).chatPostMessage( request );
 
         if( ! response.isOk() )
             log.error("SlackNotificationChannel::sendMessage() !: error while sending message to slack: \nerror: {}, \nmeta: {}",

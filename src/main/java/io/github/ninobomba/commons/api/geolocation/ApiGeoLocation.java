@@ -17,7 +17,7 @@ public interface ApiGeoLocation
 {
 
     @SneakyThrows
-    public static String getGeoLocationByStackIp(String ip)
+    static String getGeoLocationByStackIp( String ip )
     {
 
         if( StringUtils.isBlank( ip ) )
@@ -41,7 +41,7 @@ public interface ApiGeoLocation
         connection.setRequestMethod( "GET" );
         connection.setRequestProperty( "User-Agent", "Mozilla/5.0" );
 
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
         try( var reader = new BufferedReader( new InputStreamReader( connection.getInputStream(), StandardCharsets.UTF_8 ) ) ) {
             String inputLine;
             while ( Objects.nonNull( inputLine = reader.readLine()) ) builder.append( inputLine );

@@ -15,7 +15,7 @@ public interface HttpRequestDataUtils
         return getRequestHeadersMap( ( HttpServletRequest ) servletRequest );
     }
 
-    static Map<String,String> getRequestHeadersMap(HttpServletRequest httpRequest)
+    static Map<String,String> getRequestHeadersMap( HttpServletRequest httpRequest )
     {
         return Collections
                 .list( Optional.ofNullable( httpRequest.getHeaderNames() ).orElse( Collections.emptyEnumeration() ) )
@@ -29,7 +29,7 @@ public interface HttpRequestDataUtils
 
     // Parameters
     static Map<String,String> getRequestParametersMap(ServletRequest servletRequest) {
-        return getRequestParametersMap( ( HttpServletRequest ) servletRequest);
+        return getRequestParametersMap( ( HttpServletRequest ) servletRequest );
     }
 
     static Map<String,String> getRequestParametersMap(HttpServletRequest httpRequest)

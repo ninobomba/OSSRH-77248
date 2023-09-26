@@ -1,7 +1,8 @@
 package io.github.ninobomba.commons.platform;
 
-import lombok.*;
+import lombok.Builder;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Builder
@@ -10,6 +11,7 @@ public class LoginDevice implements Serializable {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -5510108553531766246L;
 
     private String id;

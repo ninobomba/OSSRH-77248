@@ -1,17 +1,17 @@
 package io.github.ninobomba.commons.web.agent;
 
-import io.github.ninobomba.commons.web.http.HttpRemoteIpUtils;
 import io.github.ninobomba.commons.id.IdGeneratorSnowFlakeSupport;
+import io.github.ninobomba.commons.web.http.HttpRemoteIpUtils;
 import net.sf.uadetector.ReadableUserAgent;
 import net.sf.uadetector.service.UADetectorServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
-public class UDDeviceDetector
+interface UDDeviceDetector
 {
 
-    public LoginDevice getLoginDeviceDetails(HttpServletRequest request)
+    default LoginDevice getLoginDeviceDetails( HttpServletRequest request )
     {
         String deviceId   = UUID.randomUUID().toString();
         String token      = String.valueOf( IdGeneratorSnowFlakeSupport.getInstance().getNextId() );
@@ -41,4 +41,5 @@ public class UDDeviceDetector
                 .build();
 
     }
+
 }

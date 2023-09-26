@@ -92,8 +92,8 @@ public final class EmailNotificationChannel implements INotificationChannel
         String body    = buildEmailBody( notificationMessage );
 
         MimeMessage message = new MimeMessage( session );
-        message.setFrom( new InternetAddress(from) );
-        message.addRecipient( Message.RecipientType.TO, new InternetAddress(to) );
+        message.setFrom( new InternetAddress( from ) );
+        message.addRecipient( Message.RecipientType.TO, new InternetAddress( to ) );
         message.setSubject( subject );
         message.setContent( body, "text/html" );
 

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class RequestManagerTest
 {
@@ -42,7 +43,7 @@ public class RequestManagerTest
         checkpointMap.forEach( (k,v) -> v.update() );
 
         RequestManager.getInstance().add( request );
-        Thread.sleep( 1000 );
+        TimeUnit.MILLISECONDS.sleep(1_000 );
 
         RequestManager.checkOnQueue();
     }

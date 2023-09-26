@@ -11,7 +11,7 @@ public interface ExceptionUtils
 {
 
     @SneakyThrows
-    static String convertToString(Throwable throwable )
+    static String convertToString( Throwable throwable )
     {
         if ( Objects.isNull( throwable ) ) return null;
 

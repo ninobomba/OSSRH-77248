@@ -3,6 +3,7 @@ package io.github.ninobomba.commons.jpa.audit;
 import io.github.ninobomba.commons.json.JsonUtils;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +11,8 @@ import java.time.format.DateTimeFormatter;
 @Data
 public class AuditableEntity implements Serializable
 {
+
+    @Serial
     private static final long serialVersionUID = -1381710822390094232L;
 
     //@CreatedBy
