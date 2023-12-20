@@ -21,9 +21,9 @@ public interface HttpRequestDataUtils
                 .list( Optional.ofNullable( httpRequest.getHeaderNames() ).orElse( Collections.emptyEnumeration() ) )
                 .stream()
                 .collect(
-                        HashMap::new,
+                        TreeMap::new,
                         ( map, key ) -> map.put( key, httpRequest.getHeader( key ) ),
-                        HashMap::putAll
+                        TreeMap::putAll
                 );
     }
 
@@ -37,6 +37,6 @@ public interface HttpRequestDataUtils
         return
         Stream.of( Collections.list ( httpRequest.getParameterNames() ) , Collections.list( httpRequest.getAttributeNames() ) )
                 .flatMap( Collection::stream )
-                .collect( toMap( key -> key, httpRequest::getParameter ));
+                .collect( toMap( key -> key, httpRequest::getParameter ) );
     }
 }

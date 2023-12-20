@@ -1,0 +1,64 @@
+{
+  "title": "schema",
+  "description": "Auto generated JSON schema based on the 'schema' file",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "price": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "exclusiveMinimum": {
+              "type": "boolean"
+            },
+            "minimum": {
+              "type": "number"
+            }
+          }
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          }
+        },
+        "id": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "required": {
+      "type": "array",
+      "items": {}
+    }
+  }
+}

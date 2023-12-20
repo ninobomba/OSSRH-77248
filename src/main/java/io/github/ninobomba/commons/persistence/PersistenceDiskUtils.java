@@ -81,6 +81,11 @@ public final class PersistenceDiskUtils
         return isFileCreated;
     }
 
+    /**
+     * Creates a directory at the specified outputDirectory if it does not already exist.
+     *
+     * @param outputDirectory the path of the directory to be created
+     */
     @SneakyThrows
     private static void createDirectory( String outputDirectory )
     {

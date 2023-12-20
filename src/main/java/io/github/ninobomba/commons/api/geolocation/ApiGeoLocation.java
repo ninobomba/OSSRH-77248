@@ -16,8 +16,15 @@ import java.util.Objects;
 public interface ApiGeoLocation
 {
 
+    /**
+     * Retrieves the geo location information for the given IP address.
+     *
+     * @param ip The IP address for which to retrieve the geo location information.
+     * @return The geo location information for the given IP address.
+     * @throws EmptyOrNullParameterException if the IP address, access key, or base URL is null or empty.
+     */
     @SneakyThrows
-    static String getGeoLocationByStackIp( String ip )
+    static String getGeoLocationByIp( String ip )
     {
 
         if( StringUtils.isBlank( ip ) )
@@ -31,20 +38,24 @@ public interface ApiGeoLocation
         if( StringUtils.isBlank( baseUrl ) )
             throw EmptyOrNullParameterException.create( "ApiGeoLocation: getGeoLocationInfo() !: baseUrl is null or empty", baseUrl );
 
-        val url = baseUrl
-                .concat( "/" )
-                .concat( ip )
-                .concat( "?access_key=" )
-                .concat( accessKey );
+        val url = baseUrl +  "/" + ip + "?access_key=" + accessKey;
 
-        val connection = ( HttpURLConnection ) new URI( url ).toURL().openConnection();
-        connection.setRequestMethod( "GET" );
-        connection.setRequestProperty( "User-Agent", "Mozilla/5.0" );
-
+        HttpURLConnection connection = null;
         var builder = new StringBuilder();
-        try( var reader = new BufferedReader( new InputStreamReader( connection.getInputStream(), StandardCharsets.UTF_8 ) ) ) {
-            String inputLine;
-            while ( Objects.nonNull( inputLine = reader.readLine()) ) builder.append( inputLine );
+
+        try {
+            connection = ( HttpURLConnection ) new URI( url ).toURL().openConnection();
+            connection.setRequestMethod( "GET" );
+            connection.setRequestProperty( "User-Agent", "Mozilla/5.0" );
+
+            try( var reader = new BufferedReader( new InputStreamReader( connection.getInputStream(), StandardCharsets.UTF_8 ) ) ) {
+                String inputLine;
+                while ( Objects.nonNull( inputLine = reader.readLine() ) ) builder.append( inputLine );
+            }
+
+        } finally {
+            if( Objects.nonNull( connection ) )
+                connection.disconnect();
         }
 
         return builder.toString();

@@ -19,6 +19,11 @@ public class PostgresqlConnectivityInspector implements IResourceInspector
     private final String password;
     private final String ssl;
 
+    /**
+     * Checks if the connection to the Postgresql database is available.
+     *
+     * @return true if the connection is available, false otherwise
+     */
     @SneakyThrows
     @Override
     public boolean isAvailable()
@@ -30,7 +35,7 @@ public class PostgresqlConnectivityInspector implements IResourceInspector
 
         boolean isValid = false;
         try ( Connection connection = DriverManager.getConnection ( uri, properties ) ) {
-            isValid = connection.isValid( 1000 );
+            isValid = connection.isValid( 1_000 );
         } catch ( SQLException e ) {
             log.error( "PostgresqlConnectivityInspector::isAvailable() !: Unable to connect to db", e );
         }

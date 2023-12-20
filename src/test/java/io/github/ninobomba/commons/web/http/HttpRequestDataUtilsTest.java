@@ -3,9 +3,10 @@ package io.github.ninobomba.commons.web.http;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 class HttpRequestDataUtilsTest {
-
-
 
     @Test
     void getRequestParametersMapTest() {
@@ -38,5 +39,30 @@ class HttpRequestDataUtilsTest {
 
     }
 
+
+
+    @Test
+    void test1() {
+
+        java.util.List<Integer> list = List.of( 1,2,3,4,5,6,7,8,9);
+
+        list.stream().filter( e -> e % 2 == 0 ).collect( Collectors.toList() );
+
+        String tenet = "tenet";
+
+        new StringBuilder( tenet ).reverse().equals( tenet );
+
+    }
+
+
+    class Country  {
+
+        private String name;
+
+        public Country(String name) {
+            this.name = name;
+        }
+
+    }
 
 }

@@ -22,12 +22,23 @@ public class CheckPoint implements Cloneable
     private LocalDateTime localDateTime;
     private String formattedTimestamp;
 
+    /**
+     * Updates the current state of the object.
+     * Retrieves the current timestamp, formats it with the specified pattern,
+     * and marks the operation as completed.
+     */
     public void update() {
         localDateTime = LocalDateTime.now();
         formattedTimestamp = localDateTime.format( pattern );
         completed = true;
     }
 
+    /**
+     * Creates and returns a copy of the current object.
+     *
+     * @return a clone of the object
+     * @throws CloneNotSupportedException if the object's class does not implement the Cloneable interface
+     */
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

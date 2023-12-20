@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 public final class CheckPointPersistence
 {
 
-    private static final String outputDirectory;
+    private static String outputDirectory;
 
     private static CheckPointPersistence instance;
 
@@ -28,6 +28,12 @@ public final class CheckPointPersistence
     private CheckPointPersistence() {
     }
 
+    /**
+     * Returns the instance of CheckPointPersistence.
+     * If the instance does not exist, it creates a new one.
+     *
+     * @return the instance of CheckPointPersistence
+     */
     public static CheckPointPersistence getInstance()
     {
         log.trace( "CheckPointPersistence::getInstance() >: start" );
@@ -42,6 +48,13 @@ public final class CheckPointPersistence
         return instance;
     }
 
+    /**
+     * Saves the checkpoint data to disk.
+     * If the checkpoint map is empty or null, the method returns without doing anything.
+     * If the output directory is empty, the method returns without doing anything.
+     *
+     * @param checkPointMap the checkpoint map containing the key-value pairs of checkpoint data
+     */
     public void save( Map<String, CheckPoint> checkPointMap )
     {
         log.trace( "CheckPointPersistence::save() >: start" );
@@ -63,6 +76,13 @@ public final class CheckPointPersistence
         log.trace( "CheckPointPersistence::save() <: complete" );
     }
 
+    /**
+     * Converts a given checkpoint map to a string representation.
+     * Each checkpoint in the map is converted to a JSON string and joined together with a comma.
+     *
+     * @param checkPointMap the checkpoint map containing the key-value pairs of checkpoint data
+     * @return a string representation of the checkpoint map
+     */
     public String mapToString( Map<String, CheckPoint> checkPointMap )
     {
         log.trace( "CheckPointPersistence::mapToString() >: start" );

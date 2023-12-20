@@ -10,7 +10,7 @@ public interface JsonUtils
 
     ObjectMapper objectMapper = new ObjectMapper().enable( SerializationFeature.INDENT_OUTPUT );
 
-    static boolean isValidJson(String json)
+    static boolean isValidJson( String json )
     {
         try {
             objectMapper.readTree( json );

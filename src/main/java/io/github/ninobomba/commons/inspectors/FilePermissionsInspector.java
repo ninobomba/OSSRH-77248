@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Objects;
 
 @Builder
 @Slf4j
@@ -32,10 +31,9 @@ public class FilePermissionsInspector implements IResourceInspector
             boolean isReadable   = Files.isReadable( filePath );
             boolean isWritable   = Files.isWritable( filePath );
             boolean isExecutable = Files.isExecutable( filePath );
-
             boolean isDirectory = Files.isDirectory( filePath );
 
-            log.debug("FilePermissionsInspector::isAvailable() _: File-Path: {}, AbsolutePath: {} isDirectory: {} readable: {} writable: {} executable: {}",
+            log.trace("FilePermissionsInspector::isAvailable() _: File-Path: {}, AbsolutePath: {} isDirectory: {} readable: {} writable: {} executable: {}",
                     file,
                     filePath.toFile().getAbsolutePath(),
                     isDirectory,
@@ -45,7 +43,7 @@ public class FilePermissionsInspector implements IResourceInspector
             );
 
             if( ! isReadable && ! isWritable ) {
-                log.warn( "FilePermissionsInspector::isAvailable() _: File: {} should have at least read and write permissions", file );
+                log.warn( "FilePermissionsInspector::isAvailable() _: File-Path: {}, AbsolutePath: {} should have at least read and write permissions", file,  filePath.toFile().getAbsolutePath() );
                 return false;
             }
         }

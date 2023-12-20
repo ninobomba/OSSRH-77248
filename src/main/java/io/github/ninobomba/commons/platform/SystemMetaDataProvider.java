@@ -11,7 +11,7 @@ interface SystemMetaDataProvider
 
     static Map<String, String> getProperties()
     {
-        Map<String, String> properties = new HashMap<>();
+        var properties = new HashMap<String, String>();
         properties.putAll( getSystemEnvironmentProperties() );
         properties.putAll( getNetworkProperties() );
         return properties;

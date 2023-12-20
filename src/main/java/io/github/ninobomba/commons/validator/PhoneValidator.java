@@ -9,7 +9,7 @@ public class PhoneValidator implements ConstraintValidator<Phone, String>
 {
 
 	@Override
-	public void initialize(Phone phone) { }
+	public void initialize( Phone phone ) { }
 
 	@Override
 	public boolean isValid(String phone, ConstraintValidatorContext ctx)

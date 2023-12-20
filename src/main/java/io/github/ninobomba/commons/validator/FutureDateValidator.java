@@ -15,7 +15,7 @@ public class FutureDateValidator implements ConstraintValidator<FutureDate, Stri
 {
 
 	@Override
-	public void initialize(FutureDate constraintAnnotation) { }
+	public void initialize( FutureDate constraintAnnotation ) { }
 
 	@Override
 	public boolean isValid(String input, ConstraintValidatorContext context)
@@ -31,29 +31,23 @@ public class FutureDateValidator implements ConstraintValidator<FutureDate, Stri
 		String[] elements = input.split( delimiter );
 		int size = elements.length;
 
-		String yearFormat = getYearFormat(elements[size - 1]);
+		String yearFormat = getYearFormat( elements[ size - 1 ] );
 
-		String pattern;
+		String pattern = switch ( size ) {
+            case 1 -> yearFormat;
+            case 2 -> "dd/"
+                    .concat(getMonthFormat( elements[ 0 ] ) )
+                    .concat("/" )
+                    .concat( yearFormat );
+            case 3 -> getDayFormat( elements[ 0 ] )
+                    .concat("/" )
+                    .concat( getMonthFormat( elements[ 1 ] ) )
+                    .concat("/" )
+                    .concat( yearFormat );
+            default -> null;
+        };
 
-		switch( size )
-		{
-			case 1 : pattern = yearFormat;
-				break;
-			case 2 : pattern = "dd/"
-					.concat( getMonthFormat( elements[ 0 ] ) )
-					.concat( "/" )
-					.concat( yearFormat );
-				break;
-			case 3 : pattern = getDayFormat( elements[ 0 ] )
-					.concat( "/" )
-					.concat( getMonthFormat( elements [ 1 ] ) )
-					.concat( "/" )
-					.concat( yearFormat );
-				break;
-			default : pattern = null;
-		}
-
-		if( size == 3 ) input = "01".concat( "/" ).concat( input );
+        if( size == 3 ) input = "01".concat( "/" ).concat( input );
 
 		//Invalid pattern to validate future date
 		if( Objects.isNull( pattern ) ) return false;

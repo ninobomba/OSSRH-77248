@@ -76,7 +76,7 @@ public final class LocalPropertiesLoader {
         streamPath.forEach( e -> {
             var item = path.concat( e.getFileName().toString() );
             log.debug("LocalPropertiesLoader::listPropertiesFile() _: evaluating: {}", item);
-            if (!Files.isDirectory( e ) && "properties".equals( FilenameUtils.getExtension( String.valueOf( e ) ) ) ) {
+            if ( ! Files.isDirectory( e ) && "properties".equals( FilenameUtils.getExtension( String.valueOf( e ) ) ) ) {
                 response.add(item);
             }
         });

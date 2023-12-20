@@ -246,6 +246,23 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/src/main/resources/schema</sourceDirectory>
+                    <targetPackage>io.github.ninobomba.json.schema</targetPackage>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
 
     </build>
@@ -395,7 +412,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.0.0.Final</version>
+            <version>6.2.7.Final</version>
         </dependency>
 
         <dependency>
@@ -404,7 +421,6 @@
             <version>6.2.5.RELEASE</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -412,6 +428,17 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>1.37</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>1.37</version>
+        </dependency>
 
         <dependency>
             <groupId>com.rabbitmq</groupId>
@@ -423,6 +450,27 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>7.4</version>
+            <!-- Use runtime scope if the project does not have any compile-time usage of logstash-logback-encoder,
+                 such as usage of StructuredArguments/Markers or implementations such as
+                 JsonProvider, AppenderListener, JsonFactoryDecorator, JsonGeneratorDecorator, etc
+            <scope>runtime</scope>
+            -->
+        </dependency>
+        <!-- Your project must also directly depend on either logback-classic or logback-access. For example: -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.3.7</version>
+            <!-- Use runtime scope if the project does not have any compile-time usage of logback,
+                 such as implementations of Appender, Encoder, Layout, TurboFilter, etc
+            <scope>runtime</scope>
+            -->
         </dependency>
 
         <dependency>
@@ -452,6 +500,18 @@
             <artifactId>spring-test</artifactId>
             <version>5.3.28</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jsonschema2pojo</groupId>
+            <artifactId>jsonschema2pojo-core</artifactId>
+            <version>1.1.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

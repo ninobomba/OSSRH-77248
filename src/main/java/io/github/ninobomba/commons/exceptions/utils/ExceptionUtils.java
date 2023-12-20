@@ -10,14 +10,17 @@ import java.util.StringJoiner;
 public interface ExceptionUtils
 {
 
+    /**
+     *
+     */
     @SneakyThrows
     static String convertToString( Throwable throwable )
     {
         if ( Objects.isNull( throwable ) ) return null;
 
-        var traces = throwable.getStackTrace();
-
         var response = new StringJoiner("\n");
+
+        var traces = throwable.getStackTrace();
 
         if ( ! CollectionUtils.isEmpty( Arrays.asList( traces ) ) )
         {

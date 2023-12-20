@@ -1,7 +1,6 @@
 package io.github.ninobomba.commons.inspectors;
 
 import io.lettuce.core.RedisClient;
-import io.lettuce.core.api.StatefulRedisConnection;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,9 +29,9 @@ public class RedisConnectivityInspector implements IResourceInspector
 
         boolean isConnectionAvailable = false;
         try ( var client = RedisClient.create( uri ) ) {
-            try (StatefulRedisConnection<String, String> connection = client.connect()) {
+            try ( var connection = client.connect() ) {
                 isConnectionAvailable = Objects.nonNull(connection) && connection.isOpen();
-            } catch (Exception e) {
+            } catch ( Exception e ) {
                 log.error("RedisConnectivityInspector::isAvailable() !: error while opening redis connection");
             }
         }

@@ -29,7 +29,7 @@ public class H2ConnectivityInspector implements IResourceInspector
         Class.forName ( DRIVER );
 
         try ( Connection connection = DriverManager.getConnection ( uri, user, password ) ) {
-            isValid = Objects.nonNull( connection ) && connection.isValid( 1000 );
+            isValid = Objects.nonNull( connection ) && connection.isValid( 1_000 );
         } catch ( SQLException e ) {
             log.error( "H2ConnectivityInspector::isAvailable() !: Unable to connect to db", e );
         }

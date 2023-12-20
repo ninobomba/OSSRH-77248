@@ -1,6 +1,5 @@
 package io.github.ninobomba.commons.inspectors;
 
-import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import lombok.Builder;
 import lombok.SneakyThrows;
@@ -23,14 +22,14 @@ public class RabbitMQConnectivityInspector implements IResourceInspector
     @Override
     public boolean isAvailable()
     {
-        ConnectionFactory factory = new ConnectionFactory();
+        var factory = new ConnectionFactory();
         factory.setUsername( user );
         factory.setPassword( password );
         factory.setHost( host );
         factory.setPort( port );
 
         boolean isValid = false;
-        try ( Connection connection = factory.newConnection() ) {
+        try ( var connection = factory.newConnection() ) {
             isValid = Objects.nonNull( connection ) && connection.isOpen();
         } catch ( IOException e ) {
             log.error( "RabbitMQConnectivityInspector::isAvailable() !: Unable to connect", e );

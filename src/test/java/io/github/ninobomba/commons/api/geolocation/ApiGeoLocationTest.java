@@ -2,7 +2,6 @@ package io.github.ninobomba.commons.api.geolocation;
 
 import io.github.ninobomba.commons.exceptions.commons.EmptyOrNullParameterException;
 import io.github.ninobomba.commons.web.http.HttpRemoteIpUtils;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,9 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ApiGeoLocationTest
 {
     @Test
-    void getGeoLocationInfoByIpAddressTest(){
+    void getGeoLocationInfoByIpAddressTest() {
 
-        var request = Mockito.mock(HttpServletRequest.class);
+        var request = Mockito.mock( HttpServletRequest.class );
 
         var ip = HttpRemoteIpUtils.getRemoteIpByHttpRequestHeaders( request );
 
@@ -25,7 +24,7 @@ class ApiGeoLocationTest
         assertThat( ip ).isNull();
 
         Assertions.assertThrows(EmptyOrNullParameterException.class, () -> {
-            var geo= ApiGeoLocation.getGeoLocationByStackIp( ip );
+            var geo= ApiGeoLocation.getGeoLocationByIp( null );
         });
 
     }

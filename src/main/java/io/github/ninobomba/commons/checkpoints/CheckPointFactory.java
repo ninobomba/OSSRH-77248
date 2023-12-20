@@ -7,7 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.CollectionUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.*;
@@ -16,9 +17,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public final class CheckPointFactory
 {
-    private final Map< String, List<CheckPoint> > checkPointTemplates;
 
     private static CheckPointFactory factory;
+
+    private final Map< String, List<CheckPoint> > checkPointTemplates;
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     private CheckPointFactory() {
         checkPointTemplates = new TreeMap<>();
@@ -144,8 +148,6 @@ public final class CheckPointFactory
     @SneakyThrows
     private List<CheckPoint> buildCheckPointList( String json )
     {
-        log.trace( "CheckPointFactory::buildCheckPointList() >: start" );
-        var mapper = new ObjectMapper();
         return mapper.readValue(
                 json,
                 mapper.getTypeFactory().constructCollectionType(List.class, CheckPoint.class)
