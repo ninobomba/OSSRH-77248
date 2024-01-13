@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.api.geolocation;
 
-import io.github.ninobomba.commons.exceptions.commons.EmptyOrNullParameterException;
+import io.github.ninobomba.commons.exceptions.types.commons.EmptyOrNullParameterException;
 import io.github.ninobomba.commons.web.http.HttpRemoteIpUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

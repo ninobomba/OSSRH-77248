@@ -7,12 +7,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public interface ExceptionUtils
-{
+public interface ExceptionUtils {
 
-    /**
-     *
-     */
     @SneakyThrows
     static String convertToString( Throwable throwable )
     {

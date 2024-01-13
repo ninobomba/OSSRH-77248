@@ -1,6 +1,7 @@
 package io.github.ninobomba.commons.api.geolocation;
 
-import io.github.ninobomba.commons.exceptions.commons.EmptyOrNullParameterException;
+import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessage;
+import io.github.ninobomba.commons.exceptions.types.commons.EmptyOrNullParameterException;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -28,15 +29,27 @@ public interface ApiGeoLocation
     {
 
         if( StringUtils.isBlank( ip ) )
-            throw EmptyOrNullParameterException.create( "ApiGeoLocation: getGeoLocationInfoByIpAddress() !: empty or null ip address", ip );
+            throw   LocalExceptionMessage.builder()
+                            .message( "ApiGeoLocation: getGeoLocationInfoByIpAddress() !: empty or null ip address: " + ip )
+                            .tClass( EmptyOrNullParameterException.class )
+                            .build()
+                    .create();
 
         val accessKey = LocalPropertiesLoader.getInstance().getProperty( "api.geolocation.key" );
         if( StringUtils.isBlank( accessKey ) )
-            throw EmptyOrNullParameterException.create("ApiGeoLocation::getGeoLocationInfo() !: accessKey is null or empty", accessKey );
+            throw   LocalExceptionMessage.builder()
+                            .message( "ApiGeoLocation: getGeoLocationInfoByIpAddress() !: accessKey is null or empty: " + accessKey )
+                            .tClass( EmptyOrNullParameterException.class )
+                            .build()
+                    .create();
 
         val baseUrl = LocalPropertiesLoader.getInstance().getProperty( "api.geolocation.url" );
         if( StringUtils.isBlank( baseUrl ) )
-            throw EmptyOrNullParameterException.create( "ApiGeoLocation: getGeoLocationInfo() !: baseUrl is null or empty", baseUrl );
+            throw   LocalExceptionMessage.builder()
+                            .message( "ApiGeoLocation: getGeoLocationInfoByIpAddress() !: baseUrl is null or empty: " + baseUrl )
+                            .tClass( EmptyOrNullParameterException.class )
+                            .build()
+                    .create();
 
         val url = baseUrl +  "/" + ip + "?access_key=" + accessKey;
 
