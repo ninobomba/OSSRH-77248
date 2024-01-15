@@ -4,24 +4,25 @@ import cn.danielw.fop.ObjectFactory;
 import cn.danielw.fop.ObjectPool;
 import cn.danielw.fop.PoolConfig;
 import cn.danielw.fop.Poolable;
+import lombok.SneakyThrows;
 
-public final class ExceptionProviderFactoryPool<T> {
+public final class ExceptionFactoryPool<T> {
 
     private final Class<T> tClass;
 
     private final ObjectPool<T> objectPool;
 
-    private final int POOL_PARTITION_SIZE = 5;
-    private final int POOL_MIN_SIZE = 10;
-    private final int POOL_MAX_SIZE = 15;
-    private final int POOL_MAX_IDLE_MS = 60 * 1_000 * 5;
+    private static final int POOL_PARTITION_SIZE = 5;
+    private static final int POOL_MIN_SIZE = 10;
+    private static final int POOL_MAX_SIZE = 15;
+    private static final int POOL_MAX_IDLE_MS = 60 * 1_000 * 5;
 
-    public ExceptionProviderFactoryPool(Class<T> tClass) {
+    public ExceptionFactoryPool(Class<T> tClass) {
         this.tClass = tClass;
         objectPool = new ObjectPool<>( setup(POOL_PARTITION_SIZE, POOL_MAX_SIZE, POOL_MIN_SIZE, POOL_MAX_IDLE_MS), create() );
     }
 
-    public ExceptionProviderFactoryPool(Class<T> tClass, int partition, int maxSize, int minSize, int maxIdleMilliseconds ) {
+    public ExceptionFactoryPool(Class<T> tClass, int partition, int maxSize, int minSize, int maxIdleMilliseconds ) {
         this.tClass = tClass;
         objectPool = new ObjectPool<>( setup( partition, maxSize, minSize, maxIdleMilliseconds ), create() );
     }
@@ -42,16 +43,17 @@ public final class ExceptionProviderFactoryPool<T> {
                 try {
                     return tClass.getConstructor().newInstance();
                 } catch ( Exception e ){
-                    return (T) new RuntimeException();
+                    return null;
                 }
             }
 
             @Override
-            public void destroy(Object o) {
+            public void destroy(T o) {
+                // TODO nullify
             }
 
             @Override
-            public boolean validate(Object o) {
+            public boolean validate(T o) {
                 return true;
             }
 
@@ -59,9 +61,9 @@ public final class ExceptionProviderFactoryPool<T> {
 
     }
 
-    public T getException() {
-        try ( Poolable<?> poolable = objectPool.borrowObject() ) {
-            return (T) poolable.getObject();
+    public Poolable<T> getPool() {
+        try ( Poolable<T> poolable = objectPool.borrowObject() ) {
+            return poolable;
         }
     }
 
@@ -69,11 +71,12 @@ public final class ExceptionProviderFactoryPool<T> {
         return objectPool.getSize();
     }
 
-    public void returnObject( Poolable<?> instance ) {
-        objectPool.returnObject((Poolable<T>) instance);
+    public void returnObject(Poolable<? extends Throwable> instance ) {
+        objectPool.returnObject( ( Poolable<T> ) instance );
     }
 
-    public void shutdown() throws InterruptedException {
+    @SneakyThrows
+    public void shutdown()  {
         objectPool.shutdown();
     }
 

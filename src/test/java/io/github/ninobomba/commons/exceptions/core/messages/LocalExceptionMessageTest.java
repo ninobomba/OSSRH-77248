@@ -66,7 +66,7 @@ class LocalExceptionMessageTest {
                     .code("200")
                     .message("OK")
                     .description("processed")
-                    .tClass(e)
+                    .tClass((Class<? extends Exception>) e)
                     .build()
                     .create();
 

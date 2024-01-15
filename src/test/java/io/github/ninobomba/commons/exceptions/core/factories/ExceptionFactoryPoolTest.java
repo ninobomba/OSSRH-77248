@@ -6,21 +6,24 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ExceptionProviderFactoryPoolTest {
+class ExceptionFactoryPoolTest {
 
     @Test
-    void test() throws InterruptedException {
+    void test() {
 
-        var factoryPool = new ExceptionProviderFactoryPool<>(SystemIllegalAccessException.class);
+        var factory = new ExceptionFactoryPool<>(SystemIllegalAccessException.class);
 
-        var exception = factoryPool.getException();
+        var pool = factory.getPool();
+        System.out.println( pool );
+
+        var exception = pool.getObject();
         assert exception instanceof SystemIllegalAccessException;
         System.out.println( exception );
 
         exception.initCause( new Throwable( "XYZ" ) );
         System.out.println(  "getCause: " + exception.getCause() );
 
-        exception.addSuppressed( new Throwable(" Suppresed ACX" ) );
+        exception.addSuppressed( new Throwable(" Suppressed ACX" ) );
         System.out.println( "getSuppressed" + ReflectionToStringBuilder.toString( exception.getSuppressed() ) );
 
         System.out.println( "getLocalizedMessage: " + exception.getLocalizedMessage());
@@ -28,30 +31,30 @@ class ExceptionProviderFactoryPoolTest {
 //        exception.setMessage( exception, "hola");
         System.out.println( "getMessage: " + exception.getMessage() );
 
-        System.out.println( "Factory size " + factoryPool.getSize() );
+        System.out.println( "Factory size " + factory.getSize() );
 
-        factoryPool.shutdown();
+
+        factory.returnObject( pool );
+        pool.returnObject();
+
+        factory.shutdown();
 
         Assertions.assertThrows(SystemIllegalAccessException.class, () -> {
             throw exception;
         });
 
-        // TODO: // Implement return
-//        factoryPool.returnObject(f );
     }
 
     @Test
     void testAll() {
-
         var classes = IPackageUtils.getCustomExceptionSet("io.github.ninobomba.commons.exceptions.types");
         classes.forEach(e -> {
-//            System.out.println(e);
-
-            var factoryPool = new ExceptionProviderFactoryPool<>( e );
-            var exception = factoryPool.getException();
+            var factoryPool = new ExceptionFactoryPool<>( e );
+            var exception = factoryPool.getPool();
             System.out.println( exception );
         });
-
     }
+
+
 
 }
