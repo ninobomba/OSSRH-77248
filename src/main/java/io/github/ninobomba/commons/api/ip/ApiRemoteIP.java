@@ -14,30 +14,29 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 
 public interface ApiRemoteIP {
-
-    /**
-     * Retrieves the remote IP address using AWS API.
-     *
-     * @return The remote IP address.
-     * @throws EmptyOrNullParameterException If the AWS URL is blank.
-     * @throws IOException                   If an I/O error occurs when retrieving the remote IP address.
-     * @throws URISyntaxException            If the AWS URL is not a valid URI.
-     */
-    @SneakyThrows
-    static String getRemoteIpByAws() {
-        String awsUrl = LocalPropertiesLoader.getInstance().getProperty("api.remote.ip.aws");
-
-        if (StringUtils.isBlank(awsUrl))
-            throw LocalExceptionMessage.builder()
-                    .message("HttpRemoteIpTools: getRemoteIpByAws() !: aws url is blank: " + awsUrl)
-                    .tClass(EmptyOrNullParameterException.class)
-                    .build()
-                    .create();
-
-        try (var br = new BufferedReader(new InputStreamReader(new URI(awsUrl).toURL().openStream(), StandardCharsets.UTF_8))) {
-            return br.readLine();
-        }
-
-    }
-
+	
+	/**
+	 * Retrieves the remote IP address using AWS API.
+	 *
+	 * @return The remote IP address.
+	 * @throws EmptyOrNullParameterException If the AWS URL is blank.
+	 * @throws IOException                   If an I/O error occurs when retrieving the remote IP address.
+	 * @throws URISyntaxException            If the AWS URL is not a valid URI.
+	 */
+	@SneakyThrows
+	static String getRemoteIpByAws ( ) {
+		String awsUrl = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.remote.ip.aws" );
+		
+		if ( StringUtils.isBlank ( awsUrl ) )
+			throw LocalExceptionMessage.builder ( )
+					.message ( "HttpRemoteIpTools: getRemoteIpByAws() !: aws url is blank: " + awsUrl )
+					.build ( )
+					.create ( EmptyOrNullParameterException.class );
+		
+		try ( var br = new BufferedReader ( new InputStreamReader ( new URI ( awsUrl ).toURL ( ).openStream ( ), StandardCharsets.UTF_8 ) ) ) {
+			return br.readLine ( );
+		}
+		
+	}
+	
 }

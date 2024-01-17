@@ -7,14 +7,14 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
-public class NumberValidator implements ConstraintValidator<IsNumber, String>
-{
+public class NumberValidator implements ConstraintValidator < IsNumber, String > {
 	@Override
-	public void initialize(IsNumber constraintAnnotation) {}
-
-	@Override
-	public boolean isValid(String input, ConstraintValidatorContext context)
-	{
-		return NumberUtils.isCreatable( input );
+	public void initialize ( IsNumber constraintAnnotation ) {
 	}
+	
+	@Override
+	public boolean isValid ( String input, ConstraintValidatorContext context ) {
+		return NumberUtils.isCreatable ( input );
+	}
+	
 }

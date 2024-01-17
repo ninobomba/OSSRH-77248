@@ -1,15 +1,11 @@
 package io.github.ninobomba.commons.notifications.bus.events;
 
 import io.github.ninobomba.commons.notifications.commons.NotificationMessage;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = false)
+@Data
 public class EmailDeliveryMessageEvent {
-
-    private NotificationMessage message;
-
+	
+	private NotificationMessage message;
+	
 }

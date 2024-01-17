@@ -1,13 +1,11 @@
 package io.github.ninobomba.commons.notifications.bus.events;
 
 import io.github.ninobomba.commons.notifications.commons.NotificationMessage;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class TwilioSmsDeliveryMessageEvent {
-
-    private NotificationMessage message;
-
+	
+	private NotificationMessage message;
+	
 }

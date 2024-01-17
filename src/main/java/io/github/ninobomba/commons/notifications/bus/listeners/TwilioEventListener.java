@@ -9,17 +9,17 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class TwilioEventListener {
-
-    @Subscribe
-    public void onWhatsUpEvent(TwilioWhatsAppDeliveryMessageEvent event) {
-        log.debug("TwilioEventListener::onWhatsUpEvent() -> processing event: {}", event);
-        TwilioWhatsAppNotificationChannel.getInstance().publish( event.getMessage() );
-    }
-
-    @Subscribe
-    public void onSmsEvent(TwilioSmsDeliveryMessageEvent event) {
-        log.debug("TwilioEventListener::onSmsEvent() -> processing event: {}", event);
-        TwilioSmsNotificationChannel.getInstance().publish( event.getMessage() );
-    }
-
+	
+	@Subscribe
+	public void onWhatsUpEvent ( TwilioWhatsAppDeliveryMessageEvent event ) {
+		log.debug ( "TwilioEventListener::onWhatsUpEvent() -> processing event: {}", event );
+		TwilioWhatsAppNotificationChannel.getInstance ( ).publish ( event.getMessage ( ) );
+	}
+	
+	@Subscribe
+	public void onSmsEvent ( TwilioSmsDeliveryMessageEvent event ) {
+		log.debug ( "TwilioEventListener::onSmsEvent() -> processing event: {}", event );
+		TwilioSmsNotificationChannel.getInstance ( ).publish ( event.getMessage ( ) );
+	}
+	
 }

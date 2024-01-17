@@ -18,45 +18,45 @@ import java.util.concurrent.Executors;
 
 @Slf4j
 public final class EventBusManager {
-
-    private static EventBusManager instance;
-    private static final EventBus eventBus = new AsyncEventBus( Executors.newCachedThreadPool() );
-    private static final List<?> listeners = List.of(
-            new EmailEventListener(),
-            new SlackEventListener(),
-            new TwilioEventListener()
-    );
-
-    static {
-        listeners.forEach( eventBus::register );
-    }
-
-    private EventBusManager() {
-    }
-
-    public static EventBusManager getInstance() {
-        if( Objects.isNull( instance ) ) instance = new EventBusManager();
-        return instance;
-    }
-
-    public void publish( NotificationMessage message ) {
-        log.debug( "EventBusManager::publish() -> message: {}", message );
-
-        var emailDeliveryMessageEvent = new EmailDeliveryMessageEvent();
-        emailDeliveryMessageEvent.setMessage( message );
-        eventBus.post( emailDeliveryMessageEvent );
-
-        var slackDeliveryMessageEvent = new SlackDeliveryMessageEvent();
-        slackDeliveryMessageEvent.setMessage( message );
-        eventBus.post( slackDeliveryMessageEvent );
-
-        var twilioSmsDeliveryMessageEvent = new TwilioSmsDeliveryMessageEvent();
-        twilioSmsDeliveryMessageEvent.setMessage( message );
-        eventBus.post( twilioSmsDeliveryMessageEvent );
-
-        var twilioWhatsAppDeliveryMessageEvent = new TwilioWhatsAppDeliveryMessageEvent();
-        twilioWhatsAppDeliveryMessageEvent.setMessage( message );
-        eventBus.post( twilioWhatsAppDeliveryMessageEvent );
-    }
-
+	
+	private static EventBusManager instance;
+	private static final EventBus eventBus = new AsyncEventBus ( Executors.newCachedThreadPool ( ) );
+	private static final List < ? > listeners = List.of (
+			new EmailEventListener ( ),
+			new SlackEventListener ( ),
+			new TwilioEventListener ( )
+	);
+	
+	static {
+		listeners.forEach ( eventBus::register );
+	}
+	
+	private EventBusManager ( ) {
+	}
+	
+	public static EventBusManager getInstance ( ) {
+		if ( Objects.isNull ( instance ) ) instance = new EventBusManager ( );
+		return instance;
+	}
+	
+	public void publish ( NotificationMessage message ) {
+		log.debug ( "EventBusManager::publish() -> message: {}", message );
+		
+		var emailDeliveryMessageEvent = new EmailDeliveryMessageEvent ( );
+		emailDeliveryMessageEvent.setMessage ( message );
+		eventBus.post ( emailDeliveryMessageEvent );
+		
+		var slackDeliveryMessageEvent = new SlackDeliveryMessageEvent ( );
+		slackDeliveryMessageEvent.setMessage ( message );
+		eventBus.post ( slackDeliveryMessageEvent );
+		
+		var twilioSmsDeliveryMessageEvent = new TwilioSmsDeliveryMessageEvent ( );
+		twilioSmsDeliveryMessageEvent.setMessage ( message );
+		eventBus.post ( twilioSmsDeliveryMessageEvent );
+		
+		var twilioWhatsAppDeliveryMessageEvent = new TwilioWhatsAppDeliveryMessageEvent ( );
+		twilioWhatsAppDeliveryMessageEvent.setMessage ( message );
+		eventBus.post ( twilioWhatsAppDeliveryMessageEvent );
+	}
+	
 }

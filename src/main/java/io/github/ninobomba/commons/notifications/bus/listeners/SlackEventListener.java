@@ -7,11 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SlackEventListener {
-
-    @Subscribe
-    public void onEvent(SlackDeliveryMessageEvent event) {
-        log.debug("SlackEventListener::onSlackMessageReceived() -> processing event: {}", event);
-        SlackNotificationChannel.getInstance().publish( event.getMessage() );
-    }
-
+	
+	@Subscribe
+	public void onEvent ( SlackDeliveryMessageEvent event ) {
+		log.debug ( "SlackEventListener::onSlackMessageReceived() -> processing event: {}", event );
+		SlackNotificationChannel.getInstance ( ).publish ( event.getMessage ( ) );
+	}
+	
 }

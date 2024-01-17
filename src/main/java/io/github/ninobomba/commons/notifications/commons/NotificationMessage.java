@@ -11,27 +11,26 @@ import java.time.format.DateTimeFormatter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotificationMessage
-{
-
-    @Builder.Default
-    private long id = IdGeneratorSnowFlakeSupport.getInstance().getNextId();
-
-    @Builder.Default
-    private ENotificationLevel level = ENotificationLevel.INFO;
-
-    @Builder.Default
-    private String timestamp = LocalDateTime.now().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm:ss.SSS" ) );
-
-    private long requestId;
-
-    private String message;
-
-    private String payload;
-
-    @SneakyThrows
-    public String toJsonString() {
-        return new ObjectMapper().writeValueAsString( this );
-    }
-
+public class NotificationMessage {
+	
+	@Builder.Default
+	private long id = IdGeneratorSnowFlakeSupport.getInstance ( ).getNextId ( );
+	
+	@Builder.Default
+	private ENotificationLevel level = ENotificationLevel.INFO;
+	
+	@Builder.Default
+	private String timestamp = LocalDateTime.now ( ).format ( DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss.SSS" ) );
+	
+	private long requestId;
+	
+	private String message;
+	
+	private String payload;
+	
+	@SneakyThrows
+	public String toJsonString ( ) {
+		return new ObjectMapper ( ).writeValueAsString ( this );
+	}
+	
 }

@@ -9,15 +9,15 @@ import java.util.Set;
 import static org.reflections.scanners.Scanners.SubTypes;
 
 public interface IPackageUtils {
-
-    static Set<Class<? extends Throwable>> getCustomExceptionSet(String packageName) {
-        Reflections reflections = new Reflections (
-                new ConfigurationBuilder()
-                        .forPackage( packageName )
-                        .filterInputsBy( new FilterBuilder().excludePackage("java.lang" ) )
-                        .setScanners( SubTypes )
-        );
-        return reflections.getSubTypesOf( Throwable.class );
-    }
-
+	
+	static Set < Class < ? extends Throwable > > getCustomExceptionSet ( String packageName ) {
+		Reflections reflections = new Reflections (
+				new ConfigurationBuilder ( )
+						.forPackage ( packageName )
+						.filterInputsBy ( new FilterBuilder ( ).excludePackage ( "java.lang" ) )
+						.setScanners ( SubTypes )
+		);
+		return reflections.getSubTypesOf ( Throwable.class );
+	}
+	
 }
