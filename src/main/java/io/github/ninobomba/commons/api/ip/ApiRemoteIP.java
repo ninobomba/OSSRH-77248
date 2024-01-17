@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.api.ip;
 
-import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessage;
+import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessageBuilder;
 import io.github.ninobomba.commons.exceptions.types.commons.EmptyOrNullParameterException;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.SneakyThrows;
@@ -28,7 +28,7 @@ public interface ApiRemoteIP {
 		String awsUrl = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.remote.ip.aws" );
 		
 		if ( StringUtils.isBlank ( awsUrl ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "HttpRemoteIpTools: getRemoteIpByAws() !: aws url is blank: " + awsUrl )
 					.build ( )
 					.create ( EmptyOrNullParameterException.class );

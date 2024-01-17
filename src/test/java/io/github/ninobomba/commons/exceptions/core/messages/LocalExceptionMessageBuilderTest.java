@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 
-class LocalExceptionMessageTest {
+class LocalExceptionMessageBuilderTest {
 	
 	@Test
 	void testInLineInstanceCreator ( ) {
 		
-		var message = LocalExceptionMessage.builder ( )
+		var message = LocalExceptionMessageBuilder.builder ( )
 				.code ( "200" )
 				.message ( "OK" )
 				.description ( format ( "processed: {}, {}, {}", 5, 6, "C", 1.7 ) )
@@ -28,12 +28,12 @@ class LocalExceptionMessageTest {
 	
 	@Test
 	void test ( ) {
-		var exception = LocalExceptionMessage.builder ( )
+		var exception = LocalExceptionMessageBuilder.builder ( )
 				.code ( "200" )
 				.message ( "OK" )
 				.description ( format ( "processed: {}, {}, {}", 1, 2, "A" ) )
-				.separator ( LocalExceptionMessage.SEPARATORS.SYSTEM_SEPARATOR.value )
-				.level ( LocalExceptionMessage.ExceptionLevel.CRITICAL )
+				.separator ( LocalExceptionMessageBuilder.SEPARATORS.SYSTEM_SEPARATOR.value )
+				.level ( LocalExceptionMessageBuilder.ExceptionLevel.CRITICAL )
 				.build ( )
 				.create ( SystemIllegalAccessException.class );
 		System.out.println ( exception );
@@ -41,7 +41,7 @@ class LocalExceptionMessageTest {
 	
 	@Test
 	void testWithThrowable ( ) {
-		var exception = LocalExceptionMessage.builder ( )
+		var exception = LocalExceptionMessageBuilder.builder ( )
 				.id ( String.valueOf ( 1_000 ) )
 				.code ( "500" )
 				.message ( String.format ( "Server Error: %d", 501 ) )
@@ -56,10 +56,10 @@ class LocalExceptionMessageTest {
 	@Test
 	void testAll ( ) {
 		
-		var classes = IPackageUtils.getCustomExceptionSet ( "io.github.ninobomba.commons.exceptions.types" );
+		var classes = IPackageUtils.findAllClassesUsingReflections ( "io.github.ninobomba.commons.exceptions.types" );
 		
 		classes.forEach ( e -> {
-			var exception = LocalExceptionMessage.builder ( )
+			var exception = LocalExceptionMessageBuilder.builder ( )
 					.code ( "200" )
 					.message ( "OK" )
 					.description ( "processed" )

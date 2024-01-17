@@ -1,4 +1,4 @@
-package io.github.ninobomba.commons.exceptions.rules;
+package io.github.ninobomba.commons.exceptions.commons;
 
 public enum CommonMessageErrors {
 	

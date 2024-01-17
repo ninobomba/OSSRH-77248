@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.notifications.channels.email;
 
-import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessage;
+import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessageBuilder;
 import io.github.ninobomba.commons.exceptions.types.notification.NotificationProcessException;
 import io.github.ninobomba.commons.notifications.channels.INotificationChannel;
 import io.github.ninobomba.commons.notifications.commons.AppNotificationProperties;
@@ -145,34 +145,34 @@ public final class EmailNotificationChannel implements INotificationChannel {
 		
 		issueUrl = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.email.issue.url" );
 		if ( StringUtils.isBlank ( issueUrl ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "EmailNotificationChannel::load() !: email issue url is empty: " + issueUrl )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
 		// Required not null values
 		var host = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.email.host" );
 		if ( StringUtils.isBlank ( host ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "EmailNotificationChannel::load() !: email host server is empty: " + host )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
 		String username = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.email.username" );
 		if ( StringUtils.isBlank ( username ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "EmailNotificationChannel::load() !: email username is empty: " + username )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
 		String password = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.email.password" );
 		if ( StringUtils.isBlank ( password ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "EmailNotificationChannel::load() !: email password is empty: " + username )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		

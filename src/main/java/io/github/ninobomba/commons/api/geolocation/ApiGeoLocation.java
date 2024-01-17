@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.api.geolocation;
 
-import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessage;
+import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessageBuilder;
 import io.github.ninobomba.commons.exceptions.types.commons.EmptyOrNullParameterException;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.SneakyThrows;
@@ -27,21 +27,21 @@ public interface ApiGeoLocation {
 	static String getGeoLocationByIp ( String ip ) {
 		
 		if ( StringUtils.isBlank ( ip ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "ApiGeoLocation: getGeoLocationInfoByIpAddress() !: empty or null ip address: " + ip )
 					.build ( )
 					.create ( EmptyOrNullParameterException.class );
 		
 		val accessKey = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.geolocation.key" );
 		if ( StringUtils.isBlank ( accessKey ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "ApiGeoLocation: getGeoLocationInfoByIpAddress() !: accessKey is null or empty: " + accessKey )
 					.build ( )
 					.create ( EmptyOrNullParameterException.class );
 		
 		val baseUrl = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.geolocation.url" );
 		if ( StringUtils.isBlank ( baseUrl ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "ApiGeoLocation: getGeoLocationInfoByIpAddress() !: baseUrl is null or empty: " + baseUrl )
 					.build ( )
 					.create ( EmptyOrNullParameterException.class );

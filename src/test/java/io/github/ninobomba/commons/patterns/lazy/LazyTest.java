@@ -27,7 +27,7 @@ public class LazyTest {
 	@Test
 	void example_4 ( ) {
 		Optional < Integer > foo = Optional.of ( 1 );
-		foo.orElseGet ( ( ) -> compute ( ) ); // lazy
+		foo.orElseGet ( LazyTest::compute ); // lazy
 	}
 	
 	private static int compute ( ) {

@@ -1,5 +1,6 @@
 package io.github.ninobomba.commons.exceptions.core.factories;
 
+import io.github.ninobomba.commons.exceptions.commons.ExceptionsConstants;
 import io.github.ninobomba.commons.project.IPackageUtils;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class ExceptionAbstractFactoryPool {
 	
-	private static final String PACKAGE = "io.github.ninobomba.commons.exceptions.types";
+	private static final String PACKAGE = ExceptionsConstants.CUSTOM_PACKAGE_NAME.getValue ();
 	
 	private static final ConcurrentHashMap < String, ExceptionFactoryPool < ? extends Throwable > > factoryMap = new ConcurrentHashMap <> ( );
 	
@@ -18,7 +19,7 @@ public final class ExceptionAbstractFactoryPool {
 	}
 	
 	private void init ( ) {
-		var classes = IPackageUtils.getCustomExceptionSet ( PACKAGE ).stream ( ).filter ( e -> !e.getClass ( ).equals ( RuntimeException.class ) ).toList ( );
+		var classes = IPackageUtils.findAllClassesUsingReflections ( PACKAGE ).stream ( ).filter ( e -> !e.getClass ( ).equals ( RuntimeException.class ) ).toList ( );
 		classes.forEach ( this::register );
 	}
 	

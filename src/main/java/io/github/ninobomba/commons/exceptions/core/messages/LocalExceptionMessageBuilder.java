@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 @Builder
-public final class LocalExceptionMessage {
+public final class LocalExceptionMessageBuilder {
 	
 	
 	private String id;

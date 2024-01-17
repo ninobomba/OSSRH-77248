@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint ( validatedBy = NumberValidator.class )
-@Target ( { ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE } )
+@Target ( { ElementType.FIELD } )
 @Retention ( RetentionPolicy.RUNTIME )
 public @interface IsNumber {
 	String message ( ) default "Invalid Number";

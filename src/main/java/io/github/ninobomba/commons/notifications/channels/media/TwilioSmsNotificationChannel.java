@@ -3,7 +3,7 @@ package io.github.ninobomba.commons.notifications.channels.media;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessage;
+import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessageBuilder;
 import io.github.ninobomba.commons.exceptions.types.notification.NotificationProcessException;
 import io.github.ninobomba.commons.notifications.channels.INotificationChannel;
 import io.github.ninobomba.commons.notifications.commons.AppNotificationProperties;
@@ -128,33 +128,33 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel 
 		
 		issueUrl = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.twilio.sms.issue.url" );
 		if ( StringUtils.isBlank ( issueUrl ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "TwilioSmsNotificationChannel::load() !: twilio issue url is empty: " + issueUrl )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
 		String token = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.twilio.sms.token" );
 		if ( StringUtils.isBlank ( token ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "TwilioSmsNotificationChannel::load() !: twilio token is empty: " + token )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
 		var sid = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.twilio.sms.sid" );
 		if ( StringUtils.isBlank ( sid ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "TwilioSmsNotificationChannel::load() !: twilio sid is empty: " + sid )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
 		var phones = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.twilio.sms.to" );
 		if ( StringUtils.isBlank ( phones ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "TwilioSmsNotificationChannel::load() !: no twilio phones configured: " + phones )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
@@ -163,9 +163,9 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel 
 				.split ( "," );
 		
 		if ( list.length == 0 )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "TwilioSmsNotificationChannel::load() !: invalid phone list: " + phones )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
@@ -174,9 +174,9 @@ public final class TwilioSmsNotificationChannel implements INotificationChannel 
 		var twilioPhoneFrom = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.twilio.sms.from" );
 		
 		if ( StringUtils.isBlank ( twilioPhoneFrom ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "TwilioSmsNotificationChannel::load() !: no twilio phone configured to send sms messages: " + twilioPhoneFrom )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		

@@ -8,7 +8,7 @@ import com.slack.api.model.block.DividerBlock;
 import com.slack.api.model.block.LayoutBlock;
 import com.slack.api.model.block.SectionBlock;
 import com.slack.api.model.block.composition.MarkdownTextObject;
-import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessage;
+import io.github.ninobomba.commons.exceptions.core.messages.LocalExceptionMessageBuilder;
 import io.github.ninobomba.commons.exceptions.types.notification.NotificationProcessException;
 import io.github.ninobomba.commons.notifications.channels.INotificationChannel;
 import io.github.ninobomba.commons.notifications.commons.AppNotificationProperties;
@@ -207,25 +207,25 @@ public final class SlackNotificationChannel implements INotificationChannel {
 		
 		issueUrl = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.slack.issue.url" );
 		if ( StringUtils.isBlank ( issueUrl ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "SlackNotificationChannel::load() !:  slack issue url is empty: " + issueUrl )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
 		token = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.slack.token" );
 		if ( StringUtils.isBlank ( token ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "SlackNotificationChannel::load() !:  slack token is empty: " + token )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
 		slackChannelId = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.slack.channel" );
 		if ( StringUtils.isBlank ( slackChannelId ) )
-			throw LocalExceptionMessage.builder ( )
+			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "SlackNotificationChannel::load() !:  slack channel is empty: " + slackChannelId )
-					.level ( LocalExceptionMessage.ExceptionLevel.ERROR )
+					.level ( LocalExceptionMessageBuilder.ExceptionLevel.ERROR )
 					.build ( )
 					.create ( NotificationProcessException.class );
 		
