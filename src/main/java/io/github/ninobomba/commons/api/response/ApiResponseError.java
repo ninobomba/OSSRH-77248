@@ -1,17 +1,13 @@
 package io.github.ninobomba.commons.api.response;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-@Getter
+@Data
 @Builder
-@ToString
-@EqualsAndHashCode
 public class ApiResponseError implements Serializable {
 	
 	@Serial

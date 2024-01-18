@@ -7,10 +7,11 @@ import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
 public interface ApiRemoteIP {
@@ -20,23 +21,38 @@ public interface ApiRemoteIP {
 	 *
 	 * @return The remote IP address.
 	 * @throws EmptyOrNullParameterException If the AWS URL is blank.
-	 * @throws IOException                   If an I/O error occurs when retrieving the remote IP address.
-	 * @throws URISyntaxException            If the AWS URL is not a valid URI.
 	 */
 	@SneakyThrows
-	static String getRemoteIpByAws ( ) {
-		String awsUrl = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.remote.ip.aws" );
+	static String getRemoteIpUsingAwsService ( ) {
+		String uri = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.remote.ip.aws" );
 		
-		if ( StringUtils.isBlank ( awsUrl ) )
+		if ( StringUtils.isBlank ( uri ) )
 			throw LocalExceptionMessageBuilder.builder ( )
-					.message ( "HttpRemoteIpTools: getRemoteIpByAws() !: aws url is blank: " + awsUrl )
+					.message ( "HttpRemoteIpTools: getRemoteIpUsingAwsService() !:  url is blank: " + uri )
 					.build ( )
 					.create ( EmptyOrNullParameterException.class );
 		
-		try ( var br = new BufferedReader ( new InputStreamReader ( new URI ( awsUrl ).toURL ( ).openStream ( ), StandardCharsets.UTF_8 ) ) ) {
+		try ( var br = new BufferedReader ( new InputStreamReader ( new URI ( uri ).toURL ( ).openStream ( ), StandardCharsets.UTF_8 ) ) ) {
 			return br.readLine ( );
 		}
 		
 	}
+	
+	@SneakyThrows
+	static String getRemoteIpUsingApifyService ( ) {
+		String uri = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.remote.ip.apify" );
+		
+		if ( StringUtils.isBlank ( uri ) )
+			throw LocalExceptionMessageBuilder.builder ( )
+					.message ( "HttpRemoteIpTools: getRemoteIpUsingApifyService() !:  url is blank: " + uri )
+					.build ( )
+					.create ( EmptyOrNullParameterException.class );
+		
+		HttpRequest request = HttpRequest.newBuilder ( ).uri ( URI.create ( uri ) ).build ( );
+		HttpResponse < String > response = HttpClient.newHttpClient ( ).send ( request, HttpResponse.BodyHandlers.ofString ( ) );
+		
+		return response.body ();
+	}
+	
 	
 }

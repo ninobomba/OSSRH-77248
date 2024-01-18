@@ -1,12 +1,12 @@
 package io.github.ninobomba.commons.api.response;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
 import java.io.Serializable;
 
+@Data
 @Builder
-@Getter
 public class ApiResponse implements Serializable {
 	
 	private final String id;
