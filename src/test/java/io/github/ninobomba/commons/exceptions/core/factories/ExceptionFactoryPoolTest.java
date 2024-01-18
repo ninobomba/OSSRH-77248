@@ -48,9 +48,9 @@ class ExceptionFactoryPoolTest {
 	@Test
 	void testAll ( ) {
 		var classes = IPackageUtils.findAllClassesUsingReflections ( "io.github.ninobomba.commons.exceptions.types" );
+		assert classes != null;
 		classes.forEach ( e -> {
 			var factoryPool = new ExceptionFactoryPool <> ( e );
-			assert factoryPool != null;
 			var exception = factoryPool.getPool ( );
 			assert exception != null;
 			System.out.println ( exception );

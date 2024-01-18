@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,8 +24,8 @@ public interface IPackageUtils {
 						.filterInputsBy ( new FilterBuilder ( ).excludePackage ( "java.lang" ) )
 						.setScanners ( SubTypes )
 		);
-		var classes = reflections.getSubTypesOf ( Throwable.class ).stream ().filter ( e -> ! e.equals ( RuntimeException.class ) && ! e.equals ( Exception.class ) ).collect ( Collectors.toSet ( ) ) ;
-		return classes.isEmpty () ? null : classes;
+		var classes = reflections.getSubTypesOf ( Throwable.class ).stream ( ).filter ( e -> !e.equals ( RuntimeException.class ) && !e.equals ( Exception.class ) ).collect ( Collectors.toSet ( ) );
+		return classes.isEmpty ( ) ? null : classes;
 	}
 	
 	static Set < Class < ? > > findAllClassesUsingGoogleGuice ( String packageName ) throws IOException {
@@ -37,9 +38,11 @@ public interface IPackageUtils {
 	}
 	
 	static Set < Class < ? > > findAllClassesUsingClassLoader ( String packageName ) {
-		InputStream stream = ClassLoader.getSystemClassLoader ( ).getResourceAsStream ( packageName.replaceAll ( "[.]", "/" ) );
-		BufferedReader reader = new BufferedReader ( new InputStreamReader ( stream ) );
-		return reader.lines ( )
+		InputStream stream = Optional
+				.ofNullable ( ClassLoader.getSystemClassLoader ( ).getResourceAsStream ( packageName.replaceAll ( "[.]", "/" ) ) )
+				.orElseThrow ( ( ) -> new IllegalArgumentException ( "Package not found" ) );
+		
+		return new BufferedReader ( new InputStreamReader ( stream ) ).lines ( )
 				.filter ( line -> line.endsWith ( ".class" ) )
 				.map ( line -> getClass ( line, packageName ) )
 				.collect ( Collectors.toSet ( ) );

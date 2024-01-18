@@ -4,6 +4,7 @@ import io.github.ninobomba.commons.exceptions.commons.ExceptionsConstants;
 import io.github.ninobomba.commons.project.IPackageUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ExceptionAbstractFactoryPool {
@@ -19,7 +20,9 @@ public final class ExceptionAbstractFactoryPool {
 	}
 	
 	private void init ( ) {
-		var classes = IPackageUtils.findAllClassesUsingReflections ( PACKAGE ).stream ( ).filter ( e -> !e.getClass ( ).equals ( RuntimeException.class ) ).toList ( );
+		var classes = Objects
+				.requireNonNull ( IPackageUtils.findAllClassesUsingReflections ( PACKAGE ) )
+				.stream ( ).toList ( );
 		classes.forEach ( this::register );
 	}
 	
