@@ -21,10 +21,13 @@
 #  </server>
 #  https://issues.sonatype.org/login.jsp?os_destination=%2Fsecure%2FSignup%21default.jspa
 
+RELEASE_VERSION="1.0.0.3"
+
 cleanup()
 {
   echo "Executing maven home cleanup for this package"
-  mvn dependency:purge-local-repository -DmanualInclude="io.github.ninobomba:t4m-commons:1.0.0.2"
+  mvn dependency:purge-local-repository -DmanualInclude="io.github.ninobomba:t4m-commons:$RELEASE_VERSION"
+  echo "Executing maven home cleanup for this package"
   rm -rf ~/.m2/repository/io/github/ninobomba
 }
 
@@ -38,7 +41,7 @@ package()
 deploy()
 {
   echo "Deploying jar file"
-  mvn install:install-file -Dfile=target/t4m-commons-1.0.0.2.jar -DgroupId=io.github.ninobomba -DartifactId=t4m-commons -Dversion=1.0.0.2 -Dpackaging=jar -DgeneratedPom=true -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false -DupdateReleaseInfo=true
+  mvn install:install-file -Dfile=target/t4m-commons-$RELEASE_VERSION.jar -DgroupId=io.github.ninobomba -DartifactId=t4m-commons -Dversion=$RELEASE_VERSION -Dpackaging=jar -DgeneratePom=true-Dpackaging=jar -DgeneratedPom=true -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false -DupdateReleaseInfo=true
 }
 
 #################################################
