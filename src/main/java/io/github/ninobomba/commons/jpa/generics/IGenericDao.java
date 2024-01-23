@@ -1,11 +1,10 @@
 package io.github.ninobomba.commons.jpa.generics;
 
-import org.openjdk.jmh.util.Optional;
-
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
-public interface IGenericDao < T extends Serializable, ID extends Serializable > {
+public interface IGenericDao < T extends Serializable, PK extends Serializable > {
 	
 	long create ( T newInstance );
 	
@@ -13,7 +12,7 @@ public interface IGenericDao < T extends Serializable, ID extends Serializable >
 	
 	void delete ( T persistentObject );
 	
-	Optional < T > findById ( ID id );
+	Optional < T > findById ( PK id );
 	
 	List < T > findAll ( );
 	

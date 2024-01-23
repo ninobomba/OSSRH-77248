@@ -145,8 +145,8 @@ Containing a map with the completed checkpoints.
     Utilities for APIs
     Register Events and Checkpoints.
     Connectivity Inspectors to different sources like PostgreSQL, MySql, Redis, etc.
-    Json Utilities
+    Json Utilities - Convert Stackstrace into loggable json output
     Annotated Validators - Email, FutureDate, Number, Phone
     Notifications - Email, Slack, Twilio SMS API.
-    Exceptions
+    Exceptions - Factory Pool & Reflection. - Yet Another Exception Handler. 
     Properties Management.
