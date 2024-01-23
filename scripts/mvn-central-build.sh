@@ -34,6 +34,7 @@ package()
   mvn clean package install -DskipTests
 }
 
+# deploys to .m2 directory
 deploy()
 {
   echo "Deploying jar file"
