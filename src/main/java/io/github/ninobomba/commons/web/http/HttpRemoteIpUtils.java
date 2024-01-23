@@ -11,13 +11,13 @@ import java.util.Optional;
 
 public interface HttpRemoteIpUtils {
 	
-	String HEADER_IP_REGEX = "X-FORWARDED-FOR|PROXY-CLIENT-IP|WL-PROXY-CLIENT-IP|HTTP-CLIENT-IP|ORIGIN|REFERER";
-	
 	@SneakyThrows
 	static String getRemoteIpByHttpRequestHeaders ( HttpServletRequest request ) {
 		var headers = HttpRequestDataUtils.getRequestHeadersMap ( request );
 		
 		if ( CollectionUtils.isEmpty ( headers ) ) return null;
+		
+		String HEADER_IP_REGEX = "X-FORWARDED-FOR|PROXY-CLIENT-IP|WL-PROXY-CLIENT-IP|HTTP-CLIENT-IP|ORIGIN|REFERER";
 		
 		return
 				Optional.ofNullable ( headers.entrySet ( ).stream ( )

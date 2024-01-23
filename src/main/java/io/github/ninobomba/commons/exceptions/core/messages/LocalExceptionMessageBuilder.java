@@ -39,7 +39,7 @@ public final class LocalExceptionMessageBuilder {
 		DEFAULT_SEPARATOR ( " -- " ),
 		SYSTEM_SEPARATOR ( System.lineSeparator ( ) );
 		
-		final String value;
+		public final String value;
 		
 		SEPARATORS ( String value ) {
 			this.value = value;

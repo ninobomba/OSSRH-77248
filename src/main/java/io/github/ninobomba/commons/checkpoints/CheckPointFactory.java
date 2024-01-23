@@ -33,15 +33,10 @@ public final class CheckPointFactory {
 	}
 	
 	public static CheckPointFactory getInstance ( ) {
-		log.trace ( "CheckPointFactory::getInstance() >: start" );
-		
 		if ( Objects.isNull ( checkPointFactory ) ) {
 			log.debug ( "CheckPointFactory::getInstance() _: creating a unique singleton instance" );
 			checkPointFactory = new CheckPointFactory ( );
 		}
-		
-		log.trace ( "CheckPointFactory::getInstance() <: complete" );
-		
 		return checkPointFactory;
 	}
 	
@@ -52,7 +47,6 @@ public final class CheckPointFactory {
 		}
 		
 		if ( !checkPointTemplates.containsKey ( key ) ) {
-			log.debug ( "CheckPointFactory::build() _: building - with key-name: {}", key );
 			var list = buildCheckPointList ( json );
 			checkPointTemplates.put ( key, list );
 		}
@@ -63,8 +57,6 @@ public final class CheckPointFactory {
 	 * Default file location unless specified is: src/main/resources/checkpoint/default.json
 	 */
 	public void build ( List < String > paths ) {
-		log.trace ( "CheckPointFactory::build() >: start" );
-		
 		if ( CollectionUtils.isEmpty ( paths ) ) {
 			log.debug ( "CheckPointFactory::build() !: list of path directories is empty: {}", paths );
 			return;
@@ -86,7 +78,6 @@ public final class CheckPointFactory {
 			
 		} );
 		
-		log.trace ( "CheckPointFactory::build() <: complete" );
 	}
 	
 	public Map < String, CheckPoint > getCheckPointMap ( String key ) {

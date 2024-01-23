@@ -9,10 +9,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toSet;
 import static org.reflections.scanners.Scanners.SubTypes;
 
 public interface IPackageUtils {
@@ -24,7 +25,7 @@ public interface IPackageUtils {
 						.filterInputsBy ( new FilterBuilder ( ).excludePackage ( "java.lang" ) )
 						.setScanners ( SubTypes )
 		);
-		var classes = reflections.getSubTypesOf ( Throwable.class ).stream ( ).filter ( e -> !e.equals ( RuntimeException.class ) && !e.equals ( Exception.class ) ).collect ( Collectors.toSet ( ) );
+		var classes = reflections.getSubTypesOf ( Throwable.class ).stream ( ).filter ( e -> !e.equals ( RuntimeException.class ) && !e.equals ( Exception.class ) ).collect ( toSet ( ) );
 		return classes.isEmpty ( ) ? null : classes;
 	}
 	
@@ -34,7 +35,7 @@ public interface IPackageUtils {
 				.stream ( )
 				.filter ( clazz -> clazz.getPackageName ( ).equalsIgnoreCase ( packageName ) )
 				.map ( ClassPath.ClassInfo::load )
-				.collect ( Collectors.toSet ( ) );
+				.collect ( toSet ( ) );
 	}
 	
 	static Set < Class < ? > > findAllClassesUsingClassLoader ( String packageName ) {
@@ -45,7 +46,7 @@ public interface IPackageUtils {
 		return new BufferedReader ( new InputStreamReader ( stream ) ).lines ( )
 				.filter ( line -> line.endsWith ( ".class" ) )
 				.map ( line -> getClass ( line, packageName ) )
-				.collect ( Collectors.toSet ( ) );
+				.collect ( toSet ( ) );
 	}
 	
 	private static Class < ? > getClass ( String className, String packageName ) {
@@ -55,6 +56,13 @@ public interface IPackageUtils {
 			// handle the exception
 		}
 		return null;
+	}
+	
+	static Set < String > findPackageNamesStartingWith ( String prefix ) {
+		return Arrays.stream ( Package.getPackages ( ) ).toList ( ).stream ( )
+				.map ( Package::getName )
+				.filter ( n -> n.startsWith ( prefix ) )
+				.collect ( toSet ( ) );
 	}
 	
 }

@@ -18,13 +18,15 @@ public final class CheckPointPersistence {
 	
 	private static CheckPointPersistence instance;
 	
-	static {
+	
+	private CheckPointPersistence ( ) {
+		init ( );
+	}
+	
+	private static void init ( ) {
 		log.debug ( "CheckPointPersistence::static-init() -> output directory is empty loading from properties file. checkpoints.files.path or defaulting to logs/checkpoints" );
 		outputDirectory = LocalPropertiesLoader.getInstance ( ).getProperty ( "checkpoints.files.path", "logs/checkpoints" );
 		log.debug ( "CheckPointPersistence::static-init() -> output directory: {}", outputDirectory );
-	}
-	
-	private CheckPointPersistence ( ) {
 	}
 	
 	/**
@@ -34,15 +36,10 @@ public final class CheckPointPersistence {
 	 * @return the instance of CheckPointPersistence
 	 */
 	public static CheckPointPersistence getInstance ( ) {
-		log.trace ( "CheckPointPersistence::getInstance() >: start" );
-		
 		if ( Objects.isNull ( instance ) ) {
 			log.debug ( "CheckPointPersistence::getInstance() _: creating unique instance" );
 			instance = new CheckPointPersistence ( );
 		}
-		
-		log.trace ( "CheckPointPersistence::getInstance() <: complete" );
-		
 		return instance;
 	}
 	
@@ -54,8 +51,6 @@ public final class CheckPointPersistence {
 	 * @param checkPointMap the checkpoint map containing the key-value pairs of checkpoint data
 	 */
 	public void save ( Map < String, CheckPoint > checkPointMap ) {
-		log.trace ( "CheckPointPersistence::save() >: start" );
-		
 		if ( CollectionUtils.isEmpty ( checkPointMap ) ) {
 			log.warn ( "CheckPointPersistence::save() !: checkpoint map is null, returning" );
 			return;
@@ -69,8 +64,6 @@ public final class CheckPointPersistence {
 		var checkpoints = mapToString ( checkPointMap );
 		log.debug ( "CheckPointPersistence::save() _: persisting checkpoint data: {} ", outputDirectory );
 		CompletableFuture.runAsync ( ( ) -> PersistenceDiskUtils.persist ( outputDirectory, checkpoints ) );
-		
-		log.trace ( "CheckPointPersistence::save() <: complete" );
 	}
 	
 	/**
@@ -81,10 +74,8 @@ public final class CheckPointPersistence {
 	 * @return a string representation of the checkpoint map
 	 */
 	public String mapToString ( Map < String, CheckPoint > checkPointMap ) {
-		log.trace ( "CheckPointPersistence::mapToString() >: start" );
 		var checkpoints = new StringJoiner ( "," );
 		checkPointMap.forEach ( ( k, v ) -> checkpoints.add ( v.toJsonString ( ) ) );
-		log.trace ( "CheckPointPersistence::mapToString() <: complete" );
 		return checkpoints.toString ( );
 	}
 	

@@ -14,8 +14,7 @@ public final class IdGenerator {
 	private static final int MAX_QUEUE_SIZE = 10_000;
 	private static final int MIN_QUEUE_SIZE_BEFORE_LOAD = 10;
 	private static final long WAIT_TIME = 1L;
-	
-	private static final ConcurrentLinkedQueue < Long > queue = new ConcurrentLinkedQueue <> ( );
+	private static ConcurrentLinkedQueue < Long > queue = null;
 	
 	private static IdGenerator instance;
 	
@@ -34,7 +33,8 @@ public final class IdGenerator {
 	}
 	
 	public long getNextId ( ) {
-		if ( queue.isEmpty ( ) || queue.size ( ) <= MIN_QUEUE_SIZE_BEFORE_LOAD ) load ( );
+		if ( queue.isEmpty ( ) || queue.size ( ) <= MIN_QUEUE_SIZE_BEFORE_LOAD )
+			load ( );
 		return Optional.ofNullable ( queue.poll ( ) ).orElse ( generateId ( ) );
 	}
 	
@@ -47,6 +47,7 @@ public final class IdGenerator {
 	 * Note: This method does not return any value.
 	 */
 	private static void load ( ) {
+		queue = new ConcurrentLinkedQueue <> ( );
 		LongStream
 				.generate ( IdGenerator::generateId )
 				//.parallel()

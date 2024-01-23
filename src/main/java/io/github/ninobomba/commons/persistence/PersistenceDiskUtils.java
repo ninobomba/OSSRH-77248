@@ -19,8 +19,6 @@ public final class PersistenceDiskUtils {
 	
 	public static void persist ( String outputDirectory, String data ) {
 		
-		log.trace ( "PersistenceDiskUtils::persist() >: start" );
-		
 		createDirectory ( outputDirectory );
 		
 		String fileLocation = ""
@@ -37,13 +35,10 @@ public final class PersistenceDiskUtils {
 		}
 		
 		save ( data, fileLocation );
-		
-		log.trace ( "PersistenceDiskUtils::persist() <: complete" );
 	}
 	
 	@SneakyThrows
 	private static void save ( String data, String fileLocation ) {
-		log.trace ( "PersistenceDiskUtils::save() >: start" );
 		
 		log.debug ( "PersistenceDiskUtils::save() _: saving data to: {}, size: {} bytes",
 				fileLocation,
@@ -57,7 +52,6 @@ public final class PersistenceDiskUtils {
 			lock.unlock ( );
 		}
 		
-		log.trace ( "PersistenceDiskUtils::save() <: complete" );
 	}
 	
 	@SneakyThrows

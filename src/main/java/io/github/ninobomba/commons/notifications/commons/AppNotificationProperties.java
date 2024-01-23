@@ -7,8 +7,9 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.net.InetAddress;
+import java.util.Objects;
 
-public final class AppNotificationProperties {
+public class AppNotificationProperties {
 	
 	@Getter
 	private String id;
@@ -23,11 +24,15 @@ public final class AppNotificationProperties {
 	@Getter
 	private String env;
 	
-	@Getter
-	private static final AppNotificationProperties instance = new AppNotificationProperties ( );
+	private static AppNotificationProperties INSTANCE;
 	
 	private AppNotificationProperties ( ) {
 		load ( );
+	}
+	
+	public static AppNotificationProperties getInstance ( ) {
+		if ( Objects.isNull ( INSTANCE ) ) INSTANCE = new AppNotificationProperties ( );
+		return INSTANCE;
 	}
 	
 	@SneakyThrows
@@ -37,7 +42,6 @@ public final class AppNotificationProperties {
 		module = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.application.module" );
 		version = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.application.version" );
 		env = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.application.env" );
-		
 		host = InetAddress.getLocalHost ( ).toString ( );
 	}
 	

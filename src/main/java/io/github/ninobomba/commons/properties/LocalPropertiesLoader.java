@@ -18,7 +18,7 @@ public final class LocalPropertiesLoader {
 	
 	private static final String DEFAULT_PROPERTIES_PATH = "src/main/resources/custom/";
 	
-	private static final Properties properties = new Properties ( );
+	private static Properties properties;
 	
 	private static LocalPropertiesLoader instance;
 	
@@ -50,7 +50,8 @@ public final class LocalPropertiesLoader {
 	}
 	
 	@SneakyThrows
-	private void load ( String path ) {
+	private static void load ( String path ) {
+		properties = new Properties ( );
 		listPropertiesFile ( path ).forEach ( e -> {
 			try ( var in = new FileInputStream ( ResourceUtils.getFile ( e ) ) ) {
 				properties.load ( in );
@@ -60,19 +61,15 @@ public final class LocalPropertiesLoader {
 	}
 	
 	private static void print ( ) {
-		log.trace ( "LocalPropertiesLoader::print() >: start" );
 		properties
 				.entrySet ( )
 				.stream ( )
 				.filter ( map -> !StringUtils.containsAnyIgnoreCase ( map.getKey ( ).toString ( ), "token", "secret", "password", "key" ) )
 				.collect ( Collectors.toMap ( Map.Entry::getKey, Map.Entry::getValue ) )
 				.forEach ( ( k, v ) -> log.debug ( "LocalPropertiesLoader::print() _: kv: {}:{}", k, v ) );
-		log.trace ( "LocalPropertiesLoader::print() <: complete" );
 	}
 	
 	private static Set < String > listPropertiesFile ( String path ) throws IOException {
-		log.trace ( "LocalPropertiesLoader::listPropertiesFile() >: start" );
-		
 		var response = new HashSet < String > ( );
 		
 		var paths = Paths.get ( path );
@@ -87,9 +84,6 @@ public final class LocalPropertiesLoader {
 			}
 		} );
 		streamPath.close ( );
-		
-		log.trace ( "LocalPropertiesLoader::listPropertiesFile() <: complete" );
-		
 		return response;
 	}
 	

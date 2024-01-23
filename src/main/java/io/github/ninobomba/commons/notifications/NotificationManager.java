@@ -14,7 +14,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public final class NotificationManager {
 	private static int maxItemsTakenFromQueue = 1_000;
 	
-	private static final BlockingQueue < NotificationMessage > notificationQueue = new LinkedBlockingQueue <> ( );
+	private static BlockingQueue < NotificationMessage > notificationQueue;
 	
 	private static NotificationManager instance;
 
@@ -26,11 +26,16 @@ public final class NotificationManager {
 //    );
 	
 	private NotificationManager ( ) {
+		init ();
+	}
+	
+	private static void init ( ) {
+		notificationQueue = new LinkedBlockingQueue <> ( );;
+		maxItemsTakenFromQueue = Integer.parseInt ( LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.application.queue.MAX_ITEMS_TAKEN_FROM_QUEUE", "100" ) );
 	}
 	
 	public static NotificationManager getInstance ( ) {
 		if ( Objects.isNull ( instance ) ) {
-			maxItemsTakenFromQueue = Integer.parseInt ( LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.application.queue.MAX_ITEMS_TAKEN_FROM_QUEUE", "100" ) );
 			instance = new NotificationManager ( );
 		}
 		return instance;

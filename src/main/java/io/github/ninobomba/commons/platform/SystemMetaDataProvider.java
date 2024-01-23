@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
-interface SystemMetaDataProvider {
+public interface SystemMetaDataProvider {
 	
 	static Map < String, String > getProperties ( ) {
 		var properties = new HashMap < String, String > ( );

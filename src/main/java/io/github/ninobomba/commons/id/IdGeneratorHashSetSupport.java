@@ -15,7 +15,7 @@ public final class IdGeneratorHashSetSupport {
 	private static final int MIN_QUEUE_SIZE_BEFORE_LOAD = 10;
 	private static final long WAIT_TIME = 1L;
 	
-	private static final Set < Long > queue = ConcurrentHashMap.newKeySet ( );
+	private static Set < Long > queue = null;
 	
 	private static IdGeneratorHashSetSupport instance;
 	
@@ -50,6 +50,7 @@ public final class IdGeneratorHashSetSupport {
 	 * Note: This method does not return any value.
 	 */
 	private static void load ( ) {
+		queue = ConcurrentHashMap.newKeySet ( );
 		LongStream
 				.generate ( IdGeneratorHashSetSupport::generateId )
 				//.parallel()

@@ -16,33 +16,33 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public final class RequestManager implements Runnable {
-	private static final int MAX_EVENTS_TAKEN_FROM_QUEUE = 1000;
-	
-	private static final BlockingQueue < Request > requestQueue = new LinkedBlockingQueue <> ( );
 	
 	private static RequestManager instance;
 	
-	private final boolean isEnabled;
+	private static final int MAX_EVENTS_TAKEN_FROM_QUEUE = 1000;
 	
-	private final long sleepTime;
+	private static BlockingQueue < Request > requestQueue;
+	
+	private static boolean isEnabled;
+	
+	private static long sleepTime;
 	
 	private static String outputDirectory;
 	
-	static {
-		outputDirectory = LocalPropertiesLoader.getInstance ( ).getProperty ( "request.manager.logs", "logs/requests" );
-	}
-	
 	private RequestManager ( ) {
-		isEnabled = Boolean.parseBoolean ( LocalPropertiesLoader.getInstance ( ).getProperty ( "request.manager.enabled", "false" ) );
-		sleepTime = Long.parseLong ( LocalPropertiesLoader.getInstance ( ).getProperty ( "request.manager.sleep", "10000" ) );
+		init ();
 		printConfiguration ( );
 	}
 	
+	private static void init ( ) {
+		requestQueue = new LinkedBlockingQueue <> ( );
+		isEnabled = Boolean.parseBoolean ( LocalPropertiesLoader.getInstance ( ).getProperty ( "request.manager.enabled", "false" ) );
+		sleepTime = Long.parseLong ( LocalPropertiesLoader.getInstance ( ).getProperty ( "request.manager.sleep", "10000" ) );
+		outputDirectory = LocalPropertiesLoader.getInstance ( ).getProperty ( "request.manager.logs", "logs/requests" );
+	}
+	
 	public static RequestManager getInstance ( ) {
-		if ( Objects.isNull ( instance ) ) {
-			log.debug ( "RequestManager::getInstance() _: creating singleton unique instance" );
-			instance = new RequestManager ( );
-		}
+		if ( Objects.isNull ( instance ) ) instance = new RequestManager ( );
 		return instance;
 	}
 	

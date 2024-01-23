@@ -12,13 +12,12 @@ public final class ExceptionFactoryPool < T > {
 	
 	private final ObjectPool < T > objectPool;
 	
-	private static final int POOL_PARTITION_SIZE = 5;
-	private static final int POOL_MIN_SIZE = 10;
-	private static final int POOL_MAX_SIZE = 15;
-	private static final int POOL_MAX_IDLE_MS = 60 * 1_000 * 5;
-	
 	public ExceptionFactoryPool ( Class < T > tClass ) {
 		this.tClass = tClass;
+		final int POOL_PARTITION_SIZE = 2;
+		final int POOL_MIN_SIZE = 10;
+		final int POOL_MAX_SIZE = 15;
+		final int POOL_MAX_IDLE_MS = 60 * 1_000 * 5;
 		objectPool = new ObjectPool <> ( setup ( POOL_PARTITION_SIZE, POOL_MAX_SIZE, POOL_MIN_SIZE, POOL_MAX_IDLE_MS ), create ( ) );
 	}
 	
@@ -48,7 +47,8 @@ public final class ExceptionFactoryPool < T > {
 			}
 			
 			@Override
-			public void destroy ( T o ) { }
+			public void destroy ( T o ) {
+			}
 			
 			@Override
 			public boolean validate ( T o ) {

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import xyz.downgoon.snowflake.Snowflake;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.IntStream;
 
@@ -13,17 +14,13 @@ public final class IdGeneratorSnowFlakeSupport {
 	private static final int MAX_QUEUE_SIZE = 20;
 	private static final int MIN_QUEUE_SIZE_BEFORE_LOAD = 10;
 	
-	private static final ConcurrentLinkedQueue < Long > queue = new ConcurrentLinkedQueue <> ( );
+	private static ConcurrentLinkedQueue < Long > queue = null;
 	
-	private static final Snowflake snowflake;
+	private static Snowflake snowflake;
 	private static IdGeneratorSnowFlakeSupport instance;
 	
-	static {
-		snowflake = new Snowflake ( 25, 2 );
-		load ( );
-	}
-	
 	private IdGeneratorSnowFlakeSupport ( ) {
+		load ();
 	}
 	
 	public static IdGeneratorSnowFlakeSupport getInstance ( ) {
@@ -47,8 +44,7 @@ public final class IdGeneratorSnowFlakeSupport {
 			log.info ( "IdGenerator::getNextId() !: loading new id numbers into memory" );
 			load ( );
 		}
-		
-		return queue.isEmpty ( ) ? snowflake.nextId ( ) : queue.poll ( );
+		return Optional.ofNullable ( queue.poll () ).orElse (  snowflake.nextId () );
 	}
 	
 	/**
@@ -60,6 +56,10 @@ public final class IdGeneratorSnowFlakeSupport {
 	 * After loading, it logs the number of id numbers that have been loaded into memory.
 	 */
 	private static void load ( ) {
+		
+		snowflake = new Snowflake ( 25, 2 );
+		queue = new ConcurrentLinkedQueue <> ( );
+		
 		IntStream
 				.rangeClosed ( 1, MAX_QUEUE_SIZE )
 				.parallel ( )
