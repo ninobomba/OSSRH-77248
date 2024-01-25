@@ -80,7 +80,6 @@ public final class PersistenceDiskUtils {
 	 */
 	@SneakyThrows
 	private static void createDirectory ( String outputDirectory ) {
-		log.trace ( "PersistenceDiskUtils::createDirectory() >: start" );
 		
 		log.debug ( "PersistenceDiskUtils::createDirectory() _: directory: {}", outputDirectory );
 		

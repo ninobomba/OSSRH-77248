@@ -9,7 +9,7 @@
 
     <groupId>io.github.ninobomba</groupId>
     <artifactId>t4m-commons</artifactId>
-    <version>1.0.0.2</version>
+    <version>1.0.0.3</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -57,16 +57,20 @@
 
     <properties>
 
+        <java.version>17</java.version>
+
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.testSource>17</maven.compiler.testSource>
+        <maven.compiler.testTarget>17</maven.compiler.testTarget>
 
-        <spring.version>5.3.9</spring.version>
-        <springboot.version>2.6.2</springboot.version>
-
-        <jackson.version>2.13.2.1</jackson.version>
+        <maven.compiler.optimize>true</maven.compiler.optimize>
+        <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
 
     </properties>
 
@@ -269,34 +273,6 @@
 
     <dependencies>
 
-        <!-- Testing -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.22.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>4.5.1</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>byte-buddy</artifactId>
-                    <groupId>net.bytebuddy</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <!-- Id Generator -->
         <dependency>
             <groupId>xyz.downgoon</groupId>
@@ -309,6 +285,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.24</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.3.23</version>
         </dependency>
 
         <dependency>
@@ -346,24 +328,6 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.7</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>activation</artifactId>
-                    <groupId>javax.activation</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
@@ -385,7 +349,7 @@
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>servlet-api</artifactId>
             <version>3.0.20100224</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -408,75 +372,6 @@
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
                     <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- notifications -->
-        <dependency>
-            <groupId>com.twilio.sdk</groupId>
-            <artifactId>twilio</artifactId>
-            <version>9.10.0</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jackson-datatype-jsr310</artifactId>
-                    <groupId>com.fasterxml.jackson.datatype</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jackson-core</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jackson-databind</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jackson-annotations</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-io</artifactId>
-                    <groupId>commons-io</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.slack.api</groupId>
-            <artifactId>slack-api-client</artifactId>
-            <version>1.21.2</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>kotlin-stdlib-common</artifactId>
-                    <groupId>org.jetbrains.kotlin</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>kotlin-stdlib</artifactId>
-                    <groupId>org.jetbrains.kotlin</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.squareup.okhttp3</groupId>
-                    <artifactId>okhttp</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>4.12.0</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>kotlin-stdlib-jdk8</artifactId>
-                    <groupId>org.jetbrains.kotlin</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -510,21 +405,84 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.4.2.Final</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>32.0.0-android</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>listenablefuture</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
-            <groupId>io.lettuce</groupId>
-            <artifactId>lettuce-core</artifactId>
-            <version>6.2.5.RELEASE</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.11</version>
+        </dependency>
+
+        <!--
+        ========================================================
+        Testing
+        ========================================================
+        -->
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.8.2</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.2.224</version>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.22.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>4.5.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>byte-buddy</artifactId>
+                    <groupId>net.bytebuddy</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mockito-core</artifactId>
+                    <groupId>org.mockito</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.3.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>byte-buddy</artifactId>
+                    <groupId>net.bytebuddy</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.12.13</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.3.23</version>
             <scope>test</scope>
         </dependency>
 
@@ -543,95 +501,30 @@
         </dependency>
 
         <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
-            <version>5.17.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>7.4</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jackson-databind</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-            </exclusions>
-            <!-- Use runtime scope if the project does not have any compile-time usage of logstash-logback-encoder,
-                 such as usage of StructuredArguments/Markers or implementations such as
-                 JsonProvider, AppenderListener, JsonFactoryDecorator, JsonGeneratorDecorator, etc
-            <scope>runtime</scope>
-            -->
-        </dependency>
-        <!-- Your project must also directly depend on either logback-classic or logback-access. For example: -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.4.14</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-            <!-- Use runtime scope if the project does not have any compile-time usage of logback,
-                 such as implementations of Appender, Encoder, Layout, TurboFilter, etc
-            <scope>runtime</scope>
-            -->
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>5.3.20</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>32.0.0-android</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>listenablefuture</artifactId>
-                    <groupId>com.google.guava</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.36</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>5.3.28</version>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>7.13.0</version>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-core</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.13.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+        ========================================================
+        Build
+        ========================================================
+        -->
 
         <dependency>
             <groupId>org.jsonschema2pojo</groupId>
             <artifactId>jsonschema2pojo-core</artifactId>
             <version>1.1.1</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.yaml</groupId>

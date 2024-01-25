@@ -4,7 +4,7 @@ public enum ExceptionsConstants {
 	
 	CUSTOM_PACKAGE_NAME ( "io.github.ninobomba.commons.exceptions.types" );
 	
-	private String value;
+	private final String value;
 	
 	ExceptionsConstants( String value ) {
 		this.value = value;

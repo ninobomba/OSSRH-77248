@@ -66,7 +66,6 @@ public final class IdGenerator {
 	 * to ensure that the generated ID is always greater than any previously generated IDs.
 	 *
 	 * @return The generated unique ID.
-	 * @throws InterruptedException if the thread is interrupted while sleeping.
 	 */
 	@SneakyThrows
 	private static long generateId ( ) {

@@ -4,7 +4,6 @@ import io.github.ninobomba.commons.persistence.PersistenceDiskUtils;
 import io.github.ninobomba.commons.properties.LocalPropertiesLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Map;
 import java.util.Objects;
@@ -51,7 +50,7 @@ public final class CheckPointPersistence {
 	 * @param checkPointMap the checkpoint map containing the key-value pairs of checkpoint data
 	 */
 	public void save ( Map < String, CheckPoint > checkPointMap ) {
-		if ( CollectionUtils.isEmpty ( checkPointMap ) ) {
+		if ( Objects.isNull ( checkPointMap ) || checkPointMap.isEmpty () ) {
 			log.warn ( "CheckPointPersistence::save() !: checkpoint map is null, returning" );
 			return;
 		}

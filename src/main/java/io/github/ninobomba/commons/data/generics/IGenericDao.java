@@ -1,4 +1,4 @@
-package io.github.ninobomba.commons.jpa.generics;
+package io.github.ninobomba.commons.data.generics;
 
 import java.io.Serializable;
 import java.util.List;

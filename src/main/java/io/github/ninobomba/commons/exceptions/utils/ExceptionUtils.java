@@ -1,7 +1,6 @@
 package io.github.ninobomba.commons.exceptions.utils;
 
 import lombok.SneakyThrows;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -11,13 +10,14 @@ public interface ExceptionUtils {
 	
 	@SneakyThrows
 	static String convertToString ( Throwable throwable ) {
+		
 		if ( Objects.isNull ( throwable ) ) return null;
 		
 		var response = new StringJoiner ( "\n" );
 		
 		var traces = throwable.getStackTrace ( );
 		
-		if ( !CollectionUtils.isEmpty ( Arrays.asList ( traces ) ) ) {
+		if ( ! Arrays.asList ( traces ).isEmpty ( ) ) {
 			response.add ( throwable.getClass ( ) + ": " + throwable.getMessage ( ) );
 			for ( StackTraceElement trace : traces )
 				response.add ( "    at " + trace.getClassName ( ) + '.' + trace.getMethodName ( ) + '(' + trace.getFileName ( ) + ':' + trace.getLineNumber ( ) + ')' );

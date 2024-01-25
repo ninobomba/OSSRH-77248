@@ -2,11 +2,11 @@ package io.github.ninobomba.commons.web.http;
 
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public interface HttpRemoteIpUtils {
@@ -15,7 +15,7 @@ public interface HttpRemoteIpUtils {
 	static String getRemoteIpByHttpRequestHeaders ( HttpServletRequest request ) {
 		var headers = HttpRequestDataUtils.getRequestHeadersMap ( request );
 		
-		if ( CollectionUtils.isEmpty ( headers ) ) return null;
+		if ( Objects.isNull ( headers ) || headers.isEmpty ( ) ) return null;
 		
 		String HEADER_IP_REGEX = "X-FORWARDED-FOR|PROXY-CLIENT-IP|WL-PROXY-CLIENT-IP|HTTP-CLIENT-IP|ORIGIN|REFERER";
 		

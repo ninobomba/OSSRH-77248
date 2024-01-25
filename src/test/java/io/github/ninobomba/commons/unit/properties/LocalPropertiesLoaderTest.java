@@ -21,7 +21,7 @@ class LocalPropertiesLoaderTest {
 	
 	@Test
 	void getValidPropertyTest ( ) {
-		var property = LocalPropertiesLoader.getInstance ( ).getProperty ( "notifications.application.id" );
+		var property = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.remote.ip.aws" );
 		System.out.println ( property );
 		assertThat ( property ).isNotNull ( );
 	}

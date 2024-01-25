@@ -56,7 +56,6 @@ public final class ExceptionFactoryPool < T > {
 			}
 			
 		};
-		
 	}
 	
 	public Poolable < T > getPool ( ) {

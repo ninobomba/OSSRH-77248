@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# https://central.sonatype.com/artifact/io.github.ninobomba/t4m-commons/versions
-
-# this script
-# Remember to update the version on each line
-
 # GPG key
 # https://central.sonatype.org/pages/working-with-pgp-signatures.html
 # gpg --gen-key
@@ -21,6 +16,7 @@
 #  </server>
 #  https://issues.sonatype.org/login.jsp?os_destination=%2Fsecure%2FSignup%21default.jspa
 
+# Check on the pom.xml and here
 RELEASE_VERSION="1.0.0.3"
 
 cleanup()

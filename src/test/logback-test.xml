@@ -12,4 +12,5 @@
     <root level="trace">
         <appender-ref ref="STDOUT" />
     </root>
+
 </configuration>

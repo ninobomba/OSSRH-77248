@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.CollectionUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -57,7 +56,7 @@ public final class CheckPointFactory {
 	 * Default file location unless specified is: src/main/resources/checkpoint/default.json
 	 */
 	public void build ( List < String > paths ) {
-		if ( CollectionUtils.isEmpty ( paths ) ) {
+		if ( Objects.isNull ( paths ) || paths.isEmpty () ) {
 			log.debug ( "CheckPointFactory::build() !: list of path directories is empty: {}", paths );
 			return;
 		}
@@ -81,7 +80,19 @@ public final class CheckPointFactory {
 	}
 	
 	public Map < String, CheckPoint > getCheckPointMap ( String key ) {
+		
 		log.trace ( "CheckPointFactory::getCheckPointList() >: start" );
+		
+		if ( StringUtils.isBlank ( key ) ) {
+			log.debug ( "CheckPointFactory::getCheckPointMap() !: empty or null parameters: key" );
+			return Collections.emptyMap ( );
+		}
+		
+		if ( !checkPointTemplates.containsKey ( key ) ) {
+			log.debug ( "CheckPointFactory::getCheckPointMap() _: key not found: {}", key );
+			return Collections.emptyMap ( );
+		}
+		
 		var map = new HashMap < String, CheckPoint > ( );
 		
 		var templateList = checkPointTemplates.get ( key );
@@ -146,14 +157,14 @@ public final class CheckPointFactory {
 		
 		log.debug ( "CheckPointFactory::getJsonFileContent() _: path: {}", filename );
 		
-		String content;
+		String content = null;
 		try (
 				var resource = new ClassPathResource ( filename ).getInputStream ( ) ;
 				var reader = new BufferedReader ( new InputStreamReader ( resource, StandardCharsets.UTF_8 ) )
 		) {
 			content = reader.lines ( ).collect ( Collectors.joining ( "\n" ) );
 		}
-		
+
 		log.debug ( "CheckPointFactory::getJsonFileContent() _: Path: {}, Size: {}",
 				filename,
 				content.getBytes ( StandardCharsets.UTF_8 ).length
@@ -166,7 +177,7 @@ public final class CheckPointFactory {
 	
 	public String templateSummary ( String key ) {
 		var list = checkPointTemplates.get ( key );
-		if ( CollectionUtils.isEmpty ( list ) )
+		if ( Objects.isNull ( list ) || list.isEmpty () )
 			return "Checkpoint template list for key: [" + key + "] is Empty or Null";
 		
 		StringJoiner joiner = new StringJoiner ( "\n" );
