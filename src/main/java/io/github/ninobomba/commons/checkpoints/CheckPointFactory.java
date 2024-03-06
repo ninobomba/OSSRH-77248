@@ -7,38 +7,64 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The CheckPointFactory class is responsible for creating and managing check point templates.
+ */
 @Slf4j
 public final class CheckPointFactory {
 	
-	private static CheckPointFactory checkPointFactory;
+	private static CheckPointFactory instance;
 	
-	private static Map < String, List < CheckPoint > > checkPointTemplates = null;
+	private static Map < String, List < CheckPoint > > checkPointTemplates;
 	
-	private static ObjectMapper mapper = null;
+	private static ObjectMapper mapper;
 	
 	private CheckPointFactory ( ) {
 		init ( );
 	}
 	
+	/**
+	 * Initializes the system.
+	 *
+	 * This method initializes the system by setting up the necessary objects and variables.
+	 * It creates a new ObjectMapper and a TreeMap for storing check point templates.
+	 *
+	 * Note: This method should only be called once during system initialization.
+	 */
 	private static void init ( ) {
 		mapper = new ObjectMapper ( );
 		checkPointTemplates = new TreeMap <> ( );
 	}
 	
+	/**
+	 * Returns the instance of the CheckPointFactory class. If the instance is null, a new instance is created. This method ensures that only one instance of the CheckPointFactory class
+	 * is created.
+	 *
+	 * @return the instance of the CheckPointFactory class
+	 */
 	public static CheckPointFactory getInstance ( ) {
-		if ( Objects.isNull ( checkPointFactory ) ) {
+		if ( Objects.isNull ( instance ) ) {
 			log.debug ( "CheckPointFactory::getInstance() _: creating a unique singleton instance" );
-			checkPointFactory = new CheckPointFactory ( );
+			instance = new CheckPointFactory ( );
 		}
-		return checkPointFactory;
+		return instance;
 	}
 	
+	/**
+	 * Builds a check point template with the given key and JSON content.
+	 * If the key or JSON content is empty or null, it will log a debug message and return without building the check point template.
+	 * If the key already exists in the check point templates, it will not build a new one.
+	 *
+	 * @param key  The key for the check point template.
+	 * @param json The JSON content for the check point template.
+	 */
 	public void build ( String key, String json ) {
 		if ( StringUtils.isAnyBlank ( key, json ) ) {
 			log.debug ( "CheckPointFactory::build() !: empty or null parameters: key / json content" );
@@ -79,6 +105,14 @@ public final class CheckPointFactory {
 		
 	}
 	
+	/**
+	 * Get the CheckPointMap for the given key.
+	 *
+	 * @param key The key to retrieve the CheckPointMap for.
+	 * @return A Map containing the CheckPoint instances corresponding to the given key.
+	 *         If the key is empty or null, an empty Map will be returned.
+	 *         If the key is not found in the checkPointTemplates, an empty Map will be returned.
+	 */
 	public Map < String, CheckPoint > getCheckPointMap ( String key ) {
 		
 		log.trace ( "CheckPointFactory::getCheckPointList() >: start" );
@@ -121,6 +155,13 @@ public final class CheckPointFactory {
 		return map;
 	}
 	
+	/**
+	 * Reads a JSON file, extracts content, builds a list of checkpoints, and stores it in a map.
+	 *
+	 * @param filename the path to the JSON file to read
+	 * @param key      the identifier to associate with the checkpoint list
+	 * @throws Exception if there is an error reading or parsing the JSON file
+	 */
 	@SneakyThrows
 	private void buildClassFromJsonTemplate ( String filename, String key ) {
 		log.trace ( "CheckPointFactory::buildClassFromJsonTemplate() >: start" );
@@ -143,6 +184,13 @@ public final class CheckPointFactory {
 		log.trace ( "CheckPointFactory::buildClassFromJsonTemplate() <: complete" );
 	}
 	
+	/**
+	 * Builds a list of CheckPoints from a JSON string.
+	 *
+	 * @param json the JSON string representing the CheckPoint list
+	 * @return a List of CheckPoint objects
+	 * @throws IOException if there is an error while reading or parsing the JSON string
+	 */
 	@SneakyThrows
 	private List < CheckPoint > buildCheckPointList ( String json ) {
 		return mapper.readValue (
@@ -151,6 +199,13 @@ public final class CheckPointFactory {
 		);
 	}
 	
+	/**
+	 * Retrieves the content of a JSON file.
+	 *
+	 * @param filename The name of the JSON file.
+	 * @return The content of the JSON file as a string.
+	 * @throws IOException if an I/O error occurs while reading the file.
+	 */
 	@SneakyThrows
 	private String getJsonFileContent ( String filename ) {
 		log.trace ( "CheckPointFactory::getJsonFileContent() >: start" );
@@ -175,11 +230,16 @@ public final class CheckPointFactory {
 		return content;
 	}
 	
+	/**
+	 * Returns a summary of the checkpoint templates associated with the given key.
+	 *
+	 * @param key the key for which the checkpoint templates are to be retrieved
+	 * @return a string representation of the checkpoint template summary
+	 */
 	public String templateSummary ( String key ) {
 		var list = checkPointTemplates.get ( key );
 		if ( Objects.isNull ( list ) || list.isEmpty () )
 			return "Checkpoint template list for key: [" + key + "] is Empty or Null";
-		
 		StringJoiner joiner = new StringJoiner ( "\n" );
 		list.forEach ( e -> joiner.add ( e.toJsonString ( ) ) );
 		return joiner.toString ( );

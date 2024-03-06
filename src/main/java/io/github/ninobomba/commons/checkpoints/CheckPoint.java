@@ -6,6 +6,14 @@ import lombok.SneakyThrows;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The CheckPoint class represents a checkpoint for tracking progress in a system.
+ * It holds information such as the ID, module, name, description, order, completion status,
+ * timestamp, and formatted timestamp of the checkpoint.
+ *
+ * This class provides methods to update the checkpoint state, create a copy of the checkpoint,
+ * and convert the checkpoint to a JSON string.
+ */
 @Data
 public class CheckPoint implements Cloneable {
 	

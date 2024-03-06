@@ -6,6 +6,9 @@ import lombok.SneakyThrows;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+/**
+ * The LocalExceptionMessageBuilder class is responsible for building exception messages with various details.
+ */
 @Builder
 public final class LocalExceptionMessageBuilder {
 	
@@ -21,6 +24,11 @@ public final class LocalExceptionMessageBuilder {
 	
 	private Throwable throwable;
 	
+	/**
+	 * Returns a string representation of the LocalExceptionMessageBuilder object.
+	 *
+	 * @return the string representation of the object
+	 */
 	@Override
 	public String toString ( ) {
 		return new StringJoiner ( Objects.isNull ( separator ) ? SEPARATORS.DEFAULT_SEPARATOR.value : separator )
@@ -35,6 +43,9 @@ public final class LocalExceptionMessageBuilder {
 				.toString ( );
 	}
 	
+	/**
+	 * The SEPARATORS enum defines different separators that can be used in exception messages.
+	 */
 	public enum SEPARATORS {
 		DEFAULT_SEPARATOR ( " -- " ),
 		SYSTEM_SEPARATOR ( System.lineSeparator ( ) );
@@ -50,6 +61,14 @@ public final class LocalExceptionMessageBuilder {
 		CRITICAL, ERROR, WARNING, INFO, DEBUG, TRACE
 	}
 	
+	/**
+	 * Creates an instance of the specified exception type.
+	 *
+	 * @param type the class representing the exception type
+	 * @param <T> the type of RuntimeException
+	 * @return an instance of the specified exception type
+	 * @throws T if the exception cannot be instantiated
+	 */
 	@SneakyThrows
 	public < T extends RuntimeException > T create ( Class < T > type ) {
 		this.invokingClass = type.getSimpleName ( );

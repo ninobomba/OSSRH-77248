@@ -11,6 +11,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Objects;
 
+/**
+ * The FutureDateValidator class implements the ConstraintValidator interface for validating future dates.
+ * It checks whether the given date string represents a date in the future.
+ */
 public class FutureDateValidator implements ConstraintValidator < FutureDate, String > {
 	
 	@Override

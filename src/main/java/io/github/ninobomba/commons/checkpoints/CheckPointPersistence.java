@@ -10,6 +10,10 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * The CheckPointPersistence class is responsible for persisting checkpoint data to disk.
+ * It provides methods to save checkpoint data and convert checkpoint maps to string representations.
+ */
 @Slf4j
 public final class CheckPointPersistence {
 	
@@ -22,6 +26,10 @@ public final class CheckPointPersistence {
 		init ( );
 	}
 	
+	/**
+	 * Initializes the CheckPointPersistence class by loading the output directory from the properties file.
+	 * If the output directory is empty, it defaults to "logs/checkpoints".
+	 */
 	private static void init ( ) {
 		log.debug ( "CheckPointPersistence::static-init() -> output directory is empty loading from properties file. checkpoints.files.path or defaulting to logs/checkpoints" );
 		outputDirectory = LocalPropertiesLoader.getInstance ( ).getProperty ( "checkpoints.files.path", "logs/checkpoints" );

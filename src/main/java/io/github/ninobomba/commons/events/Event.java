@@ -10,9 +10,14 @@ import lombok.SneakyThrows;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The Event class represents an event with a name, unique identifier, timestamp, and elapsed time.
+ * It also provides a method to convert the event to a JSON string representation.
+ */
 @Data
 //@Builder( builderClassName = "EventBuilder", buildMethodName = "build" )
 public class Event {
+	
 	private long id;
 	private String name;
 	
@@ -22,6 +27,11 @@ public class Event {
 	private LocalDateTime timestamp;
 	private String formattedTimestamp;
 	
+	/**
+	 * Constructs a new Event object with the given name.
+	 *
+	 * @param name The name of the event.
+	 */
 	public Event ( String name ) {
 		assignDefaults ( );
 		this.name = name;

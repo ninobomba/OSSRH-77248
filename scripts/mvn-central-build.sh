@@ -17,7 +17,7 @@
 #  https://issues.sonatype.org/login.jsp?os_destination=%2Fsecure%2FSignup%21default.jspa
 
 # Check on the pom.xml and here
-RELEASE_VERSION="1.0.0.3"
+RELEASE_VERSION="1.0.0.5"
 
 cleanup()
 {
@@ -49,3 +49,5 @@ package
 deploy
 
 echo "<<< complete >>>"
+
+# https://central.sonatype.com/artifact/io.github.ninobomba/t4m-commons

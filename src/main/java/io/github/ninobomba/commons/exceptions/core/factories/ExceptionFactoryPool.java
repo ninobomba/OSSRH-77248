@@ -7,18 +7,16 @@ import cn.danielw.fop.Poolable;
 import lombok.SneakyThrows;
 
 public final class ExceptionFactoryPool < T > {
+	private static final int DEFAULT_POOL_PARTITION_SIZE = 2;
+	private static final int DEFAULT_POOL_MIN_SIZE       = 10;
+	private static final int DEFAULT_POOL_MAX_SIZE       = 15;
+	private static final int DEFAULT_POOL_MAX_IDLE_MS    = 60 * 1_000 * 5;
 	
-	private final Class < T > tClass;
-	
+	private final Class < T >      tClass;
 	private final ObjectPool < T > objectPool;
 	
 	public ExceptionFactoryPool ( Class < T > tClass ) {
-		this.tClass = tClass;
-		final int POOL_PARTITION_SIZE = 2;
-		final int POOL_MIN_SIZE = 10;
-		final int POOL_MAX_SIZE = 15;
-		final int POOL_MAX_IDLE_MS = 60 * 1_000 * 5;
-		objectPool = new ObjectPool <> ( setup ( POOL_PARTITION_SIZE, POOL_MAX_SIZE, POOL_MIN_SIZE, POOL_MAX_IDLE_MS ), create ( ) );
+		this ( tClass, DEFAULT_POOL_PARTITION_SIZE, DEFAULT_POOL_MAX_SIZE, DEFAULT_POOL_MIN_SIZE, DEFAULT_POOL_MAX_IDLE_MS );
 	}
 	
 	public ExceptionFactoryPool ( Class < T > tClass, int partition, int maxSize, int minSize, int maxIdleMilliseconds ) {
@@ -47,14 +45,14 @@ public final class ExceptionFactoryPool < T > {
 			}
 			
 			@Override
-			public void destroy ( T o ) {
+			public void destroy ( T object ) {
+				// Handle object destruction, if necessary
 			}
 			
 			@Override
-			public boolean validate ( T o ) {
-				return true;
+			public boolean validate ( T object ) {
+				return object != null;
 			}
-			
 		};
 	}
 	
