@@ -3,7 +3,7 @@
 deploy()
 {
   echo "Deploying jar file to mvn central"
-  mvn clean compile deploy -DskipTestsKKH D
+  mvn clean compile deploy -DskipTests
 }
 
 cd ..
