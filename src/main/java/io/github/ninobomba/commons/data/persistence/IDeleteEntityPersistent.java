@@ -1,8 +1,6 @@
 package io.github.ninobomba.commons.data.persistence;
 
-import java.io.Serializable;
-
-public interface IDeleteEntityPersistent < E extends Serializable > {
+public interface IDeleteEntityPersistent < E > {
 	
 	void delete ( E entity );
 	

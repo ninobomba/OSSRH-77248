@@ -1,10 +1,9 @@
 package io.github.ninobomba.commons.data.persistence;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface IReadPersistent < T extends Serializable, PK extends Serializable > {
+public interface IReadPersistent < T, PK > {
 	
 	Optional < T > findOne ( T entity );
 	

@@ -1,10 +1,9 @@
 package io.github.ninobomba.commons.data.services;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface IReadUseCase < T extends Serializable, ID extends Serializable > {
+public interface IReadUseCase < T, ID > {
 	
 	Optional < T > findOne ( T entity );
 	

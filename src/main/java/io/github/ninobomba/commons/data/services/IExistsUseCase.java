@@ -1,8 +1,6 @@
 package io.github.ninobomba.commons.data.services;
 
-import java.io.Serializable;
-
-public interface IExistsUseCase < ID extends Serializable > {
+public interface IExistsUseCase < ID > {
 	boolean existsById ( ID id );
 	
 }

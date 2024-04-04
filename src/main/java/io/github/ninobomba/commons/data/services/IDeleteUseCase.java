@@ -1,8 +1,6 @@
 package io.github.ninobomba.commons.data.services;
 
-import java.io.Serializable;
-
-public interface IDeleteUseCase < ID extends Serializable > {
+public interface IDeleteUseCase < ID > {
 	
 	void deleteById ( ID id );
 	
