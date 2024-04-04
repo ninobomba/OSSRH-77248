@@ -1,7 +1,7 @@
 package io.github.ninobomba.commons.data.persistence;
 
-public interface ICreateWithReturnTypePersistent < E, R > {
+public interface ICreateWithReturnTypePersistent < E > {
 	
-	R create ( E entity );
+	E create ( E entity );
 	
 }

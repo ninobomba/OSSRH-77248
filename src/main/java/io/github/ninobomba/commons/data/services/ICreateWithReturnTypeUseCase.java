@@ -1,7 +1,7 @@
 package io.github.ninobomba.commons.data.services;
 
-public interface ICreateWithReturnTypeUseCase < E, R > {
+public interface ICreateWithReturnTypeUseCase < E > {
 	
-	R create ( E entity );
+	E create ( E entity );
 	
 }
