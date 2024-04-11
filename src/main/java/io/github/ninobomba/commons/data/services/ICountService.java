@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.data.services;
 
-public interface ICountUseCase < E > {
+public interface ICountService < E > {
 
 	int count( E type );
 	

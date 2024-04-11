@@ -1,6 +1,7 @@
 package io.github.ninobomba.commons.data.services;
 
-public interface IUpdateUseCase < T > {
+public interface IUpdateService < T > {
+	
 	void update ( T entity );
 
 }

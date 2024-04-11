@@ -1,10 +1,9 @@
 package io.github.ninobomba.commons.data.mapper;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-public interface IEntityMapper < DTO , ENTITY extends Serializable > {
+public interface IEntityMapper < DTO , ENTITY > {
 	
 	DTO toDTO ( ENTITY entity );
 	

@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.data.services;
 
-public interface ICreateUseCase < E > {
+public interface ICreateService < E > {
 	
 	Long create( E entity );
 	
