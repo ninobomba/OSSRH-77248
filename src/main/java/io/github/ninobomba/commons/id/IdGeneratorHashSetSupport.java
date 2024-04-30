@@ -9,6 +9,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.LongStream;
 
+/**
+ * IdGeneratorHashSetSupport is a class that provides unique ID generation functionality using a HashSet as a queue.
+ * The class follows the singleton design pattern.
+ */
 public final class IdGeneratorHashSetSupport {
 	
 	private static final int MAX_QUEUE_SIZE = 10_000;
@@ -19,6 +23,10 @@ public final class IdGeneratorHashSetSupport {
 	
 	private static IdGeneratorHashSetSupport instance;
 	
+	/**
+	 * IdGeneratorHashSetSupport is a class that provides unique ID generation functionality using a HashSet as a queue.
+	 * The class follows the singleton design pattern.
+	 */
 	private IdGeneratorHashSetSupport ( ) {
 		load ( );
 	}
@@ -33,6 +41,15 @@ public final class IdGeneratorHashSetSupport {
 		return instance;
 	}
 	
+	/**
+	 * Retrieves the next available unique ID from the queue.
+	 * If the queue is empty or its size is less than or equal to the minimum queue size before loading,
+	 * the load method is called to populate the queue with new unique IDs.
+	 * Otherwise, it retrieves an ID from the queue using the stream.findAny() method.
+	 * The retrieved ID is then removed from the queue.
+	 *
+	 * @return The retrieved unique ID.
+	 */
 	public long getNextId ( ) {
 		if ( queue.isEmpty ( ) || queue.size ( ) <= MIN_QUEUE_SIZE_BEFORE_LOAD )
 			load ( );

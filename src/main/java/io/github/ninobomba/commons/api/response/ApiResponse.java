@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * Represents a response returned by an API.
+ */
 @Data
 @Builder
 public class ApiResponse implements Serializable {

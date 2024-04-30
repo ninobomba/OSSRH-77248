@@ -9,6 +9,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.LongStream;
 
+/**
+ * The IdGenerator class is responsible for generating unique IDs.
+ * It uses a queue to store generated IDs and reloads the queue when it becomes empty or below a certain threshold.
+ * The class follows the singleton pattern, meaning there can only be one instance of IdGenerator.
+ */
 public final class IdGenerator {
 	
 	private static final int MAX_QUEUE_SIZE = 10_000;
@@ -18,6 +23,11 @@ public final class IdGenerator {
 	
 	private static IdGenerator instance;
 	
+	/**
+	 * The IdGenerator class is responsible for generating unique IDs.
+	 * It uses a queue to store generated IDs and reloads the queue when it becomes empty or below a certain threshold.
+	 * The class follows the singleton pattern, meaning there can only be one instance of IdGenerator.
+	 */
 	private IdGenerator ( ) {
 		load ( );
 	}
@@ -32,6 +42,15 @@ public final class IdGenerator {
 		return instance;
 	}
 	
+	/**
+	 * Returns the next ID from the IdGenerator queue.
+	 *
+	 * If the queue is empty or its size is below a certain threshold, the method calls the load() method to reload the queue.
+	 * It then retrieves the next ID from the queue using the poll() method.
+	 * If the retrieved ID is null, the method calls the generateId() method to generate a new ID.
+	 *
+	 * @return The next ID from the IdGenerator queue.
+	 */
 	public long getNextId ( ) {
 		if ( queue.isEmpty ( ) || queue.size ( ) <= MIN_QUEUE_SIZE_BEFORE_LOAD )
 			load ( );

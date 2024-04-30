@@ -5,6 +5,14 @@ import lombok.Builder;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * Represents a login device.
+ *
+ * This class contains information about a login device such as its ID, token, email, timezone,
+ * user agent, name, type, device version, category, OS producer, OS name, remote host, and enabled status.
+ *
+ * It implements the Serializable interface, allowing instances of this class to be serialized and deserialized.
+ */
 @Builder
 public class LoginDevice implements Serializable {
 	

@@ -7,6 +7,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
+/**
+ *
+ */
 public class NumberValidator implements ConstraintValidator < IsNumber, String > {
 	@Override
 	public void initialize ( IsNumber constraintAnnotation ) {

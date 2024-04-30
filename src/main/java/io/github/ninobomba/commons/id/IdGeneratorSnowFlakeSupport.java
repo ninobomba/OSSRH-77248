@@ -8,6 +8,27 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.IntStream;
 
+/**
+ * The IdGeneratorSnowFlakeSupport class provides support for generating unique id numbers using the Snowflake algorithm.
+ * It maintains a queue of id numbers to ensure fast and efficient generation of new ids.
+ * The loading process is parallelized to maximize performance.
+ * <p>
+ * Usage Example:
+ * <p>
+ * To generate a new id number, call the getNextId() method:
+ * <pre>
+ * {@code
+ * long id = IdGeneratorSnowFlakeSupport.getInstance().getNextId();
+ * }
+ * </pre>
+ * <p>
+ * To load new id numbers into memory, call the load() method:
+ * <pre>
+ * {@code
+ * IdGeneratorSnowFlakeSupport.getInstance().load();
+ * }
+ * </pre>
+ */
 @Slf4j
 public final class IdGeneratorSnowFlakeSupport {
 	
@@ -23,6 +44,14 @@ public final class IdGeneratorSnowFlakeSupport {
 		load ();
 	}
 	
+	/**
+	 * Returns an instance of the IdGeneratorSnowFlakeSupport class.
+	 *
+	 * If an instance does not already exists, a new instance is created and returned.
+	 * Otherwise, the existing instance is returned.
+	 *
+	 * @return an instance of the IdGeneratorSnowFlakeSupport class
+	 */
 	public static IdGeneratorSnowFlakeSupport getInstance ( ) {
 		if ( Objects.isNull ( instance ) ) instance = new IdGeneratorSnowFlakeSupport ( );
 		return instance;

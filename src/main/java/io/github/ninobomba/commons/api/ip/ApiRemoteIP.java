@@ -14,6 +14,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
+/**
+ *
+ */
 public interface ApiRemoteIP {
 	
 	/**
@@ -38,6 +41,12 @@ public interface ApiRemoteIP {
 		
 	}
 	
+	/**
+	 * Retrieves the remote IP address using the Apify service.
+	 *
+	 * @return The remote IP address.
+	 * @throws EmptyOrNullParameterException If the URL is blank.
+	 */
 	@SneakyThrows
 	static String getRemoteIpUsingApifyService ( ) {
 		String uri = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.remote.ip.apify" );

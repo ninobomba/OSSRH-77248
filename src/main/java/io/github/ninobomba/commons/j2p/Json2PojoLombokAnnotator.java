@@ -4,9 +4,18 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.codemodel.JDefinedClass;
 import org.jsonschema2pojo.AbstractAnnotator;
 
+/**
+ * This class is responsible for annotating Java classes using Lombok annotations based on the provided JSON schema.
+ */
 public class Json2PojoLombokAnnotator extends AbstractAnnotator {
 	
 	
+	/**
+	 * Annotates a Java class using Lombok annotations based on the provided JSON schema.
+	 *
+	 * @param clazz  the Java class to annotate
+	 * @param schema the JSON schema
+	 */
 	@Override
 	public void propertyInclusion ( JDefinedClass clazz, JsonNode schema ) {
 		JsonNode additionalProperties = schema.get ( "additionalProperties" );

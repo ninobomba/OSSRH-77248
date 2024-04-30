@@ -6,6 +6,9 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * Represents an error response from an API.
+ */
 @Data
 @Builder
 public class ApiResponseError implements Serializable {

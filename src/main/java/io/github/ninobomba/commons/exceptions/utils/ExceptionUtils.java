@@ -6,8 +6,17 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+/**
+ * The ExceptionUtils interface provides utility methods for working with exceptions.
+ */
 public interface ExceptionUtils {
 	
+	/**
+	 * Converts a Throwable object to a String representation.
+	 *
+	 * @param throwable the Throwable object to convert
+	 * @return the String representation of the Throwable object
+	 */
 	@SneakyThrows
 	static String convertToString ( Throwable throwable ) {
 		

@@ -10,13 +10,25 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * The PersistenceDiskUtils class provides utility methods for persisting data to disk.
+ */
 @Slf4j
 public final class PersistenceDiskUtils {
 	private static final ReentrantLock lock = new ReentrantLock ( );
 	
+	/**
+	 *
+	 */
 	private PersistenceDiskUtils ( ) {
 	}
 	
+	/**
+	 * This method persists the provided data to a file in the specified output directory.
+	 *
+	 * @param outputDirectory the path of the output directory where the file will be created
+	 * @param data            the data to be persisted
+	 */
 	public static void persist ( String outputDirectory, String data ) {
 		
 		createDirectory ( outputDirectory );
@@ -37,6 +49,14 @@ public final class PersistenceDiskUtils {
 		save ( data, fileLocation );
 	}
 	
+
+	/**
+	 * Saves the provided data to the specified file location.
+	 *
+	 * @param data         the data to be saved
+	 * @param fileLocation the path of the file to save the data to
+	 * @throws IOException if an I/O error occurs while saving the data
+	 */
 	@SneakyThrows
 	private static void save ( String data, String fileLocation ) {
 		
@@ -54,6 +74,12 @@ public final class PersistenceDiskUtils {
 		
 	}
 	
+	/**
+	 * Create a file at the specified location.
+	 *
+	 * @param fileLocation the location where the file should be created
+	 * @return true if the file was created successfully, false otherwise
+	 */
 	@SneakyThrows
 	private static boolean createFile ( String fileLocation ) {
 		log.info ( "PersistenceDiskUtils::createFile() _: saving data to: {}", fileLocation );

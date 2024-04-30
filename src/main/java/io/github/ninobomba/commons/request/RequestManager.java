@@ -29,11 +29,20 @@ public final class RequestManager implements Runnable {
 	
 	private static String outputDirectory;
 	
+	/**
+	 * Initializes the RequestManager.
+	 * This constructor is private to enforce the use of the singleton pattern.
+	 * It calls the init() method to perform any necessary initialization tasks.
+	 * After initialization, it calls the printConfiguration() method to display the current configuration.
+	 */
 	private RequestManager ( ) {
 		init ();
 		printConfiguration ( );
 	}
 	
+	/**
+	 * Initializes the request manager.
+	 */
 	private static void init ( ) {
 		requestQueue = new LinkedBlockingQueue <> ( );
 		isEnabled = Boolean.parseBoolean ( LocalPropertiesLoader.getInstance ( ).getProperty ( "request.manager.enabled", "false" ) );
@@ -41,15 +50,31 @@ public final class RequestManager implements Runnable {
 		outputDirectory = LocalPropertiesLoader.getInstance ( ).getProperty ( "request.manager.logs", "logs/requests" );
 	}
 	
+	/**
+	 * Retrieves the instance of RequestManager.
+	 *
+	 * @return The singleton instance of RequestManager.
+	 */
 	public static RequestManager getInstance ( ) {
 		if ( Objects.isNull ( instance ) ) instance = new RequestManager ( );
 		return instance;
 	}
 	
+	/**
+	 * Adds a request to the requestQueue.
+	 *
+	 * @param request the request to be added to the requestQueue
+	 */
 	public static void add ( Request request ) {
 		if ( Objects.nonNull ( request ) ) requestQueue.add ( request );
 	}
 	
+	/**
+	 * Checks if the request queue is empty, retrieves and handles requests from the queue,
+	 * and then persists the processed requests to disk.
+	 *
+	 * @throws InterruptedException if the thread is interrupted while waiting to take a request from the queue
+	 */
 	@SneakyThrows
 	public static void checkOnQueue ( ) {
 		log.trace ( "RequestManager::checkOnQueue() >: start" );
@@ -90,6 +115,17 @@ public final class RequestManager implements Runnable {
 	}
 	
 	
+	/**
+	 * Runs the request manager.
+	 *
+	 * This method checks if the request manager is enabled. If it is not enabled, a warning message is logged and the method returns.
+	 * If the request manager is enabled, it enters a loop to continuously check the request queue. Inside the loop, it logs a debug message
+	 * indicating the time to sleep before the next check. Then it calls the 'checkOnQueue()' method to process the requests in the queue.
+	 * After processing the queue, it sleeps for the specified time in milliseconds using TimeUnit.SECONDS.sleep(). The loop continues until
+	 * the request queue is empty.
+	 *
+	 * @throws InterruptedException if the sleep operation is interrupted
+	 */
 	@SneakyThrows
 	@Override
 	public void run ( ) {
@@ -105,6 +141,13 @@ public final class RequestManager implements Runnable {
 		}
 	}
 	
+	/**
+	 * Prints the current configuration settings.
+	 *
+	 * This method logs the current configuration settings to the trace log level using log4j.
+	 * The logged configuration settings include the isEnabled flag, sleepTime value,
+	 * and outputDirectory path.
+	 */
 	public void printConfiguration ( ) {
 		log.trace ( "RequestManager::printConfiguration() _: isEnabled: {}", isEnabled );
 		log.trace ( "RequestManager::printConfiguration() _: sleepTime: {}", sleepTime );

@@ -12,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.util.*;
 
+/**
+ * The Request class represents a request with a unique ID, name, payload, events, and checkpoints.
+ */
 @Slf4j
 @Builder
 public class Request {
@@ -39,12 +42,25 @@ public class Request {
 		checkPointMap = CheckPointFactory.getInstance ( ).getCheckPointMap ( key );
 	}
 	
+	/**
+	 * Adds a new event to the event queue.
+	 *
+	 * @param name The name of the event to be added.
+	 */
 	public void pushEvent ( String name ) {
 		log.trace ( "Request::pushEvent() _: Adding new event name: {}", name );
 		if ( eventQueue.isEmpty ( ) ) eventQueue.add ( new Event ( "__INIT__" ) );
 		eventQueue.add ( new Event ( name ) );
 	}
 	
+	/**
+	 * Calculates the elapsed time between events in the event queue.
+	 * This method updates the elapsed time in each event object.
+	 * It uses the timestamps of the events to calculate the elapsed time
+	 * in both seconds and nanoseconds. The calculated values are then
+	 * set in the respective fields of the event objects.
+	 * If the event queue is empty, the method returns without performing any calculations.
+	 */
 	public void calculateElapsedTime ( ) {
 		log.trace ( "Request: calculateElapsedTime() >: start" );
 		
@@ -72,11 +88,20 @@ public class Request {
 		log.trace ( "Request: calculateElapsedTime() <: complete" );
 	}
 	
+	/**
+	 * Clears the event queue and check point map.
+	 */
 	public void clear ( ) {
 		eventQueue.clear ( );
 		checkPointMap.clear ( );
 	}
 	
+	/**
+	 * Converts the object to a JSON string representation.
+	 *
+	 * @param pretty - flag indicating if the JSON string should be formatted with indentation and line breaks
+	 * @return the JSON string representation of the object
+	 */
 	public String toJsonString ( boolean pretty ) {
 		calculateElapsedTime ( );
 		var events = new StringJoiner ( "," );

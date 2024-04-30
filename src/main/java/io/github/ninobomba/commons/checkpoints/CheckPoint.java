@@ -51,6 +51,11 @@ public class CheckPoint implements Cloneable {
 		return super.clone ( );
 	}
 	
+	/**
+	 * Converts the current CheckPoint object to a JSON string representation.
+	 *
+	 * @return The JSON string representation of the CheckPoint object.
+	 */
 	@SneakyThrows
 	public String toJsonString ( ) {
 		return "{"

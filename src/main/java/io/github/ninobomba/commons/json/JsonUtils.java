@@ -5,10 +5,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.SneakyThrows;
 
+/**
+ * The JsonUtils interface provides utility methods for working with JSON data.
+ */
 public interface JsonUtils {
 	
 	ObjectMapper objectMapper = new ObjectMapper ( ).enable ( SerializationFeature.INDENT_OUTPUT );
 	
+	/**
+	 * Checks if a given string is a valid JSON.
+	 *
+	 * @param json The string to be checked.
+	 * @return True if the string is a valid JSON, false otherwise.
+	 */
 	static boolean isValidJson ( String json ) {
 		try {
 			objectMapper.readTree ( json );
@@ -18,6 +27,13 @@ public interface JsonUtils {
 		return true;
 	}
 	
+	/**
+	 * Formats a string containing JSON data into a more readable and indented format.
+	 *
+	 * @param json The string containing the JSON data to be formatted.
+	 * @return The formatted JSON string.
+	 * @throws JsonProcessingException if there is an error processing the JSON data.
+	 */
 	@SneakyThrows
 	static String pretty ( String json ) {
 		return objectMapper

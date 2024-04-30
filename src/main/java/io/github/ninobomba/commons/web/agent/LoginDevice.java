@@ -5,6 +5,12 @@ import lombok.Builder;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * The LoginDevice class represents a login device with its associated details.
+ * It is used to store information about a device used for logging into a system.
+ *
+ * The class implements the Serializable interface to allow the object to be serialized and deserialized.
+ */
 @Builder
 public class LoginDevice implements Serializable {
 	

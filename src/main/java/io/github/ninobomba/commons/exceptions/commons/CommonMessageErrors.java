@@ -1,5 +1,8 @@
 package io.github.ninobomba.commons.exceptions.commons;
 
+/**
+ * This enum represents a set of common message errors.
+ */
 public enum CommonMessageErrors {
 	
 	UNEXPECTED_VALUE ( "Constraint error - Unexpected value" ),

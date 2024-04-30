@@ -9,8 +9,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * The HttpRemoteIpUtils class provides utilities for retrieving the remote IP address from HTTP request headers.
+ */
 public interface HttpRemoteIpUtils {
 	
+	/**
+	 * Retrieves the remote IP address from HTTP request headers.
+	 *
+	 * @param request the HttpServletRequest containing the request headers
+	 * @return the remote IP address as a String, or null if no IP address is found in the headers
+	 */
 	@SneakyThrows
 	static String getRemoteIpByHttpRequestHeaders ( HttpServletRequest request ) {
 		var headers = HttpRequestDataUtils.getRequestHeadersMap ( request );

@@ -1,5 +1,8 @@
 package io.github.ninobomba.commons.exceptions.commons;
 
+/**
+ * This enum class contains constants related to exceptions.
+ */
 public enum ExceptionsConstants {
 	
 	CUSTOM_PACKAGE_NAME ( "io.github.ninobomba.commons.exceptions.types" );

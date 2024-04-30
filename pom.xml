@@ -12,7 +12,7 @@
     <version>1.0.0.10</version>
     <packaging>jar</packaging>
 
-    <name>${project.groupId}.${project.artifactId}.${version}</name>
+    <name>${project.groupId}.${project.artifactId}.${project.version}</name>
     <description>Tools 4 Monkeys - Java Commons</description>
     <url>https://github.com/ninobomba/OSSRH-77248</url>
 
@@ -65,7 +65,6 @@
         <maven.compiler.testSource>17</maven.compiler.testSource>
         <maven.compiler.testTarget>17</maven.compiler.testTarget>
 
-        <maven.compiler.optimize>true</maven.compiler.optimize>
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

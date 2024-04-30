@@ -14,6 +14,9 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
+/**
+ * The ApiGeoLocation interface provides methods for retrieving geo location information for a given IP address.
+ */
 public interface ApiGeoLocation {
 	
 	/**

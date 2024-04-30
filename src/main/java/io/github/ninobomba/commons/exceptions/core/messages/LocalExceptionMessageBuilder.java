@@ -56,7 +56,11 @@ public final class LocalExceptionMessageBuilder {
 			this.value = value;
 		}
 	}
-	
+
+	/**
+	 * This enum represents the level of an exception. It can have one
+	 * of the following values: CRITICAL, ERROR, WARNING, INFO, DEBUG, TRACE.
+	 */
 	public enum ExceptionLevel {
 		CRITICAL, ERROR, WARNING, INFO, DEBUG, TRACE
 	}

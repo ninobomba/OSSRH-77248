@@ -8,8 +8,17 @@ import net.sf.uadetector.service.UADetectorServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
+/**
+ * The UDDeviceDetector interface represents a device detector used to collect login device details from a HttpServletRequest.
+ */
 interface UDDeviceDetector {
 	
+	/**
+	 * Returns the details of the login device based on the given HttpServletRequest.
+	 *
+	 * @param request the HttpServletRequest containing the login device information
+	 * @return the LoginDevice object with the login device details
+	 */
 	default LoginDevice getLoginDeviceDetails ( HttpServletRequest request ) {
 		String deviceId = UUID.randomUUID ( ).toString ( );
 		String token = String.valueOf ( IdGeneratorSnowFlakeSupport.getInstance ( ).getNextId ( ) );

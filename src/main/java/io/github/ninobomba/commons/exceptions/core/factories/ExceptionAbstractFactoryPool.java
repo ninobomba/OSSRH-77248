@@ -18,6 +18,9 @@ public final class ExceptionAbstractFactoryPool {
 	
 	private static ExceptionAbstractFactoryPool exceptionAbstractFactoryPool;
 	
+	/**
+	 *
+	 */
 	private ExceptionAbstractFactoryPool ( ) {
 		init ( );
 	}
