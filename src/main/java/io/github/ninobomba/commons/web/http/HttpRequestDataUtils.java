@@ -63,4 +63,17 @@ public interface HttpRequestDataUtils {
 						.flatMap ( Collection::stream )
 						.collect ( toMap ( key -> key, httpRequest::getParameter ) );
 	}
+
+	/**
+	 * Returns a map of request parameters from the given HttpServletRequest object.
+	 *
+	 * @param httpRequest the HttpServletRequest object from which to extract the parameters
+	 * @return a map containing the request parameters, where the key is the parameter name, and the value is the parameter value
+	 */
+	static Map < String, String > getRequestParametersMap ( jakarta.servlet.http.HttpServletRequest httpRequest ) {
+		return
+				Stream.of ( Collections.list ( httpRequest.getParameterNames ( ) ), Collections.list ( httpRequest.getAttributeNames ( ) ) )
+						.flatMap ( Collection::stream )
+						.collect ( toMap ( key -> key, httpRequest::getParameter ) );
+	}
 }

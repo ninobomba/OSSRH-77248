@@ -20,10 +20,10 @@ import java.util.Objects;
 public interface ApiGeoLocation {
 	
 	/**
-	 * Retrieves the geo location information for the given IP address.
+	 * Retrieves the geolocation information for the given IP address.
 	 *
-	 * @param ip The IP address for which to retrieve the geo location information.
-	 * @return The geo location information for the given IP address.
+	 * @param ip The IP address for which to retrieve the geolocation information.
+	 * @return The geolocation information for the given IP address.
 	 * @throws EmptyOrNullParameterException if the IP address, access key, or base URL is null or empty.
 	 */
 	@SneakyThrows
@@ -49,7 +49,7 @@ public interface ApiGeoLocation {
 					.build ( )
 					.create ( EmptyOrNullParameterException.class );
 		
-		val url = baseUrl + "/" + ip + "?access_key=" + accessKey;
+		val url = String.format ( "%s/%s?access_key=%s", baseUrl, ip, accessKey );
 		
 		HttpURLConnection connection = null;
 		var builder = new StringBuilder ( );

@@ -103,7 +103,7 @@ public final class LocalPropertiesLoader {
 	}
 	
 	/**
-	 * Prints out the non-sensitive properties stored in the properties object.
+	 * Prints out the non-sensitive properties stored in the property object.
 	 * Sensitive properties such as "token", "secret", "password", and "key" are filtered out.
 	 * The key-value pairs of the properties are logged using the log framework at the debug level.
 	 */

@@ -29,5 +29,15 @@ public interface HttpResponseDataUtils {
 	static Map < String, String > getResponseHeadersMap ( HttpServletResponse httpResponse ) {
 		return httpResponse.getHeaderNames ( ).stream ( ).collect ( toMap ( key -> key, httpResponse::getHeader ) );
 	}
+
+	/**
+	 * Converts the response headers of an HttpServletResponse into a Map.
+	 *
+	 * @param httpResponse the HttpServletResponse object containing the response headers
+	 * @return a Map representing the response headers, where the keys are the header names and the values are the header values
+	 */
+	static Map < String, String > getResponseHeadersMap ( jakarta.servlet.http.HttpServletResponse httpResponse ) {
+		return httpResponse.getHeaderNames ( ).stream ( ).collect ( toMap ( key -> key, httpResponse::getHeader ) );
+	}
 	
 }

@@ -69,7 +69,7 @@ public interface HttpUrlUtils {
 	
 	/**
 	 * Checks if a host is available by sending a HEAD request to the specified URL.
-	 * This method uses the default HTTP port 80 and a timeout of 10,000 milliseconds.
+	 * This method uses default HTTP port 80 and a timeout of 10,000 milliseconds.
 	 *
 	 * @param url     the URL of the host to check availability for
 	 * @return true if the host is available and responds with a successful HTTP status code (between 200 and 399);

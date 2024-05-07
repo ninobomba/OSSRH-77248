@@ -32,10 +32,8 @@ public final class CheckPointFactory {
 	
 	/**
 	 * Initializes the system.
-	 *
 	 * This method initializes the system by setting up the necessary objects and variables.
 	 * It creates a new ObjectMapper and a TreeMap for storing check point templates.
-	 *
 	 * Note: This method should only be called once during system initialization.
 	 */
 	private static void init ( ) {
