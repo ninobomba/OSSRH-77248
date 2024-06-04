@@ -10,6 +10,7 @@
     > gpg --keyserver https://keys.openpgp.org --send-keys <key-id>
 
 # maven
+
     > vim $HOME/.m2/settings.xml
 
     File settings.xml example:
@@ -21,10 +22,13 @@
 
     <servers>
         <server>
-            <id>central</id>
-            <username></username>
-            <password></password>
+            <id>ossrh</id>
+            <username>ninobomba</username>
+            <password>MyPassword</password>
         </server>
     </servers>
 
 </settings>
+
+# sonatype
+    https://account.oss.sonatype.org/realms/central-ossrh/account/#/
