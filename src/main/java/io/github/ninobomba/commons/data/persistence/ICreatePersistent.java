@@ -13,6 +13,6 @@ public interface ICreatePersistent < E > {
 	 * @param entity the object to be persisted
 	 * @return the identifier of the created object
 	 */
-	Long create( E entity );
+	long create( E entity );
 	
 }

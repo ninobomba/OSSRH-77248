@@ -10,7 +10,6 @@ public interface IUpdatePersistent < T > {
 	 * Updates the given entity in the database.
 	 *
 	 * @param entity The entity to be updated.
-	 * @param <T>    The type of entity.
 	 */
 	void update ( T entity );
 

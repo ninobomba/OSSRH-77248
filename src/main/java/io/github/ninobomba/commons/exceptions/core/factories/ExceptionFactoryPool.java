@@ -14,33 +14,33 @@ import lombok.SneakyThrows;
 public final class ExceptionFactoryPool < T > {
 
 	private static final int DEFAULT_POOL_PARTITION_SIZE = 2;
-	private static final int DEFAULT_POOL_MIN_SIZE       = 10;
-	private static final int DEFAULT_POOL_MAX_SIZE       = 15;
-	private static final int DEFAULT_POOL_MAX_IDLE_MS    = 60 * 1_000 * 5;
-	
-	private final Class < T >      tClass;
+	private static final int DEFAULT_POOL_MIN_SIZE = 10;
+	private static final int DEFAULT_POOL_MAX_SIZE = 15;
+	private static final int DEFAULT_POOL_MAX_IDLE_MS = 60 * 1_000 * 5;
+
+	private final Class < T > tClass;
 	private final ObjectPool < T > objectPool;
-	
+
 	public ExceptionFactoryPool ( Class < T > tClass ) {
 		this ( tClass, DEFAULT_POOL_PARTITION_SIZE, DEFAULT_POOL_MAX_SIZE, DEFAULT_POOL_MIN_SIZE, DEFAULT_POOL_MAX_IDLE_MS );
 	}
-	
+
 	/**
 	 * The ExceptionFactoryPool class represents a pool of exception factories. It manages and provides access to exception factories for different types of exceptions.
 	 *
-	 * @param <T> the type of the throwable
+	 * @param tClass the type of the throwable
 	 */
 	public ExceptionFactoryPool ( Class < T > tClass, int partition, int maxSize, int minSize, int maxIdleMilliseconds ) {
 		this.tClass = tClass;
 		objectPool = new ObjectPool <> ( setup ( partition, maxSize, minSize, maxIdleMilliseconds ), create ( ) );
 	}
-	
+
 	/**
 	 * Sets up the configuration for the pool.
 	 *
-	 * @param partition the number of partitions for the pool
-	 * @param maxSize   the maximum size of the pool
-	 * @param minSize   the minimum size of the pool
+	 * @param partition           the number of partitions for the pool
+	 * @param maxSize             the maximum size of the pool
+	 * @param minSize             the minimum size of the pool
 	 * @param maxIdleMilliseconds the maximum idle time for objects in the pool in milliseconds
 	 * @return the configured PoolConfig object
 	 */
@@ -52,7 +52,7 @@ public final class ExceptionFactoryPool < T > {
 		configuration.setMaxIdleMilliseconds ( maxIdleMilliseconds );
 		return configuration;
 	}
-	
+
 	/**
 	 * Creates an object factory for the ExceptionFactoryPool.
 	 *
@@ -68,19 +68,19 @@ public final class ExceptionFactoryPool < T > {
 					return null;
 				}
 			}
-			
+
 			@Override
 			public void destroy ( T object ) {
 				// Handle object destruction, if necessary
 			}
-			
+
 			@Override
 			public boolean validate ( T object ) {
 				return object != null;
 			}
 		};
 	}
-	
+
 	/**
 	 * Retrieves a Poolable object from the pool.
 	 *
@@ -91,7 +91,7 @@ public final class ExceptionFactoryPool < T > {
 			return poolable;
 		}
 	}
-	
+
 	/**
 	 * Retrieves the size of the pool.
 	 *
@@ -100,7 +100,7 @@ public final class ExceptionFactoryPool < T > {
 	public int getSize ( ) {
 		return objectPool.getSize ( );
 	}
-	
+
 	/**
 	 * Returns a Poolable object back to the pool.
 	 *
@@ -109,7 +109,7 @@ public final class ExceptionFactoryPool < T > {
 	public void returnObject ( Poolable < ? extends Throwable > instance ) {
 		objectPool.returnObject ( ( Poolable < T > ) instance );
 	}
-	
+
 	/**
 	 * Shuts down the ExceptionFactoryPool by invoking the shutdown method on the underlying object pool.
 	 */
@@ -117,5 +117,5 @@ public final class ExceptionFactoryPool < T > {
 	public void shutdown ( ) {
 		objectPool.shutdown ( );
 	}
-	
+
 }

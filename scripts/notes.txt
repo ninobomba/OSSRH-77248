@@ -1,0 +1,30 @@
+# https://central.sonatype.org/pages/working-with-pgp-signatures.html
+# https://central.sonatype.org/pages/apache-maven.html
+# https://issues.sonatype.org/login.jsp?os_destination=%2Fsecure%2FSignup%21default.jspa
+
+# GPG key
+
+    > gpg --gen-key
+    > gpg --list-secret-keys --keyid-format=long
+    > gpg --keyserver keyserver.ubuntu.com --send-keys <key-id>
+    > gpg --keyserver https://keys.openpgp.org --send-keys <key-id>
+
+# maven
+    > vim $HOME/.m2/settings.xml
+
+    File settings.xml example:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <servers>
+        <server>
+            <id>central</id>
+            <username></username>
+            <password></password>
+        </server>
+    </servers>
+
+</settings>

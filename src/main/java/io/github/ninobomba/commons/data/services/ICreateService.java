@@ -13,6 +13,6 @@ public interface ICreateService < E > {
 	 * @param entity the entity to be created
 	 * @return the ID of the newly created entity
 	 */
-	Long create( E entity );
+	long create( E entity );
 	
 }
