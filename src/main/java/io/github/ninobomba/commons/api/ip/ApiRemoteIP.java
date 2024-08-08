@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
  *
  */
 public interface ApiRemoteIP {
-	
+
 	/**
 	 * Retrieves the remote IP address using AWS API.
 	 *
@@ -28,19 +28,19 @@ public interface ApiRemoteIP {
 	@SneakyThrows
 	static String getRemoteIpUsingAwsService ( ) {
 		String uri = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.remote.ip.aws" );
-		
+
 		if ( StringUtils.isBlank ( uri ) )
 			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "HttpRemoteIpTools: getRemoteIpUsingAwsService() !:  url is blank: " + uri )
 					.build ( )
 					.create ( EmptyOrNullParameterException.class );
-		
+
 		try ( var br = new BufferedReader ( new InputStreamReader ( new URI ( uri ).toURL ( ).openStream ( ), StandardCharsets.UTF_8 ) ) ) {
 			return br.readLine ( );
 		}
-		
+
 	}
-	
+
 	/**
 	 * Retrieves the remote IP address using the Apify service.
 	 *
@@ -50,18 +50,18 @@ public interface ApiRemoteIP {
 	@SneakyThrows
 	static String getRemoteIpUsingApifyService ( ) {
 		String uri = LocalPropertiesLoader.getInstance ( ).getProperty ( "api.remote.ip.apify" );
-		
+
 		if ( StringUtils.isBlank ( uri ) )
 			throw LocalExceptionMessageBuilder.builder ( )
 					.message ( "HttpRemoteIpTools: getRemoteIpUsingApifyService() !:  url is blank: " + uri )
 					.build ( )
 					.create ( EmptyOrNullParameterException.class );
-		
+
 		HttpRequest request = HttpRequest.newBuilder ( ).uri ( URI.create ( uri ) ).build ( );
-		HttpResponse < String > response = HttpClient.newHttpClient ( ).send ( request, HttpResponse.BodyHandlers.ofString ( ) );
-		
-		return response.body ();
+
+		try ( var client = HttpClient.newHttpClient ( ) ) {
+			return client.send ( request, HttpResponse.BodyHandlers.ofString ( ) ).body ( );
+		}
 	}
-	
 	
 }

@@ -17,16 +17,16 @@ import java.time.format.DateTimeFormatter;
 @Data
 //@Builder( builderClassName = "EventBuilder", buildMethodName = "build" )
 public class Event {
-	
+
 	private long id;
 	private String name;
-	
+
 	private long elapsedTimeSeconds;
 	private long elapsedTimeNanoSeconds;
-	
+
 	private LocalDateTime timestamp;
 	private String formattedTimestamp;
-	
+
 	/**
 	 * Constructs a new Event object with the given name.
 	 *
@@ -36,11 +36,11 @@ public class Event {
 		assignDefaults ( );
 		this.name = name;
 	}
-	
+
 	/**
 	 * This method is used to assign default values to the id, timestamp, and formattedTimestamp variables.
 	 * It generates a unique id using the IdGeneratorSnowFlakeSupport.getInstance().getNextId() method.
-	 * It sets the current timestamp using LocalDateTime.now() method.
+	 * It sets the current timestamp using the LocalDateTime.now () method.
 	 * It formats the timestamp using the DateTimeFormatter.ofPattern() method with the pattern "yyyy-MM-dd HH:mm:ss.SSS".
 	 */
 	private void assignDefaults ( ) {
@@ -48,7 +48,7 @@ public class Event {
 		timestamp = LocalDateTime.now ( );
 		formattedTimestamp = timestamp.format ( DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss.SSS" ) );
 	}
-	
+
 	/**
 	 * This method is used to convert the current object to its JSON string representation.
 	 * It utilizes the ObjectMapper class from the Jackson JSON library to perform the serialization.
@@ -64,5 +64,5 @@ public class Event {
 		mapper.disable ( SerializationFeature.WRITE_DATES_AS_TIMESTAMPS );
 		return mapper.writeValueAsString ( this );
 	}
-	
+
 }

@@ -13,5 +13,3 @@ pwd
 deploy
 
 echo "<<< complete >>>"
-
-# https://central.sonatype.com/artifact/io.github.ninobomba/t4m-commons

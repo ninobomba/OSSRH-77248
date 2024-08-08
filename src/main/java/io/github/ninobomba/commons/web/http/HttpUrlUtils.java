@@ -80,7 +80,7 @@ public interface HttpUrlUtils {
 	/**
 	 * Checks the availability of a host by sending a HEAD request to the specified URL and port.
 	 *
-	 * @param url  the URL of the host (e.g., "http://example.com")
+	 * @param url  the URL of the host (e.g., "<a href="http://example.com">...</a>")
 	 * @param port the port number of the host (0 indicates the default port)
 	 * @return true if the host is available and returns a successful response code (2xx), false otherwise
 	 */
