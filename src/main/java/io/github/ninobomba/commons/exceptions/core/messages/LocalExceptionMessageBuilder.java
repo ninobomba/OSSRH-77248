@@ -11,19 +11,32 @@ import java.util.StringJoiner;
  */
 @Builder
 public final class LocalExceptionMessageBuilder {
-	
-	
+
+
 	private String id;
+
 	private String code;
+
+	// Brief summary of the error
 	private String message;
+
+	// Detailed explanation of the error
 	private String description;
+
 	private String invokingClass;
+
 	private String separator;
-	
+
+	// The URI which caused the problem
+	private String instance;
+
+	// The URI providing more details about the problem
+	private String link;
+
 	private ExceptionLevel level;
-	
+
 	private Throwable throwable;
-	
+
 	/**
 	 * Returns a string representation of the LocalExceptionMessageBuilder object.
 	 *
@@ -39,19 +52,21 @@ public final class LocalExceptionMessageBuilder {
 				.add ( "Code: " + ( Objects.nonNull ( code ) ? code : "" ) )
 				.add ( "Message: " + ( Objects.nonNull ( message ) ? message : "" ) )
 				.add ( "Description: " + ( Objects.nonNull ( description ) ? description : "" ) )
+				.add ( "Instance: " + ( Objects.nonNull ( instance ) ? instance : "" ) )
+				.add ( "Link: " + ( Objects.nonNull ( link ) ? link : "" ) )
 				.add ( "" )
 				.toString ( );
 	}
-	
+
 	/**
 	 * The SEPARATORS enum defines different separators that can be used in exception messages.
 	 */
 	public enum SEPARATORS {
 		DEFAULT_SEPARATOR ( " -- " ),
 		SYSTEM_SEPARATOR ( System.lineSeparator ( ) );
-		
+
 		public final String value;
-		
+
 		SEPARATORS ( String value ) {
 			this.value = value;
 		}
@@ -64,12 +79,12 @@ public final class LocalExceptionMessageBuilder {
 	public enum ExceptionLevel {
 		CRITICAL, ERROR, WARNING, INFO, DEBUG, TRACE
 	}
-	
+
 	/**
 	 * Creates an instance of the specified exception type.
 	 *
 	 * @param type the class representing the exception type
-	 * @param <T> the type of RuntimeException
+	 * @param <T>  the type of RuntimeException
 	 * @return an instance of the specified exception type
 	 * @throws T if the exception cannot be instantiated
 	 */
@@ -80,5 +95,5 @@ public final class LocalExceptionMessageBuilder {
 				type.getConstructor ( String.class ).newInstance ( toString ( ) ) :
 				type.getConstructor ( String.class, Throwable.class ).newInstance ( toString ( ), throwable );
 	}
-	
+
 }
