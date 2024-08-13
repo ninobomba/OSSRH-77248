@@ -26,12 +26,23 @@
             <username>ninobomba</username>
             <password>MyPassword</password>
         </server>
+
+        https://s01.oss.sonatype.org/#profile;User%20Token
+        <server>
+                <id>ossrh</id>
+                <username>7cV</username>
+                <password>0xs</password>
+        </server>
+
     </servers>
 
 </settings>
 
 # sonatype
     https://account.oss.sonatype.org/realms/central-ossrh/account/#/
+    https://my.sonatype.com/
+    https://s01.oss.sonatype.org/#welcome
+    https://s01.oss.sonatype.org/#profile;User%20Token
 
 # available
     https://central.sonatype.com/artifact/io.github.ninobomba/t4m-commons
