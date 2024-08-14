@@ -1,6 +1,7 @@
 package io.github.ninobomba.commons.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.SneakyThrows;
@@ -10,7 +11,9 @@ import lombok.SneakyThrows;
  */
 public interface JsonUtils {
 
-	ObjectMapper objectMapper = new ObjectMapper ( ).enable ( SerializationFeature.INDENT_OUTPUT );
+	ObjectMapper objectMapper = new ObjectMapper ( )
+			.configure ( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false )
+			.enable ( SerializationFeature.INDENT_OUTPUT );
 
 	/**
 	 * Checks if a given string is a valid JSON.

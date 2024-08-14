@@ -3,6 +3,8 @@ package io.github.ninobomba.commons.exceptions.core.messages;
 import lombok.Builder;
 import lombok.SneakyThrows;
 
+import java.io.Serializable;
+import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -27,7 +29,7 @@ public final class LocalExceptionMessageBuilder {
 
 	private String separator;
 
-	// The URI which caused the problem
+	// The URI, which caused the problem
 	private String instance;
 
 	// The URI providing more details about the problem
@@ -37,6 +39,8 @@ public final class LocalExceptionMessageBuilder {
 
 	private Throwable throwable;
 
+	private Map < String, Serializable > properties;
+
 	/**
 	 * Returns a string representation of the LocalExceptionMessageBuilder object.
 	 *
@@ -44,10 +48,11 @@ public final class LocalExceptionMessageBuilder {
 	 */
 	@Override
 	public String toString ( ) {
+		updateWithPropertiesIfRequired ( );
 		return new StringJoiner ( Objects.isNull ( separator ) ? SEPARATORS.DEFAULT_SEPARATOR.value : separator )
 				.add ( "" )
 				.add ( "Invoking Class: " + ( Objects.nonNull ( invokingClass ) ? invokingClass : "" ) )
-				.add ( "Level: " + ( Objects.nonNull ( level ) ? "Level: " + level : "" ) )
+				.add ( "Level: " + ( Objects.nonNull ( level ) ? level : "" ) )
 				.add ( "Id: " + ( Objects.nonNull ( id ) ? id : "" ) )
 				.add ( "Code: " + ( Objects.nonNull ( code ) ? code : "" ) )
 				.add ( "Message: " + ( Objects.nonNull ( message ) ? message : "" ) )
@@ -58,13 +63,26 @@ public final class LocalExceptionMessageBuilder {
 				.toString ( );
 	}
 
+	private void updateWithPropertiesIfRequired ( ) {
+		if ( Objects.isNull ( properties ) || properties.isEmpty ( ) ) return;
+
+		id = String.valueOf ( properties.getOrDefault ( "id", id ) );
+		code = String.valueOf ( properties.getOrDefault ( "code", code ) );
+		message = String.valueOf ( properties.getOrDefault ( "message", message ) );
+		description = String.valueOf ( properties.getOrDefault ( "description", description ) );
+		invokingClass = String.valueOf ( properties.getOrDefault ( "invokingClass", invokingClass ) );
+		separator = String.valueOf ( properties.getOrDefault ( "separator", SEPARATORS.DEFAULT_SEPARATOR.value ) );
+		instance = String.valueOf ( properties.getOrDefault ( "instance", instance ) );
+		link = String.valueOf ( properties.getOrDefault ( "link", link ) );
+		level = ExceptionLevel.valueOf ( String.valueOf ( properties.getOrDefault ( "level", level == null ? ExceptionLevel.INFO : level.name ( ) ) ) );
+	}
+
 	/**
 	 * The SEPARATORS enum defines different separators that can be used in exception messages.
 	 */
 	public enum SEPARATORS {
-		DEFAULT_SEPARATOR ( " -- " ),
+		DEFAULT_SEPARATOR ( ", " ),
 		SYSTEM_SEPARATOR ( System.lineSeparator ( ) );
-
 		public final String value;
 
 		SEPARATORS ( String value ) {

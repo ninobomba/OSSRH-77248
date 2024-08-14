@@ -70,8 +70,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <jackson.version>2.17.1</jackson.version>
-        <cucumber.version>7.18.0</cucumber.version>
+        <jackson.version>2.17.2</jackson.version>
+        <cucumber.version>7.18.1</cucumber.version>
         <mockito.version>5.12.0</mockito.version>
 
     </properties>
