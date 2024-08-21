@@ -18,19 +18,19 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public final class LocalPropertiesLoader {
-	
+
 	private static final String DEFAULT_PROPERTIES_PATH = "src/main/resources/custom/";
-	
+
 	private static Properties properties;
-	
+
 	private static LocalPropertiesLoader instance;
-	
+
 	/**
 	 * This class represents a Local Properties Loader.
 	 */
 	private LocalPropertiesLoader ( ) {
 	}
-	
+
 	/**
 	 * Loads local properties from a specified path.
 	 *
@@ -39,7 +39,7 @@ public final class LocalPropertiesLoader {
 	private LocalPropertiesLoader ( String path ) {
 		load ( path );
 	}
-	
+
 	/**
 	 * Retrieves the instance of LocalPropertiesLoader.
 	 *
@@ -48,7 +48,7 @@ public final class LocalPropertiesLoader {
 	public static LocalPropertiesLoader getInstance ( ) {
 		return getInstance ( DEFAULT_PROPERTIES_PATH );
 	}
-	
+
 	/**
 	 * Retrieves the instance of LocalPropertiesLoader. If an instance
 	 * does not exist, a new instance will be created and returned.
@@ -63,9 +63,9 @@ public final class LocalPropertiesLoader {
 		print ( );
 		return instance;
 	}
-	
+
 	/**
-	 * Retrieves the value of the specified property, or returns the default value if the property is not found.
+	 * Retrieves the value of the specified property or returns the default value if the property is not found.
 	 *
 	 * @param name         the name of the property
 	 * @param defaultValue the default value to return if the property is not found
@@ -74,7 +74,7 @@ public final class LocalPropertiesLoader {
 	public String getProperty ( String name, String defaultValue ) {
 		return Optional.ofNullable ( getProperty ( name ) ).orElse ( defaultValue );
 	}
-	
+
 	/**
 	 * Retrieves the value of a property with the given name.
 	 *
@@ -83,11 +83,11 @@ public final class LocalPropertiesLoader {
 	 */
 	public String getProperty ( String name ) {
 		var property = properties.get ( name );
-		return Objects.isNull (  property  ) ? null : property.toString ( );
+		return Objects.isNull ( property ) ? null : property.toString ( );
 	}
-	
+
 	/**
-	 * Loads properties from the specified path into the properties object.
+	 * Loads properties from the specified path into the property object.
 	 *
 	 * @param path The path to the properties files directory.
 	 */
@@ -101,7 +101,7 @@ public final class LocalPropertiesLoader {
 			}
 		} );
 	}
-	
+
 	/**
 	 * Prints out the non-sensitive properties stored in the property object.
 	 * Sensitive properties such as "token", "secret", "password", and "key" are filtered out.
@@ -111,11 +111,11 @@ public final class LocalPropertiesLoader {
 		properties
 				.entrySet ( )
 				.stream ( )
-				.filter ( map -> !StringUtils.containsAnyIgnoreCase ( map.getKey ( ).toString ( ), "token", "secret", "password", "key" ) )
+				.filter ( map -> ! StringUtils.containsAnyIgnoreCase ( map.getKey ( ).toString ( ), "token", "secret", "password", "key" ) )
 				.collect ( Collectors.toMap ( Map.Entry::getKey, Map.Entry::getValue ) )
 				.forEach ( ( k, v ) -> log.debug ( "LocalPropertiesLoader::print() _: kv: {}:{}", k, v ) );
 	}
-	
+
 	/**
 	 * A utility method to list properties files in the given path.
 	 *
@@ -125,20 +125,20 @@ public final class LocalPropertiesLoader {
 	 */
 	private static Set < String > listPropertiesFile ( String path ) throws IOException {
 		var response = new HashSet < String > ( );
-		
+
 		var paths = Paths.get ( path );
 		log.debug ( "LocalPropertiesLoader::listPropertiesFile() _: paths: {}", paths );
 		var streamPath = Files.list ( paths );
-		
+
 		streamPath.forEach ( e -> {
 			var item = path.concat ( e.getFileName ( ).toString ( ) );
 			log.debug ( "LocalPropertiesLoader::listPropertiesFile() _: evaluating: {}", item );
-			if ( !Files.isDirectory ( e ) && "properties".equals ( FilenameUtils.getExtension ( String.valueOf ( e ) ) ) ) {
+			if ( ! Files.isDirectory ( e ) && "properties".equals ( FilenameUtils.getExtension ( String.valueOf ( e ) ) ) ) {
 				response.add ( item );
 			}
 		} );
 		streamPath.close ( );
 		return response;
 	}
-	
+
 }

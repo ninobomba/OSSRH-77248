@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 class LocalExceptionMessageBuilderTest {
 
@@ -99,10 +101,11 @@ class LocalExceptionMessageBuilderTest {
 				.build ( )
 				.create ( SystemIllegalAccessException.class );
 
+		assertThat ( exception ).isNotNull ( );
+
 		System.out.println ( exception );
 
 		System.out.println ( ExceptionUtils.toJsonString ( entries, true ) );
-
 		System.out.println ( ExceptionUtils.toJsonString ( entries, false ) );
 	}
 

@@ -14,19 +14,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ApiGeoLocationTest {
 	@Test
 	void getGeoLocationInfoByIpAddressTest ( ) {
-		
 		var request = Mockito.mock ( HttpServletRequest.class );
-		
 		var ip = HttpRemoteIpUtils.getRemoteIpByHttpRequestHeaders ( request );
-		
 		System.out.println ( "getRemoteIpByHttpRequestHeaders() > ip value is: " + ip );
-		
 		assertThat ( ip ).isNull ( );
-		
 		Assertions.assertThrows ( EmptyOrNullParameterException.class, ( ) -> {
 			var geo = ApiGeoLocation.getGeoLocationByIp ( null );
 		} );
-		
 	}
-	
+
+	@Test
+	void getGeoLocationByIpAddressTest ( ) {
+		var ip = "189.128.121.26";
+		var geo = ApiGeoLocation.getGeoLocationByIp ( ip );
+		assertThat ( geo ).isNotBlank ( );
+		System.out.println ( "ip: " + ip + " geo: " + geo );
+	}
 }

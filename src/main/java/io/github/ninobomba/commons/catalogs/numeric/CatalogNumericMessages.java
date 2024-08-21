@@ -1,20 +1,19 @@
-package io.github.ninobomba.commons.exceptions.commons;
+package io.github.ninobomba.commons.catalogs.numeric;
 
 /**
  * This enum represents a set of common message errors.
  */
-public enum CommonMessageErrors {
-	
+public enum CatalogNumericMessages {
+
 	UNEXPECTED_VALUE ( "Constraint error - Unexpected value" ),
 	LOWER_THAN_ZERO ( "The value is lower than zero" ),
 	HIGHER_THAN_ZERO ( "The value is higher than zero" ),
-	INVALID_AMOUNT ( "Invalid amount" ),
-	INSUFFICIENT_FUNDS ( "Insufficient funds" );
-	
+	EQUALS_TO_ZERO ( "The value is equals to zero" );
+
 	public final String description;
-	
-	CommonMessageErrors ( String description ) {
+
+	CatalogNumericMessages ( String description ) {
 		this.description = description;
 	}
-	
+
 }

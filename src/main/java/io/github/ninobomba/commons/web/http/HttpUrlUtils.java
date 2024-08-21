@@ -71,7 +71,7 @@ public interface HttpUrlUtils {
 	 *
 	 * @param url the URL of the host to check availability for
 	 * @return true if the host is available and responds with a successful HTTP status code (between 200 and 399);
-	 * false otherwise or if an exception occurs during the check
+	 * false otherwise, or if an exception occurs during the check
 	 */
 	static boolean hostAvailabilityCheck ( String url ) {
 		return hostAvailabilityCheck ( url, 0, 10_000 );
@@ -82,7 +82,7 @@ public interface HttpUrlUtils {
 	 *
 	 * @param url  the URL of the host (e.g., "<a href="http://example.com">...</a>")
 	 * @param port the port number of the host (0 indicates the default port)
-	 * @return true if the host is available and returns a successful response code (2xx), false otherwise
+	 * @return true if the host is available and returns a successful response code (2xxx), false otherwise
 	 */
 	static boolean hostAvailabilityCheck ( String url, int port ) {
 		return hostAvailabilityCheck ( url, port, 10_000 );
