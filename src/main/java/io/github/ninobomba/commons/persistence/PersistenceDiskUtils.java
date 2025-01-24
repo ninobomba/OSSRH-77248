@@ -4,7 +4,6 @@ import io.github.ninobomba.commons.time.DateTimeUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -56,7 +55,6 @@ public final class PersistenceDiskUtils {
 	 *
 	 * @param data         the data to be saved
 	 * @param fileLocation the path of the file to save the data to
-	 * @throws IOException if an I/O error occurs while saving the data
 	 */
 	@SneakyThrows
 	private static void save ( String data, String fileLocation ) {

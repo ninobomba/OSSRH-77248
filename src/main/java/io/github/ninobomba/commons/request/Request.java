@@ -120,7 +120,7 @@ public class Request {
 				.concat ( "\"checkpoints\":[" + checkpoints + "]" )
 				.concat ( "}" );
 
-		return pretty ? JsonUtils.pretty ( response ) : response;
+		return pretty ? JsonUtils.format ( response ) : response;
 	}
 
 }

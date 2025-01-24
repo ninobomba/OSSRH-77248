@@ -128,16 +128,17 @@ public final class LocalPropertiesLoader {
 
 		var paths = Paths.get ( path );
 		log.debug ( "LocalPropertiesLoader::listPropertiesFile() _: paths: {}", paths );
-		var streamPath = Files.list ( paths );
 
-		streamPath.forEach ( e -> {
-			var item = path.concat ( e.getFileName ( ).toString ( ) );
-			log.debug ( "LocalPropertiesLoader::listPropertiesFile() _: evaluating: {}", item );
-			if ( ! Files.isDirectory ( e ) && "properties".equals ( FilenameUtils.getExtension ( String.valueOf ( e ) ) ) ) {
-				response.add ( item );
-			}
-		} );
-		streamPath.close ( );
+		try ( var streamPath = Files.list ( paths ) ) {
+			streamPath.forEach ( e -> {
+				var item = path.concat ( e.getFileName ( ).toString ( ) );
+				log.debug ( "LocalPropertiesLoader::listPropertiesFile() _: evaluating: {}", item );
+				if ( ! Files.isDirectory ( e ) && "properties".equals ( FilenameUtils.getExtension ( String.valueOf ( e ) ) ) ) {
+					response.add ( item );
+				}
+			} );
+		}
+
 		return response;
 	}
 
