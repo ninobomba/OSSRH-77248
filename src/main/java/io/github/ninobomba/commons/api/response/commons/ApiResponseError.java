@@ -15,7 +15,5 @@ public class ApiResponseError implements Serializable {
 	private final String value;
 	private final String message;
 	private final String description;
-
-	private final boolean success = false;
-
+	
 }
