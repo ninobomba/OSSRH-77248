@@ -1,20 +1,14 @@
-package io.github.ninobomba.commons.api.response.record;
+package io.github.ninobomba.commons.api.response.commons;
 
-import lombok.Builder;
 import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
  * Represents an error response from an API.
  */
 @Data
-@Builder
-public final class ApiResponseError implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = - 4107701302700942933L;
+public class ApiResponseError implements Serializable {
 
 	private final String id;
 	private final String field;
@@ -22,7 +16,6 @@ public final class ApiResponseError implements Serializable {
 	private final String message;
 	private final String description;
 
-	@Builder.Default
 	private final boolean success = false;
 
 }

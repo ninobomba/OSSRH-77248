@@ -1,6 +1,5 @@
-package io.github.ninobomba.commons.api.response.record;
+package io.github.ninobomba.commons.api.response.commons;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,15 +8,13 @@ import java.io.Serializable;
  * Represents a response returned by an API.
  */
 @Data
-@Builder
-public final class ApiResponseSuccess implements Serializable {
+public class ApiResponseSuccess implements Serializable {
 
 	private final String id;
 	private final String field;
 	private final String value;
 	private final String message;
 
-	@Builder.Default
-	private final boolean success = false;
+	private final boolean success = true;
 
 }

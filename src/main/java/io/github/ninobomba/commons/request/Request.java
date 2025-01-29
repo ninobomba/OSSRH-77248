@@ -73,7 +73,7 @@ public class Request {
 			var to = ( Event ) events[ index ];
 			var from = ( Event ) events[ index - 1 ];
 
-			Duration duration = Duration.between ( from.getTimestamp ( ), to.getTimestamp ( ) );
+			var duration = Duration.between ( from.getTimestamp ( ), to.getTimestamp ( ) );
 			to.setElapsedTimeNanoSeconds ( duration.toNanos ( ) );
 			to.setElapsedTimeSeconds ( duration.toSeconds ( ) );
 

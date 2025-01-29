@@ -9,10 +9,11 @@
 
     <groupId>io.github.ninobomba</groupId>
     <artifactId>t4m-commons</artifactId>
-    <version>1.0.0.17</version>
+    <version>1.0.0.20</version>
     <packaging>jar</packaging>
 
-    <name>${project.groupId}.${project.artifactId}.${project.version}</name>
+    <name>io.github.ninobomba.t4mcommons.1.0.0.20</name>
+    <!--    <name>${project.groupId}.${project.artifactId}.${project.version}</name>-->
     <description>Tools 4 Monkeys - Java Commons</description>
     <url>https://github.com/ninobomba/OSSRH-77248</url>
 
@@ -248,22 +249,22 @@
                     <!--                            <goal>aggregate</goal>-->
                     <!--                        </goals>-->
                     <!--                    </execution>-->
-                    <!--                    <execution>-->
-                    <!--                        <id>attach-javadocs</id>-->
-                    <!--                        <goals>-->
-                    <!--                            <goal>jar</goal>-->
-                    <!--                        </goals>-->
-                    <!--                        <phase>package</phase>-->
-                    <!--                        <configuration>-->
-                    <!--                            <show>public</show>-->
-                    <!--                            <failOnError>false</failOnError>-->
-                    <!--                            <detectOfflineLinks>false</detectOfflineLinks>-->
-                    <!--                            <doclint>all,-missing</doclint>-->
-                    <!--                            <nohelp>true</nohelp>-->
-                    <!--                            <excludePackageNames>*.internal.*,test.*,demo</excludePackageNames>-->
-                    <!--                            <quiet>true</quiet>-->
-                    <!--                        </configuration>-->
-                    <!--                    </execution>-->
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <show>public</show>
+                            <failOnError>false</failOnError>
+                            <detectOfflineLinks>false</detectOfflineLinks>
+                            <doclint>all,-missing</doclint>
+                            <nohelp>true</nohelp>
+                            <excludePackageNames>*.internal.*,test.*,demo</excludePackageNames>
+                            <quiet>true</quiet>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 
