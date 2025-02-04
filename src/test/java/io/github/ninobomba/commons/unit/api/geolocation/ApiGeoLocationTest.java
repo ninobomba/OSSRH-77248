@@ -2,7 +2,7 @@ package io.github.ninobomba.commons.unit.api.geolocation;
 
 import io.github.ninobomba.commons.api.geolocation.ApiGeoLocation;
 import io.github.ninobomba.commons.exceptions.types.commons.EmptyOrNullParameterException;
-import io.github.ninobomba.commons.web.http.HttpRemoteIpUtils;
+import io.github.ninobomba.commons.web.http.javax.HttpRemoteIpUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

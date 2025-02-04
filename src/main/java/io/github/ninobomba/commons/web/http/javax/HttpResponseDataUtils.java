@@ -1,4 +1,4 @@
-package io.github.ninobomba.commons.web.http;
+package io.github.ninobomba.commons.web.http.javax;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;

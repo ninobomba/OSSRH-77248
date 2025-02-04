@@ -12,5 +12,6 @@ public class ApiResponseSuccess implements Serializable {
 
 	private final String id;
 	private final String message;
-	
+	private final Object data;
+
 }

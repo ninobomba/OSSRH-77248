@@ -1,4 +1,4 @@
-package io.github.ninobomba.commons.web.http;
+package io.github.ninobomba.commons.web.http.javax;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +11,7 @@ import static java.util.stream.Collectors.toMap;
  * The HttpRequestDataUtils interface provides utility methods for working with HTTP request data.
  */
 public interface HttpRequestDataUtils {
-	
+
 	/**
 	 * Returns a map of request headers from the given ServletRequest.
 	 *
@@ -22,7 +22,7 @@ public interface HttpRequestDataUtils {
 	static Map < String, String > getRequestHeadersMap ( ServletRequest servletRequest ) {
 		return getRequestHeadersMap ( ( HttpServletRequest ) servletRequest );
 	}
-	
+
 	/**
 	 * Returns a map of request headers from the given HttpServletRequest object.
 	 *
@@ -39,7 +39,7 @@ public interface HttpRequestDataUtils {
 						TreeMap::putAll
 				);
 	}
-	
+
 	/**
 	 * Returns a map of request parameters from the given ServletRequest.
 	 *
@@ -50,7 +50,7 @@ public interface HttpRequestDataUtils {
 	static Map < String, String > getRequestParametersMap ( ServletRequest servletRequest ) {
 		return getRequestParametersMap ( ( HttpServletRequest ) servletRequest );
 	}
-	
+
 	/**
 	 * Returns a map of request parameters from the given HttpServletRequest object.
 	 *
@@ -58,10 +58,9 @@ public interface HttpRequestDataUtils {
 	 * @return a map containing the request parameters, where the key is the parameter name and the value is the parameter value
 	 */
 	static Map < String, String > getRequestParametersMap ( HttpServletRequest httpRequest ) {
-		return
-				Stream.of ( Collections.list ( httpRequest.getParameterNames ( ) ), Collections.list ( httpRequest.getAttributeNames ( ) ) )
-						.flatMap ( Collection::stream )
-						.collect ( toMap ( key -> key, httpRequest::getParameter ) );
+		return Stream.of ( Collections.list ( httpRequest.getParameterNames ( ) ), Collections.list ( httpRequest.getAttributeNames ( ) ) )
+				.flatMap ( Collection::stream )
+				.collect ( toMap ( key -> key, httpRequest::getParameter ) );
 	}
 
 	/**
@@ -71,9 +70,8 @@ public interface HttpRequestDataUtils {
 	 * @return a map containing the request parameters, where the key is the parameter name, and the value is the parameter value
 	 */
 	static Map < String, String > getRequestParametersMap ( jakarta.servlet.http.HttpServletRequest httpRequest ) {
-		return
-				Stream.of ( Collections.list ( httpRequest.getParameterNames ( ) ), Collections.list ( httpRequest.getAttributeNames ( ) ) )
-						.flatMap ( Collection::stream )
-						.collect ( toMap ( key -> key, httpRequest::getParameter ) );
+		return Stream.of ( Collections.list ( httpRequest.getParameterNames ( ) ), Collections.list ( httpRequest.getAttributeNames ( ) ) )
+				.flatMap ( Collection::stream )
+				.collect ( toMap ( key -> key, httpRequest::getParameter ) );
 	}
 }

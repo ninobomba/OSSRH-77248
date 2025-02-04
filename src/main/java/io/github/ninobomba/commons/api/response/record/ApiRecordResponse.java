@@ -9,15 +9,9 @@ public final class ApiRecordResponse {
 
 	public record Success(
 			String id,
-			String field,
-			String value,
 			String message,
-			boolean success
+			Object data
 	) implements Serializable, Response {
-
-		public Success {
-			success = true;
-		}
 	}
 
 	public record Error(
@@ -25,8 +19,7 @@ public final class ApiRecordResponse {
 			String field,
 			String value,
 			String message,
-			String description,
-			boolean success
+			String description
 	) implements Serializable, Response {
 	}
 

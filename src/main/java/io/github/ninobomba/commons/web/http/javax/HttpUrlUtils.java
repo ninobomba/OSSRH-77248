@@ -1,4 +1,4 @@
-package io.github.ninobomba.commons.web.http;
+package io.github.ninobomba.commons.web.http.javax;
 
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
