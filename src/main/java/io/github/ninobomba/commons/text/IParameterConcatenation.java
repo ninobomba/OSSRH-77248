@@ -3,10 +3,10 @@ package io.github.ninobomba.commons.text;
 import java.util.Optional;
 
 /**
- * The IParameterConcatenator interface provides a method for formatting a processing message by replacing placeholders
+ * The IParameterConcatenate interface provides a method for formatting a processing message by replacing placeholders
  * with actual parameter values.
  */
-public interface IParameterConcatenator {
+public interface IParameterConcatenation {
 	
 	/**
 	 * Replaces placeholders in a processing message with actual parameter values.
