@@ -1,6 +1,7 @@
 package io.github.ninobomba.commons.platform;
 
 import lombok.Builder;
+import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * <p>
  * It implements the Serializable interface, allowing instances of this class to be serialized and deserialized.
  */
+@Data
 @Builder
 public class LoginDevice implements Serializable {
 

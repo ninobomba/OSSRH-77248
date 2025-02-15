@@ -31,32 +31,36 @@ import java.util.stream.IntStream;
  */
 @Slf4j
 public final class IdGeneratorSnowFlakeSupport {
-	
+
+	private static ConcurrentLinkedQueue < Long > queue = null;
+
+	private static Snowflake snowflake;
+	private static IdGeneratorSnowFlakeSupport INSTANCE;
+
 	private static final int MAX_QUEUE_SIZE = 20;
 	private static final int MIN_QUEUE_SIZE_BEFORE_LOAD = 10;
-	
-	private static ConcurrentLinkedQueue < Long > queue = null;
-	
-	private static Snowflake snowflake;
-	private static IdGeneratorSnowFlakeSupport instance;
-	
+
 	private IdGeneratorSnowFlakeSupport ( ) {
-		load ();
+		load ( );
 	}
-	
+
 	/**
 	 * Returns an instance of the IdGeneratorSnowFlakeSupport class.
-	 *
+	 * <p>
 	 * If an instance does not already exists, a new instance is created and returned.
 	 * Otherwise, the existing instance is returned.
 	 *
 	 * @return an instance of the IdGeneratorSnowFlakeSupport class
 	 */
-	public static IdGeneratorSnowFlakeSupport getInstance ( ) {
-		if ( Objects.isNull ( instance ) ) instance = new IdGeneratorSnowFlakeSupport ( );
-		return instance;
+	public static IdGeneratorSnowFlakeSupport getINSTANCE ( ) {
+		if ( Objects.isNull ( INSTANCE ) ) {
+			synchronized ( IdGeneratorSnowFlakeSupport.class ) {
+				INSTANCE = new IdGeneratorSnowFlakeSupport ( );
+			}
+		}
+		return INSTANCE;
 	}
-	
+
 	/**
 	 * Gets the next id number from the queue.
 	 * <p>
@@ -70,12 +74,12 @@ public final class IdGeneratorSnowFlakeSupport {
 	 */
 	public long getNextId ( ) {
 		if ( queue.isEmpty ( ) || queue.size ( ) <= MIN_QUEUE_SIZE_BEFORE_LOAD ) {
-			log.info ( "IdGenerator::getNextId() !: loading new id numbers into memory" );
+			log.info ( "IdGeneratorConcurrentLinkedQueueSupport::getNextId() !: loading new id numbers into memory" );
 			load ( );
 		}
-		return Optional.ofNullable ( queue.poll () ).orElse (  snowflake.nextId () );
+		return Optional.ofNullable ( queue.poll ( ) ).orElse ( snowflake.nextId ( ) );
 	}
-	
+
 	/**
 	 * Loads new id numbers into memory.
 	 * <p>
@@ -85,19 +89,19 @@ public final class IdGeneratorSnowFlakeSupport {
 	 * After loading, it logs the number of id numbers that have been loaded into memory.
 	 */
 	private static void load ( ) {
-		
+
 		snowflake = new Snowflake ( 25, 2 );
 		queue = new ConcurrentLinkedQueue <> ( );
-		
+
 		IntStream
 				.rangeClosed ( 1, MAX_QUEUE_SIZE )
 				.parallel ( )
 				.forEach ( e -> {
 					long id = snowflake.nextId ( );
-					if ( !queue.contains ( id ) ) queue.offer ( id );
+					if ( ! queue.contains ( id ) ) queue.offer ( id );
 				} );
-		
-		log.info ( "IdGenerator::load() : loaded {} id numbers into memory", queue.size ( ) );
+
+		log.info ( "IdGeneratorConcurrentLinkedQueueSupport::load() : loaded {} id numbers into memory", queue.size ( ) );
 	}
-	
+
 }

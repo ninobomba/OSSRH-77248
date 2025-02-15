@@ -3,31 +3,33 @@ package io.github.ninobomba.commons.id;
 import lombok.SneakyThrows;
 
 import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.LongStream;
 
 /**
- * IdGeneratorHashSetSupport is a class that provides unique ID generation functionality using a HashSet as a queue.
- * The class follows the singleton design pattern.
+ * The IdGeneratorConcurrentLinkedQueueSupport class is responsible for generating unique IDs.
+ * It uses a queue to store generated IDs and reloads the queue when it becomes empty or below a certain threshold.
+ * The class follows the singleton pattern, meaning there can only be one instance of IdGeneratorConcurrentLinkedQueueSupport.
  */
-public final class IdGeneratorHashSetSupport {
+public final class IdGeneratorConcurrentLinkedQueueSupport {
 
-	private static Set < Long > queue = null;
+	private static ConcurrentLinkedQueue < Long > queue = null;
 
-	private static IdGeneratorHashSetSupport INSTANCE;
+	private static IdGeneratorConcurrentLinkedQueueSupport INSTANCE;
 
 	private static final int MAX_QUEUE_SIZE = 10_000;
 	private static final int MIN_QUEUE_SIZE_BEFORE_LOAD = 10;
 	private static final long WAIT_TIME = 1L;
 
 	/**
-	 * IdGeneratorHashSetSupport is a class that provides unique ID generation functionality using a HashSet as a queue.
-	 * The class follows the singleton design pattern.
+	 * The IdGeneratorConcurrentLinkedQueueSupport class is responsible for generating unique IDs.
+	 * It uses a queue to store generated IDs and reloads the queue when it becomes empty or below a certain threshold.
+	 * The class follows the singleton pattern, meaning there can only be one instance of IdGeneratorConcurrentLinkedQueueSupport.
 	 */
-	private IdGeneratorHashSetSupport ( ) {
+	private IdGeneratorConcurrentLinkedQueueSupport ( ) {
 		load ( );
 	}
 
@@ -36,30 +38,28 @@ public final class IdGeneratorHashSetSupport {
 	 *
 	 * @return the instance of IdGeneratorConcurrentLinkedQueueSupport
 	 */
-	public static IdGeneratorHashSetSupport getINSTANCE ( ) {
+	public static IdGeneratorConcurrentLinkedQueueSupport getINSTANCE ( ) {
 		if ( Objects.isNull ( INSTANCE ) ) {
-			synchronized ( IdGeneratorHashSetSupport.class ) {
-				INSTANCE = new IdGeneratorHashSetSupport ( );
+			synchronized ( IdGeneratorConcurrentLinkedQueueSupport.class ) {
+				INSTANCE = new IdGeneratorConcurrentLinkedQueueSupport ( );
 			}
 		}
 		return INSTANCE;
 	}
 
 	/**
-	 * Retrieves the next available unique ID from the queue.
-	 * If the queue is empty or its size is less than or equal to the minimum queue size before loading,
-	 * the load method is called to populate the queue with new unique IDs.
-	 * Otherwise, it retrieves an ID from the queue using the stream.findAny() method.
-	 * The retrieved ID is then removed from the queue.
+	 * Returns the next ID from the IdGeneratorConcurrentLinkedQueueSupport queue.
+	 * <p>
+	 * If the queue is empty or its size is below a certain threshold, the method calls the load() method to reload the queue.
+	 * It then retrieves the next ID from the queue using the poll() method.
+	 * If the retrieved ID is null, the method calls the generateId() method to generate a new ID.
 	 *
-	 * @return The retrieved unique ID.
+	 * @return The next ID from the IdGeneratorConcurrentLinkedQueueSupport queue.
 	 */
 	public long getNextId ( ) {
 		if ( queue.isEmpty ( ) || queue.size ( ) <= MIN_QUEUE_SIZE_BEFORE_LOAD )
 			load ( );
-		Long id = queue.stream ( ).findAny ( ).orElse ( generateId ( ) );
-		queue.remove ( id );
-		return id;
+		return Optional.ofNullable ( queue.poll ( ) ).orElse ( generateId ( ) );
 	}
 
 	/**
@@ -71,12 +71,14 @@ public final class IdGeneratorHashSetSupport {
 	 * Note: This method does not return any value.
 	 */
 	private static void load ( ) {
-		queue = ConcurrentHashMap.newKeySet ( );
+		queue = new ConcurrentLinkedQueue <> ( );
 		LongStream
-				.generate ( IdGeneratorHashSetSupport::generateId )
+				.generate ( IdGeneratorConcurrentLinkedQueueSupport::generateId )
 				//.parallel()
 				.limit ( MAX_QUEUE_SIZE / 2 )
-				.forEach ( queue::add );
+				.distinct ( )
+				.filter ( e -> ! queue.contains ( e ) )
+				.forEach ( queue::offer );
 	}
 
 	/**

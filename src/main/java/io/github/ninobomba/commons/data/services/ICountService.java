@@ -11,7 +11,7 @@ public interface ICountService < E > {
 	 * Counts the number of elements of a specific type.
 	 *
 	 * @param type the type of elements to be counted
-	 * @return the number of elements of the specified type
+	 * @return the number is specified.
 	 */
 	int count( E type );
 	

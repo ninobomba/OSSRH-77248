@@ -1,6 +1,5 @@
-package io.github.ninobomba.commons.data.dtos;
+package io.github.ninobomba.commons.data.dto.v1;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,31 +25,35 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
-public abstract class AbstractDtoDefaultValues {
-	
-	private String        createdBy;
-	private String        lastModifiedBy;
-	
+public abstract class AuditableDto {
+
+	private String createdBy;
+	private String lastModifiedBy;
+
 	private LocalDateTime createdAt;
 	private LocalDateTime lastModifiedAt;
-	
+
+	private String status;
+	private String version;
+
 	/**
 	 * An abstract class that provides default values for properties commonly used in DTOs (Data Transfer Objects).
-	 *
+	 * <p>
 	 * This class provides default values for the following properties:
 	 * - createdBy: the user who created the entity represented by the DTO
 	 * - lastModifiedBy: the last user who modified the entity represented by the DTO
 	 * - createdAt: the date and time when the entity represented by the DTO was created
 	 * - lastModifiedAt: the date and time when the entity represented by the DTO was last modified
-	 *
+	 * <p>
 	 * It also includes a single constructor that initializes the createdAt and lastModifiedAt properties with the
 	 * current date and time.
 	 */
-	public AbstractDtoDefaultValues ( ) {
+	public AuditableDto ( ) {
 		final LocalDateTime currentDateTime = LocalDateTime.now ( );
 		this.createdAt = currentDateTime;
 		this.lastModifiedAt = currentDateTime;
+		this.status = "NEW";
+		this.version = "1.0.0";
 	}
-	
+
 }

@@ -44,7 +44,7 @@ public class Event {
 	 * It formats the timestamp using the DateTimeFormatter.ofPattern() method with the pattern "yyyy-MM-dd HH:mm:ss.SSS".
 	 */
 	private void assignDefaults ( ) {
-		id = IdGeneratorSnowFlakeSupport.getInstance ( ).getNextId ( );
+		id = IdGeneratorSnowFlakeSupport.getINSTANCE ( ).getNextId ( );
 		timestamp = LocalDateTime.now ( );
 		formattedTimestamp = timestamp.format ( DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss.SSS" ) );
 	}
