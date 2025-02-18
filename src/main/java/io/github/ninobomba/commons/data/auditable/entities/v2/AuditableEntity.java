@@ -1,4 +1,4 @@
-package io.github.ninobomba.commons.data.entities.v2;
+package io.github.ninobomba.commons.data.auditable.entities.v2;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ public abstract class AuditableEntity {
 
 	private Instant createdDate;
 	private Instant lastModifiedDate;
-	
+
 	private String status;
 	private String version;
 

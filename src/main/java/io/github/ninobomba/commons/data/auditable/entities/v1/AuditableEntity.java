@@ -1,4 +1,4 @@
-package io.github.ninobomba.commons.data.entities.v1;
+package io.github.ninobomba.commons.data.auditable.entities.v1;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +36,6 @@ public abstract class AuditableEntity {
 	 * @see AuditableEntity#lastModifiedAt
 	 * @see AuditableEntity#status
 	 * @see AuditableEntity#version
-	 * @see AuditableEntity#NEW
 	 */
 	public AuditableEntity ( ) {
 		final LocalDateTime currentDateTime = LocalDateTime.now ( );
