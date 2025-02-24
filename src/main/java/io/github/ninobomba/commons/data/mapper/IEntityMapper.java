@@ -20,7 +20,7 @@ public interface IEntityMapper < DTO, ENTITY > {
 	 * @param entity the ENTITY object to be converted
 	 * @return the resulting DTO object
 	 */
-	DTO toDTO ( ENTITY entity );
+	DTO toDto ( ENTITY entity );
 
 	/**
 	 * Converts a DTO object to an ENTITY object.
@@ -53,7 +53,7 @@ public interface IEntityMapper < DTO, ENTITY > {
 	 * @param entityList the list of ENTITY objects to be converted
 	 * @return the resulting list of DTO objects
 	 */
-	List < DTO > toDTOList ( List < ENTITY > entityList );
+	List < DTO > toDtoList ( List < ENTITY > entityList );
 
 	/**
 	 * Converts a set of ENTITY objects to a set of DTO objects.
@@ -61,7 +61,7 @@ public interface IEntityMapper < DTO, ENTITY > {
 	 * @param entitySet the set of ENTITY objects to be converted
 	 * @return the resulting set of DTO objects
 	 */
-	Set < DTO > toDTOSet ( Set < ENTITY > entitySet );
+	Set < DTO > toDtoSet ( Set < ENTITY > entitySet );
 
 	/**
 	 * Converts a set of DTO objects to a set of ENTITY objects.

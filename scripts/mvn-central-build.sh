@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check on the pom.xml and here
-RELEASE_VERSION="1.0.0.35"
+RELEASE_VERSION="1.0.0.37"
 
 cleanup()
 {

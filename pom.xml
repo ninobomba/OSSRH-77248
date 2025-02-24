@@ -9,10 +9,10 @@
 
     <groupId>io.github.ninobomba</groupId>
     <artifactId>t4m-commons</artifactId>
-    <version>1.0.0.35</version>
+    <version>1.0.0.37</version>
     <packaging>jar</packaging>
 
-    <name>io.github.ninobomba.t4mcommons.1.0.0.35</name>
+    <name>io.github.ninobomba.t4mcommons.1.0.0.37</name>
     <!--    <name>${project.groupId}.${project.artifactId}.${project.version}</name>-->
     <description>Tools 4 Monkeys - Java Commons</description>
     <url>https://github.com/ninobomba/OSSRH-77248</url>
