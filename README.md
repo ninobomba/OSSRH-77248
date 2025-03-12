@@ -1,154 +1,156 @@
-# OSSRH-77248
-# Tools for Monkeys!
+# OSSRH-77248 - Tools for Monkeys (T4M)
 
-Tools for monkeys **T4M**. is a set of common utilities that can be used in Java projects.
+T4M is a comprehensive set of common utilities for Java projects, designed to simplify development and provide reusable components for common tasks.
 
-https://central.sonatype.com/artifact/io.github.ninobomba/t4m-commons/versions
+## Project Overview
 
+- **Name**: Tools for Monkeys (T4M)
+- **Group ID**: io.github.ninobomba
+- **Artifact ID**: t4m-commons
+- **Version**: 1.0.0.37
+- **License**: Apache License 2.0
+- **Java Version**: 21
+- **Maven Central**: https://central.sonatype.com/artifact/io.github.ninobomba/t4m-commons/versions
 
-# Id Generator
+## Key Features
 
-The IdGenerator class uses the Snowflake project to create an in-memory collection of IDs (Long Type). During the startup of this singleton, it will generate 10_000 records in-memory to be consumed, once it reaches a minimum value, it will start to generate more ids automatically.
+### ID Generation
+- Snowflake algorithm-based ID generator
+- HashSet-based ID generator
+- Pre-generation and caching for performance
 
-  ``` var id = IdGenerator.getInstance().getNextId(); ```
+```java
+long id = IdGeneratorSnowFlakeSupport.getINSTANCE().getNextId();
+```
 
-## Notifications
+### Auditable Entities
+- Support for tracking creation and modification timestamps and users
+- Automatic field population based on CRUD operations
 
-The notifications channel tool, can be use to send messages by Email, Slack, TwilioSMS, TwilioWhatsUp. The NotificationManager controls the access and flush messages to pre-configured and available channels.
+### Notifications
+- Multi-channel notification system (Email, Slack, Twilio SMS, WhatsApp)
+- Centralized notification management
 
-``` 
-NotificationManager.push(  
-        NotificationMessage  
-           .builder()  
-           .message( "Hello, I love you, won't you tell me your name?" )  
-           .payload( "optional" )  
-           .build()  
+```java
+NotificationManager.push(
+    NotificationMessage
+        .builder()
+        .message("Hello, I love you, won't you tell me your name?")
+        .payload("optional")
+        .build()
 );
 NotificationManager.flush();
-``` 
-```mermaid
-sequenceDiagram
-NotificationManager ->> EMailNotificationChannel: Hello, I love you, won't you tell me your name?
-NotificationManager ->> TwilioSMSNotificationChannel: Hello, I love you, let me jump in your game
-NotificationManager ->> TwilioWhatsUpNotificationChannel: HHello, I love you, won't you tell me your name?
-NotificationManager ->> SlackNotificationChannel: Hello, hello, hello, hello, hello, hello, hello
 ```
 
-## Events
+### Events
+- Event tracking with timestamps and elapsed time
+- JSON serialization for logging and analysis
 
-Sometimes we need to audit and keep track of events. Ex, if we do receive a request and calculate the elapsed time between each of the processing tasks:
+```java
+Request request = Request.builder()
+    .name("Payment Process")
+    .payload("{}")
+    .build();
 
-```
-Request request = Request.builder()  
-     .name( "Payment Process" )   
-     .payload( "{}" )  
-     .build();  
-  
-request.pushEvent( "start" );  
-request.pushEvent( "processing" );  
-request.pushEvent( "complete" );  
+request.pushEvent("start");
+request.pushEvent("processing");
+request.pushEvent("complete");
 
-System.out.println( request.toJsonString( true ) );
-```
-Returning
-```
-{
-  "id" : "803330924731310080",
-  "name" : "Payment Process",
-  "payload" : "{}",
-  "events" : [ {
-    "id" : 803330924731310081,
-    "name" : "__INIT__",
-    "elapsedTimeSeconds" : 0,
-    "elapsedTimeNanoSeconds" : 0,
-    "timestamp" : "2022-01-25T12:30:17.6956226",
-    "formattedTimestamp" : "2022-01-25 12:30:17.695"
-  }, {
-    "id" : 803330924731310082,
-    "name" : "start",
-    "elapsedTimeSeconds" : 0,
-    "elapsedTimeNanoSeconds" : 8811600,
-    "timestamp" : "2022-01-25T12:30:17.7044342",
-    "formattedTimestamp" : "2022-01-25 12:30:17.704"
-  }, {
-    "id" : 803330924731310083,
-    "name" : "processing",
-    "elapsedTimeSeconds" : 0,
-    "elapsedTimeNanoSeconds" : 545000,
-    "timestamp" : "2022-01-25T12:30:17.7049792",
-    "formattedTimestamp" : "2022-01-25 12:30:17.704"
-  }, {
-    "id" : 803330924731310084,
-    "name" : "complete",
-    "elapsedTimeSeconds" : 0,
-    "elapsedTimeNanoSeconds" : 0,
-    "timestamp" : "2022-01-25T12:30:17.7049792",
-    "formattedTimestamp" : "2022-01-25 12:30:17.704"
-  } ],
-  "checkpoints" : [ ]
-}
+System.out.println(request.toJsonString(true));
 ```
 
-## Checkpoints 
+### Checkpoints
+- Define and track progress through a process
+- JSON-based checkpoint configuration
 
-During our execution process, we can define checkpoints. 
+### Web Utilities
+- HTTP request/response utilities
+- User agent detection
+- Support for both Jakarta and Javax APIs
 
-Signup Process example:
+### API Utilities
+- API response builders
+- HATEOAS support
+- Geolocation and IP utilities
+
+### Exception Handling
+- Comprehensive exception hierarchy
+- Factory pattern for exception creation
+- Localized exception messages
+
+### Other Utilities
+- JSON processing
+- Text manipulation
+- Time utilities
+- Validation
+- Spring integration
+- Design pattern implementations
+
+## Architecture
+
+The library is organized into logical packages:
+
+- **api**: API-related utilities (geolocation, IP, response builders)
+- **architecture**: Architectural patterns and adapters
+- **catalogs**: Catalog-related utilities (financial, numeric)
+- **checkpoints**: Checkpoint tracking
+- **constants**: Common constants
+- **data**: Data-related utilities (auditable entities, DTOs, ETL, mappers)
+- **errors**: Error handling
+- **events**: Event handling
+- **exceptions**: Exception definitions and handling
+- **id**: ID generation
+- **json**: JSON utilities
+- **patterns**: Design pattern implementations
+- **persistence**: Data persistence utilities
+- **platform**: Platform-specific utilities
+- **properties**: Property handling
+- **spring**: Spring Framework integration
+- **text**: Text processing utilities
+- **time**: Time-related utilities
+- **validator**: Validation utilities
+- **web**: Web-related utilities (HTTP, user agent)
+
+## Getting Started
+
+Add the dependency to your Maven project:
+
+```xml
+<dependency>
+    <groupId>io.github.ninobomba</groupId>
+    <artifactId>t4m-commons</artifactId>
+    <version>1.0.0.37</version>
+</dependency>
 ```
-Load the Json file defining our checkpoint list for this process.
----------------------------------------------------------------
-CheckPointFactory.getInstance().build( new ArrayList<>(){{ 
-     add("src/test/resources/checkpoint/signup.json"); 
-  }});  
-request.createCheckPointMapWithKey( "signup" );
----------------------------------------------------------------
-(signup.json)
-[  
- {  
-   "id": "SGS1",  
-   "module": "signup",  
-   "name": "start",  
-   "description": "Start of request",  
-   "order": 1  
-  },  
- {  
-   "id": "SGV2",  
-   "module": "signup",  
-   "name": "validate",  
-   "description": "Validate data",  
-   "order": 2  
-  },  
- {  
-   "id": "SGP3",  
-   "module": "signup",  
-   "name": "persist",  
-   "description": "Persist data",  
-   "order": 3  
-  },  
- {  
-   "id": "SGC4",  
-   "module": "signup",  
-   "name": "completed",  
-   "description": "Request is completed",  
-   "order": 4  
-  }  
-]
-```
-During the execution flow we can update each of the checkpoints:
 
-```
-var checkpointMap = request.getCheckPointMap();  
-checkpointMap.get("SGP3").update()
-```
-Containing a map with the completed checkpoints.
+## Installation
 
+The library is available on Maven Central. No additional repositories are needed.
 
-  
-    Utilities for APIs
-    Register Events and Checkpoints.
-    Connectivity Inspectors to different sources like PostgreSQL, MySql, Redis, etc.
-    Json Utilities - Convert Stackstrace into loggable json output
-    Annotated Validators - Email, FutureDate, Number, Phone
-    Notifications - Email, Slack, Twilio SMS API.
-    Exceptions - Factory Pool & Reflection. - Yet Another Exception Handler. 
-    Properties Management.
+## Requirements
+
+- Java 21 or higher
+- Maven 3.6 or higher
+
+## Dependencies
+
+The library depends on several key libraries:
+- Spring Framework
+- Jackson for JSON processing
+- Apache Commons
+- Lombok (for development only)
+- Snowflake ID generator
+- User agent detection libraries
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome. Please feel free to submit a Pull Request.
+
+## Contact
+
+- **Developer**: Fernando Farfan
+- **GitHub**: https://github.com/ninobomba
