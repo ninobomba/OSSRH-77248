@@ -9,19 +9,22 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.google.common.net.HttpHeaders.X_FORWARDED_FOR;
+import static org.springframework.http.HttpHeaders.*;
+
 /**
  * The HttpRemoteIpUtils class provides utilities for retrieving the remote IP address from HTTP request headers.
  */
 public interface HttpRemoteIpUtils {
 
 	List < String > HEADER_IP_REGEX_LIST = List.of (
-			"X-FORWARDED-FOR",
-			"PROXY-CLIENT-IP",
-			"WL-PROXY-CLIENT-IP",
-			"HTTP-CLIENT-IP",
-			"ORIGIN",
-			"REFERER",
-			"HOST"
+			X_FORWARDED_FOR ,
+			ORIGIN ,
+			REFERER ,
+			HOST ,
+			"PROXY_CLIENT_IP" ,
+			"WL-PROXY-CLIENT-IP" ,
+			"HTTP-CLIENT-IP"
 	);
 
 	/**
@@ -39,9 +42,9 @@ public interface HttpRemoteIpUtils {
 
 		return Optional.ofNullable ( headers.entrySet ( ).stream ( )
 				.filter ( e -> HEADER_IP_REGEX_LIST.contains ( e.getKey ( ).toUpperCase ( ) ) )
-				.map ( Map.Entry::getValue )
+				.map ( Map.Entry :: getValue )
 				.findFirst ( )
-				.orElseGet ( request::getRemoteHost )
+				.orElseGet ( request :: getRemoteHost )
 		).orElse (
 				InetAddress.getLocalHost ( ).getHostAddress ( )
 		);
