@@ -29,6 +29,7 @@ notes
 ./notes/env.txt
 
 *.iml
+./out
 
 ./mvn
 
