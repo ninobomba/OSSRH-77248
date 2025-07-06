@@ -39,6 +39,7 @@
 </settings>
 
 # sonatype
+    https://central.sonatype.org/publish/generate-portal-token/
     https://account.oss.sonatype.org/realms/central-ossrh/account/#/
     https://my.sonatype.com/
     https://s01.oss.sonatype.org/#welcome

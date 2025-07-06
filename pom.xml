@@ -12,7 +12,7 @@
     <version>1.0.0.40</version>
     <packaging>jar</packaging>
 
-    <name>io.github.ninobomba.t4mcommons.1.0.0.37</name>
+    <name>io.github.ninobomba.t4m</name>
     <!--    <name>${project.groupId}.${project.artifactId}.${project.version}</name>-->
     <description>Tools 4 Monkeys - Java Commons</description>
     <url>https://github.com/ninobomba/OSSRH-77248</url>

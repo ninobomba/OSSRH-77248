@@ -11,32 +11,32 @@ import static io.github.ninobomba.commons.api.response.record.ApiRecordResponse.
 public interface ApiResponseCreator {
 
     @NotNull
-    private static ApiRecordResponse success (
+    private static < T > ApiRecordResponse success (
             String id,
-            Object response
+            T data
     ) {
         return new ApiRecordResponse.Success(
                 id,
                 SUCCESS_MESSAGE,
-                response
+                data
         );
     }
 
     @NotNull
-    private static ApiRecordResponse success (
+    private static < T > ApiRecordResponse success (
             String id,
-            Object response,
+            T data,
             String message
     ) {
         return new ApiRecordResponse.Success(
                 id,
                 Optional.ofNullable( message ).orElse( SUCCESS_MESSAGE ),
-                response
+                data
         );
     }
 
     @NotNull
-    private static < T > ApiRecordResponse failure (
+    private static ApiRecordResponse failure (
             String id,
             String message
     ) {
@@ -50,7 +50,7 @@ public interface ApiResponseCreator {
     }
 
     @NotNull
-    private static < T > ApiRecordResponse failure (
+    private static ApiRecordResponse failure (
             String id,
             String message,
             String description
@@ -65,7 +65,7 @@ public interface ApiResponseCreator {
     }
 
     @NotNull
-    private static < T > ApiRecordResponse failure (
+    private static ApiRecordResponse failure (
             String id,
             String field,
             String value,
