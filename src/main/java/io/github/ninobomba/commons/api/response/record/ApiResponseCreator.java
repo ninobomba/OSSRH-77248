@@ -2,6 +2,8 @@ package io.github.ninobomba.commons.api.response.record;
 
 import io.github.ninobomba.commons.constants.DefaultValueConstants;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
@@ -79,5 +81,15 @@ public interface ApiResponseCreator {
                 Optional.ofNullable( message ).orElse( FAILED_MESSAGE ),
                 description
         );
+    }
+
+    static < T > ResponseEntity< ApiRecordResponse > createSuccessResponse ( String requestId, T response, HttpStatus status ) {
+        var apiResponse = success( requestId, response );
+        return new ResponseEntity<>( apiResponse, status );
+    }
+
+    static ResponseEntity< ApiRecordResponse > createFailureResponse ( String requestId, String message, HttpStatus status ) {
+        var apiResponse = failure( requestId, message );
+        return new ResponseEntity<>( apiResponse, status );
     }
 }
