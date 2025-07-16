@@ -21,12 +21,6 @@
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
     <servers>
-        <server>
-            <id>ossrh</id>
-            <username>ninobomba</username>
-            <password>MyPassword</password>
-        </server>
-
         https://s01.oss.sonatype.org/#profile;User%20Token
         <server>
                 <id>ossrh</id>

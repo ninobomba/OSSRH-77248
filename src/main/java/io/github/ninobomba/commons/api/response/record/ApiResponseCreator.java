@@ -12,84 +12,84 @@ import static io.github.ninobomba.commons.api.response.record.ApiRecordResponse.
 
 public interface ApiResponseCreator {
 
-    @NotNull
-    private static < T > ApiRecordResponse success (
-            String id,
-            T data
-    ) {
-        return new ApiRecordResponse.Success(
-                id,
-                SUCCESS_MESSAGE,
-                data
-        );
-    }
+	@NotNull
+	private static < T > ApiRecordResponse success (
+			String id,
+			T data
+	) {
+		return new ApiRecordResponse.Success (
+				id,
+				SUCCESS_MESSAGE,
+				data
+		);
+	}
 
-    @NotNull
-    private static < T > ApiRecordResponse success (
-            String id,
-            T data,
-            String message
-    ) {
-        return new ApiRecordResponse.Success(
-                id,
-                Optional.ofNullable( message ).orElse( SUCCESS_MESSAGE ),
-                data
-        );
-    }
+	@NotNull
+	private static < T > ApiRecordResponse success (
+			String id,
+			T data,
+			String message
+	) {
+		return new ApiRecordResponse.Success (
+				id,
+				Optional.ofNullable ( message ).orElse ( SUCCESS_MESSAGE ),
+				data
+		);
+	}
 
-    @NotNull
-    private static ApiRecordResponse failure (
-            String id,
-            String message
-    ) {
-        return new ApiRecordResponse.Error(
-                id,
-                DefaultValueConstants.DefaultStringValues.DEFAULT_FIELD_NAME,
-                DefaultValueConstants.DefaultStringValues.DEFAULT_FIELD_VALUE,
-                Optional.ofNullable( message ).orElse( FAILED_MESSAGE ),
-                DefaultValueConstants.DefaultStringValues.DEFAULT_DESCRIPTION_VALUE
-        );
-    }
+	@NotNull
+	private static ApiRecordResponse failure (
+			String id,
+			String message
+	) {
+		return new ApiRecordResponse.Error (
+				id,
+				DefaultValueConstants.DefaultStringValues.DEFAULT_FIELD_NAME,
+				DefaultValueConstants.DefaultStringValues.DEFAULT_FIELD_VALUE,
+				Optional.ofNullable ( message ).orElse ( FAILED_MESSAGE ),
+				DefaultValueConstants.DefaultStringValues.DEFAULT_DESCRIPTION_VALUE
+		);
+	}
 
-    @NotNull
-    private static ApiRecordResponse failure (
-            String id,
-            String message,
-            String description
-    ) {
-        return new ApiRecordResponse.Error(
-                id,
-                DefaultValueConstants.DefaultStringValues.DEFAULT_FIELD_NAME,
-                DefaultValueConstants.DefaultStringValues.DEFAULT_FIELD_VALUE,
-                Optional.ofNullable( message ).orElse( FAILED_MESSAGE ),
-                description
-        );
-    }
+	@NotNull
+	private static ApiRecordResponse failure (
+			String id,
+			String message,
+			String description
+	) {
+		return new ApiRecordResponse.Error (
+				id,
+				DefaultValueConstants.DefaultStringValues.DEFAULT_FIELD_NAME,
+				DefaultValueConstants.DefaultStringValues.DEFAULT_FIELD_VALUE,
+				Optional.ofNullable ( message ).orElse ( FAILED_MESSAGE ),
+				description
+		);
+	}
 
-    @NotNull
-    private static ApiRecordResponse failure (
-            String id,
-            String field,
-            String value,
-            String message,
-            String description
-    ) {
-        return new ApiRecordResponse.Error(
-                id,
-                field,
-                value,
-                Optional.ofNullable( message ).orElse( FAILED_MESSAGE ),
-                description
-        );
-    }
+	@NotNull
+	private static ApiRecordResponse failure (
+			String id,
+			String field,
+			String value,
+			String message,
+			String description
+	) {
+		return new ApiRecordResponse.Error (
+				id,
+				field,
+				value,
+				Optional.ofNullable ( message ).orElse ( FAILED_MESSAGE ),
+				description
+		);
+	}
 
-    static < T > ResponseEntity< ApiRecordResponse > createSuccessResponse ( String requestId, T response, HttpStatus status ) {
-        var apiResponse = success( requestId, response );
-        return new ResponseEntity<>( apiResponse, status );
-    }
+	static < T > ResponseEntity < ApiRecordResponse > createSuccessResponse ( String requestId, T response, HttpStatus status ) {
+		var apiResponse = success ( requestId, response );
+		return ResponseEntity.status ( status ).body ( apiResponse );
+	}
 
-    static ResponseEntity< ApiRecordResponse > createFailureResponse ( String requestId, String message, HttpStatus status ) {
-        var apiResponse = failure( requestId, message );
-        return new ResponseEntity<>( apiResponse, status );
-    }
+	static ResponseEntity < ApiRecordResponse > createFailureResponse ( String requestId, String message, HttpStatus status ) {
+		var apiResponse = failure ( requestId, message );
+		return ResponseEntity.status ( status ).body ( apiResponse );
+	}
 }
