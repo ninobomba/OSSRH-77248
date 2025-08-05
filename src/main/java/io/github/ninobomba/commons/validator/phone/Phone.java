@@ -1,7 +1,8 @@
-package io.github.ninobomba.commons.validator;
+package io.github.ninobomba.commons.validator.phone;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+
 import java.lang.annotation.*;
 
 /**

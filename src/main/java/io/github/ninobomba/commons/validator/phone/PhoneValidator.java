@@ -1,9 +1,8 @@
-package io.github.ninobomba.commons.validator;
+package io.github.ninobomba.commons.validator.phone;
 
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 
 /**
  * The PhoneValidator class implements the ConstraintValidator interface to define

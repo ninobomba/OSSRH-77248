@@ -1,7 +1,8 @@
-package io.github.ninobomba.commons.validator;
+package io.github.ninobomba.commons.validator.future;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+
 import java.lang.annotation.*;
 
 /**
@@ -15,8 +16,8 @@ import java.lang.annotation.*;
 @Retention ( RetentionPolicy.RUNTIME )
 public @interface FutureDate {
 	String message ( ) default "Invalid Future Date";
-	
+
 	Class < ? >[] groups ( ) default { };
-	
+
 	Class < ? extends Payload >[] payload ( ) default { };
 }
