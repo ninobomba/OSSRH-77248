@@ -7,7 +7,7 @@ import java.util.Set;
 
 /**
  * The IEntityMapper interface defines methods for mapping between DTO and ENTITY objects.
- * Implementations of this interface handle the conversion between DTOs and ENTITY objects in a consistent manner.
+ * Implementations of this interface handle the conversion between DTOs and ENTITY objects consistently.
  *
  * @param <DTO>    The type representing the DTO object
  * @param <ENTITY> The type representing the ENTITY object

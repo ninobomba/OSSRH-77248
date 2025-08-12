@@ -10,10 +10,9 @@ import java.lang.annotation.*;
 @Target ( { ElementType.FIELD } )
 @Retention ( RetentionPolicy.RUNTIME )
 public @interface AgeAdult {
-
 	String message ( ) default "Must be at least 18 years old";
 
 	Class < ? >[] groups ( ) default { };
 
-	Class < ? extends Payload >[] payload ( );
+	Class < ? extends Payload >[] payload ( ) default { };
 }
