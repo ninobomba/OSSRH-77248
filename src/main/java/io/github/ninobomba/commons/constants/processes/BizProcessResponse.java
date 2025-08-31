@@ -1,0 +1,41 @@
+package io.github.ninobomba.commons.constants.processes;
+
+public enum BizProcessResponse {
+
+	SUCCESS,
+	FAILURE;
+
+	public enum Status {
+		PROCESSING,
+		PROCESSED,
+		CREATED,
+		PENDING,
+		CANCELLED,
+		UNAUTHORIZED,
+		CONFLICTED,
+		ACTIVE,
+		INACTIVE,
+		SUSPENDED,
+		COMPLETED,
+		DELETED,
+		EXPIRED,
+		BLOCKED,
+		PAUSED,
+		ON_HOLD,
+		IN_REVIEW,
+		SCHEDULED,
+		RETRYING,
+		ERROR,
+		TIMEOUT,
+		ABORTED,
+		NOT_FOUND,
+		NO_MATCH,
+		NOT_IMPLEMENTED,
+		VALID,
+		VALIDATION_FAILED,
+		VALIDATION_ERROR,
+		VALIDATION_WARNING,
+		INVALID,
+		UNKNOWN
+	}
+}

@@ -31,7 +31,6 @@ public final class AuditableValuesProvider {
 				default -> throw new IllegalArgumentException ( "Unsupported operation: " + operation );
 			}
 		}
-
 	}
 
 	private static void handleCreateOperation ( Field field, Object entityInstance, String username ) {
