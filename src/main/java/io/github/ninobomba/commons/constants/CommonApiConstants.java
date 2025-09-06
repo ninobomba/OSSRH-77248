@@ -21,4 +21,10 @@ public interface CommonApiConstants {
 		public static final String TOKEN_MISSING_ERROR_MESSAGE = "Token is required for this operation";
 	}
 
+	enum RequestAttributes {
+		;
+		public static final String EMAIL = "EMAIL";
+		public static final String ACCOUNT_ID = "ACCOUNT_ID";
+	}
+
 }
