@@ -10,10 +10,10 @@ public sealed interface ApiRecordResponse permits ApiRecordResponse.BasicError, 
 
 	enum Messages {
 		;
-		public static final String SUCCESS_MESSAGE = "Request processed";
-		public static final String FAILED_MESSAGE = "Request Failed ";
+		public static final String SUCCESS_MESSAGE = "Request processed successfully";
+		public static final String FAILED_MESSAGE = "Request processing failed";
 	}
-
+	
 	record Success(
 			String id,
 			String message,
