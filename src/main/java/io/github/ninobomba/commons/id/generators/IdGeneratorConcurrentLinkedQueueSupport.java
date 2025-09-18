@@ -1,4 +1,4 @@
-package io.github.ninobomba.commons.id;
+package io.github.ninobomba.commons.id.generators;
 
 import lombok.SneakyThrows;
 

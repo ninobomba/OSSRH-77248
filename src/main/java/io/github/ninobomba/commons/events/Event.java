@@ -3,7 +3,7 @@ package io.github.ninobomba.commons.events;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.github.ninobomba.commons.id.IdGeneratorSnowFlakeSupport;
+import io.github.ninobomba.commons.id.generators.IdGeneratorSnowFlakeSupport;
 import lombok.Data;
 import lombok.SneakyThrows;
 

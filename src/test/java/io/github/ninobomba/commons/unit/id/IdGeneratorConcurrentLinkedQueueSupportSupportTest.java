@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.unit.id;
 
-import io.github.ninobomba.commons.id.IdGeneratorConcurrentLinkedQueueSupport;
+import io.github.ninobomba.commons.id.generators.IdGeneratorConcurrentLinkedQueueSupport;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;

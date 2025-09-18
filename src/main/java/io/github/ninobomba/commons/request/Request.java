@@ -3,7 +3,7 @@ package io.github.ninobomba.commons.request;
 import io.github.ninobomba.commons.checkpoints.CheckPoint;
 import io.github.ninobomba.commons.checkpoints.CheckPointFactory;
 import io.github.ninobomba.commons.events.Event;
-import io.github.ninobomba.commons.id.IdGeneratorSnowFlakeSupport;
+import io.github.ninobomba.commons.id.generators.IdGeneratorSnowFlakeSupport;
 import io.github.ninobomba.commons.json.JsonUtils;
 import lombok.Builder;
 import lombok.Getter;

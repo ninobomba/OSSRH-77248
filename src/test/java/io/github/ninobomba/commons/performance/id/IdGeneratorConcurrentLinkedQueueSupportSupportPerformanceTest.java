@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.performance.id;
 
-import io.github.ninobomba.commons.id.IdGeneratorConcurrentLinkedQueueSupport;
+import io.github.ninobomba.commons.id.generators.IdGeneratorConcurrentLinkedQueueSupport;
 import org.junit.jupiter.api.Test;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;

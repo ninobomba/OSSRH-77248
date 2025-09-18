@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.unit.id;
 
-import io.github.ninobomba.commons.id.IdGeneratorSnowFlakeSupport;
+import io.github.ninobomba.commons.id.generators.IdGeneratorSnowFlakeSupport;
 
 class IdGeneratorSnowFlakeSupportTest {
 
