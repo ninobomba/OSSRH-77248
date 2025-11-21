@@ -30,6 +30,10 @@ public sealed interface OperationResult < T >
 		return this instanceof Success < ? >;
 	}
 
+    default T get(){
+        return getOrNull();
+    }
+
 	default T getOrNull ( ) {
 		if ( this instanceof Success < T > ( T data ) ) return data;
 		if ( this instanceof Failure < T > ( T data ) ) return data;
