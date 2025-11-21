@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.tests.contracts.asserts;
 
-public interface ITestAssertNullBody {
+public interface ITestAssertFailureNullBody {
 
 	void assertNullBody ( );
 

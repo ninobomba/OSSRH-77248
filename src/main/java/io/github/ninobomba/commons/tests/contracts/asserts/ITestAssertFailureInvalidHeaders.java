@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.tests.contracts.asserts;
 
-public interface ITestAssertInvalidHeaders {
+public interface ITestAssertFailureInvalidHeaders {
 
 	void assertInvalidHeaders ( );
 }

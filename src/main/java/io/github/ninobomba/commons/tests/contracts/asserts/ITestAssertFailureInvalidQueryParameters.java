@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.tests.contracts.asserts;
 
-public interface ITestAssertInvalidQueryParameters {
+public interface ITestAssertFailureInvalidQueryParameters {
 
 	void assertInvalidRequestParameters ( );
 

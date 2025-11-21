@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,7 +57,7 @@ public class EventFactory {
 				( String ) jsonAsMap.get ( "type" ),
 				( String ) jsonAsMap.get ( "entityIdentifier" ),
 				( String ) jsonAsMap.get ( "entityName" ),
-				( Instant ) jsonAsMap.get ( "timestamp" )
+				( LocalDateTime ) jsonAsMap.get ( "timestamp" )
 		);
 	}
 
