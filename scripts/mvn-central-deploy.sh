@@ -6,8 +6,6 @@ deploy()
   mvn deploy -DskipTests
 }
 
-cd ..
-pwd
 
 deploy
 

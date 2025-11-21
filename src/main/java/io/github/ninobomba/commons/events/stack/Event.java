@@ -1,6 +1,6 @@
 package io.github.ninobomba.commons.events.stack;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 public record Event(
 		String id,
@@ -8,6 +8,6 @@ public record Event(
 		String type,
 		String entityIdentifier,
 		String entityName,
-		Instant timestamp
+		LocalDateTime timestamp
 ) {
 }
