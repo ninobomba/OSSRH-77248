@@ -1,9 +1,9 @@
-package io.github.ninobomba.commons.tests.contracts.validations;
+package io.github.ninobomba.commons.tests.contracts.asserts.components;
 
 public interface ITestValidateDbData {
 
 
-	boolean areRecordsInDatabase ( int expectedRecords );
+	boolean recordsInDatabase(int expectedRecords );
 
 	//	boolean areRecordsInDatabase ( );
 //	boolean areRecordsInDatabase ( String tableName, int expectedRecords );
