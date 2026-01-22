@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Retention ( RetentionPolicy.RUNTIME )
 public @interface NotBlankCharArray {
 
-	String message ( ) default "Password cannot be blank";
+	String message ( ) default "Field cannot be blank";
 
 	Class < ? >[] groups ( ) default { };
 

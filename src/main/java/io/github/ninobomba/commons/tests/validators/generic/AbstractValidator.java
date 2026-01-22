@@ -27,14 +27,7 @@ public abstract class AbstractValidator<V, T extends AbstractValidator<V, T>> {
         }
         return (T) this;
     }
-
-    public void throwOnErrors(String exceptionPrefix) {
-        if (!validationErrors.isEmpty()) {
-            String combinedErrors = String.join(", ", validationErrors);
-            throw new IllegalArgumentException(exceptionPrefix + ": [" + combinedErrors + "]");
-        }
-    }
-
+    
     public boolean isValid() {
         return validationErrors.isEmpty();
     }
